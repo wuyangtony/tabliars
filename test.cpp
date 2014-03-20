@@ -29,7 +29,7 @@ int main() {
   vector<long> factors = FactoredSieve(bound);
   
   
-  
+ /* 
   ZZ a = to_ZZ(2);
   ZZ firstliarbigger;
   long countbig = 0;
@@ -38,7 +38,7 @@ int main() {
     countbig++;
     }
      
-
+*/
 
 /*
 for(long n = 3; n < 2050; n++){
