@@ -24,21 +24,24 @@ int main() {
   long ncount = 0;
   long squareroot = pow(121, 1.0/2);
 
-  cout << "cuberoot of 27 is " << squareroot << "\n";
 
   vector<long> factors = FactoredSieve(bound);
   
-  
+  ZZ a = to_ZZ(1320);
+  FirstSpspFactored(a, factors);
  /* 
   ZZ a = to_ZZ(2);
-  ZZ firstliarbigger;
+  long firstpsp;
   long countbig = 0;
-  for(a = to_ZZ(2); a < 100; a++){
-      cout << a << " : " << FirstSpspRandom(a) << " " << FirstSpspFactored(a, factors)  << "\n";
-    countbig++;
+  for(a = to_ZZ(2); a < 5000; a++){
+    firstpsp = FirstSpspFactored(a, factors);
+    if(firstpsp >= 2000){
+      countbig++;
+      cout << a << " : " << firstpsp << "\n";
     }
-     
-*/
+  }
+   */ 
+
 
 /*
 for(long n = 3; n < 2050; n++){
