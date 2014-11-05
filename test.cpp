@@ -23,7 +23,7 @@ int main() {
   time_t start, end;
  
   mark(sieve);
-  primes(sieve);
+  //primes(sieve);
 
 /*
 for(long n = 3; n < 2050; n++){

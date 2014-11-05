@@ -6,6 +6,7 @@ sieve of eratosthenes
 #define SIEVEPRACTICE_H
 
 #include <vector>
+#include <NTL/ZZ.h>
 
 NTL_CLIENT  // replaces namespace std
 
