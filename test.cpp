@@ -23,32 +23,7 @@ int main() {
   time_t start, end;
  
   mark(sieve);
-  primes(sieve);
-/*
-  long numone = 0;
-  long power = 5;
-  long bound = 1;
-  for(long i=0; i < power; i++){
-    bound = bound * 10;
-  }
-  long ncount = 0;
-  long squareroot = pow(121, 1.0/2);
-
-  cout << "cuberoot of 27 is " << squareroot << "\n";
-
-  vector<long> factors = FactoredSieve(bound);
-  
-  
-  
-  ZZ a = to_ZZ(2);
-  ZZ firstliarbigger;
-  long countbig = 0;
-  for(a = to_ZZ(2); a < 100; a++){
-      cout << a << " : " << FirstSpspRandom(a) << " " << FirstSpspFactored(a, factors)  << "\n";
-    countbig++;
-    }
-     
-*/
+  //primes(sieve);
 
 /*
 for(long n = 3; n < 2050; n++){
