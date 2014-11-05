@@ -1,5 +1,6 @@
 #include <ctime>
 #include <time.h>
+#include <vector>
 #include "formulas.h"
 #include "tab_carmichael.h"
 #include "tab_liars.h"
@@ -7,14 +8,23 @@
 #include <NTL/ZZ.h>
 #include <list>
 #include <NTL/RR.h>  
+#include "sievepractice.h"
 
 NTL_CLIENT
 
 
 int main() {
 
-  time_t start, end;
+  /*Ask for user input and creates vector of that length*/
+  long lengthofsieve = 100;
+  /*Vector that stores all numbers to be evaluated as prime or composite*/
+  vector<long> sieve(lengthofsieve);
 
+  time_t start, end;
+ 
+  mark(sieve);
+  primes(sieve);
+/*
   long numone = 0;
   long power = 5;
   long bound = 1;
@@ -38,7 +48,7 @@ int main() {
     countbig++;
     }
      
-
+*/
 
 /*
 for(long n = 3; n < 2050; n++){
