@@ -1,5 +1,6 @@
 #include <ctime>
 #include <time.h>
+#include <vector>
 #include "formulas.h"
 #include "tab_carmichael.h"
 #include "tab_liars.h"
@@ -7,41 +8,22 @@
 #include <NTL/ZZ.h>
 #include <list>
 #include <NTL/RR.h>  
+#include "sievepractice.h"
 
 NTL_CLIENT
 
 
 int main() {
 
+  /*Ask for user input and creates vector of that length*/
+  long lengthofsieve = 100;
+  /*Vector that stores all numbers to be evaluated as prime or composite*/
+  vector<long> sieve(lengthofsieve);
+
   time_t start, end;
-
-  long numone = 0;
-  long power = 5;
-  long bound = 1;
-  for(long i=0; i < power; i++){
-    bound = bound * 10;
-  }
-  long ncount = 0;
-  long squareroot = pow(121, 1.0/2);
-
-
-  vector<long> factors = FactoredSieve(bound);
-  
-  ZZ a = to_ZZ(1320);
-  FirstSpspFactored(a, factors);
- /* 
-  ZZ a = to_ZZ(2);
-  long firstpsp;
-  long countbig = 0;
-  for(a = to_ZZ(2); a < 5000; a++){
-    firstpsp = FirstSpspFactored(a, factors);
-    if(firstpsp >= 2000){
-      countbig++;
-      cout << a << " : " << firstpsp << "\n";
-    }
-  }
-   */ 
-
+ 
+  mark(sieve);
+  primes(sieve);
 
 /*
 for(long n = 3; n < 2050; n++){
