@@ -9,9 +9,9 @@ NTL_CLIENT //namespace, replaces namespace std
 /*Marks composite numbers in vector*/
 long mark(vector<long> &sieve){
 	long lengthofsieve = sieve.size();
-	for(long i=2; i++; i<=floor(sqrt(lengthofsieve))){
+	for(long i=2; i<lengthofsieve; i++){
 		if(sieve[i] == 0){
-			for(long j=i*i+i; i*i+i; j<=lengthofsieve){
+			for(long j=2*sieve[i]-2; j<lengthofsieve; j+=sieve[i]){
 				cout << "(i,j) = " << i << " " << j << "\n";
 				sieve[j] = 1;
 			}
@@ -23,7 +23,7 @@ long mark(vector<long> &sieve){
 /*Prints out prime numbers in vector*/
 long primes(vector<long> &sieve){
 	long lengthofsieve = sieve.size();
-	for(long i=3; i+2; i<=lengthofsieve) {
+	for(long i=3; i<=lengthofsieve; i+2) {
 		if(i==1){
 			cout << i;
 		}
