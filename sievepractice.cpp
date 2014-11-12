@@ -11,8 +11,7 @@ long mark(vector<long> &sieve){
 	long lengthofsieve = sieve.size();
 	for(long i=2; i<lengthofsieve; i++){
 		if(sieve[i] == 0){
-			for(long j=2*sieve[i]-2; j<lengthofsieve; j+=sieve[i]){
-				cout << "(i,j) = " << i << " " << j << "\n";
+			for(long j=2*i; j<lengthofsieve; j+=i){
 				sieve[j] = 1;
 			}
  		}
@@ -23,9 +22,9 @@ long mark(vector<long> &sieve){
 /*Prints out prime numbers in vector*/
 long primes(vector<long> &sieve){
 	long lengthofsieve = sieve.size();
-	for(long i=3; i<=lengthofsieve; i+2) {
-		if(i==1){
-			cout << i;
+	for(long i=3; i<lengthofsieve; i+=2) {
+		if(sieve[i]==0){
+			cout << i << "\n";
 		}
 	}
 	return 0;
