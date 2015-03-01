@@ -36,6 +36,10 @@ long ncount=0;  // stores the count of odd composites with two strong liars
 cout << "bound is " << bound << " and ncount is " << ncount << "\n";
 cout << trialStrongLiarCount(9) << "\n";
 
+for(long n = 1; n < 15; n++){
+  cout << "n = " << n << ", ord_2(n) = " << Ord2(n) << ", odd part is " << OddDivisor(n) << "\n";
+}
+
 /*
 // more testing - using another method to count composites with two strong liars
   for(long i=1; i <= bound; i++){

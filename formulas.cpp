@@ -93,14 +93,20 @@ void distinctsieveFactor(long n, vector<long>& factors, const vector<long>& siev
 
 /* returns the largest odd divisor of n */
 long OddDivisor(long n){
-  long div;
-
+  long div = n; // if n odd then that is what is returned
+  while(div % 2 == 0){ // while n still even, keep dividing by 2
+    div = div / 2;
+  }
 return div;
 }
 
 /* returns ord_2(n), the largest power of 2 dividing n */
 long Ord2(long n){
-  long ord;
+  long ord = 0;
+  while(n % 2 == 0){  // keep dividing n by 2 and adding 1 to ord
+    ord++;
+    n = n / 2;
+  }
 
 return ord;
 }
