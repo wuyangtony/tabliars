@@ -1,13 +1,16 @@
 PATHS = -I/usr/local/include -L/usr/local/lib
-TAGS = -lntl -lgmp -lm -O3 -static 
+TAGS = -lntl -lgmp -lm -O2 -static 
 
-all: test runwitness 
+all: test runwitness runtwostrongliars 
 
 test: test.o formulas.o tab_carmichael.o tab_liars.o first_liar.o sievepractice.o
 	g++ $(PATHS) formulas.o tab_carmichael.o tab_liars.o first_liar.o test.o sievepractice.o -o test $(TAGS)
 
 runwitness:	runreliablewitness.o formulas.o tab_carmichael.o tab_liars.o
 	g++ $(PATHS) formulas.o tab_carmichael.o tab_liars.o runreliablewitness.o -o runwitness $(TAGS)
+
+runtwostrongliars:	runtwostrongliars.o formulas.o
+	g++ $(PATHS) formulas.o runtwostrongliars.o -o runtwostrongliars $(TAGS)
 
 test.o: test.cpp
 	g++ $(PATHS) -c test.cpp	
@@ -29,6 +32,9 @@ first_liar.o:	first_liar.cpp
 
 sievepractice.o: sievepractice.cpp
 	g++ $(PATHS) -c sievepractice.cpp
+
+runtwostrongliars.o:	runtwostrongliars.cpp
+	g++ $(PATHS) -c runtwostrongliars.cpp
 
 clean:
 	rm *.o
