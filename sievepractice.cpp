@@ -22,7 +22,7 @@ long mark(vector<long> &sieve){
 /*Prints out prime numbers in vector*/
 long primes(vector<long> &sieve){
 	long lengthofsieve = sieve.size();
-	for(long i=3; i<lengthofsieve; i+=2) {
+	for(long i=3; i<lengthofsieve; i+=2){
 		if(sieve[i]==0){
 			cout << i << "\n";
 		}

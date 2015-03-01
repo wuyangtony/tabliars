@@ -9,7 +9,7 @@
 #include <list>
 #include <NTL/RR.h>  
 #include "sievepractice.h"
-
+#include "lowestprimesieve.h"
 NTL_CLIENT
 
 
@@ -21,9 +21,15 @@ int main() {
   vector<long> sieve(lengthofsieve);
 
   time_t start, end;
- 
+  
+  lowestprime(sieve);
+  prime(sieve); 
+
+
+/*
   mark(sieve);
   primes(sieve);
+*/ 
 
 /*
 for(long n = 3; n < 2050; n++){
@@ -56,7 +62,7 @@ cout << "strong liars for 95:\n";
 for(ZZ i = to_ZZ(1); i < 95; i++){
   if(!MillerWitness(to_ZZ(95), i)) cout << i  << " is a liar\n";
 }
- 
+
 // more testing - using another method to count composites with two strong liars
   for(long i=1; i <= bound; i++){
     if(trialStrongLiarCount(i) == 2)4

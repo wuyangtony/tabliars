@@ -13,7 +13,7 @@ ZZ FirstNLiarFactored(ZZ a, vector<long> &factors);
 /* returns the number of strong liars of n, using the definition, 
 given by an NTL implementation */
 ZZ StrongLiarCount(ZZ n);
-  ZZ liarcount = 0; 
+  ZZ liarcount = to_ZZ(0); 
   ZZ a = to_ZZ(a);
 
 /* returns the number of Strong liars of n.  It does this using 
