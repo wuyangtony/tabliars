@@ -38,16 +38,25 @@ cout << "bound is " << bound << " and ncount is " << ncount << "\n";
 cout << trialStrongLiarCount(9) << "\n";
 
 vector<long> factors;
-for(long i = 2; i < 20; i++){
+// now compare against sieveFactor
+for(long i=2; i < 20; i++){
   factors.clear();
-  trialFactor(i, factors);
+  sieveFactor(i, factors, sieve);
   cout << i << ": ";
   for(long j = 0; j < factors.size(); j++){
     cout << factors.at(j) << " ";
   }
   cout << "\n";
 }
-
+for(long i=2; i < 30; i++){
+  factors.clear();
+  distinctsieveFactor(i, factors, sieve);
+  cout << i << ": ";
+  for(long j = 0; j < factors.size(); j++){
+    cout << factors.at(j) << " ";
+  }
+  cout << "\n";
+}
 /*
 // more testing - using another method to count composites with two strong liars
   for(long i=1; i <= bound; i++){

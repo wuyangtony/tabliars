@@ -81,15 +81,32 @@ vector<long> FactoredSieve(long x){
 return ints;
 }
 
-/* Since the factoredsieve stores only the largest prime factor, the 
+/* Since the factoredsieve stores only the smallest prime factor, the 
 next routine uses that information (with access to the entire sieve 
 for recursive work) to give the full factorization
 Input is the sieve and a vector which will store the factors
 */
-void sieveFactor(long n, vector<long>& factors, const vector<long>& sieve);
+void sieveFactor(long n, vector<long>& factors, const vector<long>& sieve){
+  while(n != 1){ // we're done when the cofactor reaches 1
+    long prime = sieve.at(n);  // gives smallest prime factor
+    factors.push_back(prime);  // add it to the list of factors
+    n = n / prime;  // update cofactor
+  }
+return;
+}
 
 /* This next only returns the distinct prime factors of n */
-void distinctsieveFactor(long n, vector<long>& factors, const vector<long>& sieve);
+void distinctsieveFactor(long n, vector<long>& factors, const vector<long>& sieve){
+  // conveniently, in sieveFactor the primes are listed in order from 
+  // smallest to largest, with repeated factors adjacent.  We can exploit this
+  while(n != 1){
+    long prime = sieve.at(n); // gives next prime
+    n = n / prime;  // update cofactor
+    // if prime already appears at end of factors, don't add it
+    if(factors.back() != prime) factors.push_back(prime);
+  }
+return;
+}
 
 /* returns the largest odd divisor of n */
 long OddDivisor(long n){
