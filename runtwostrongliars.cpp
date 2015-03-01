@@ -1,5 +1,6 @@
 #include <ctime>
 #include <time.h>
+#include <math.h>
 #include <vector>
 #include "formulas.h"
 #include "tab_carmichael.h"
@@ -36,8 +37,15 @@ long ncount=0;  // stores the count of odd composites with two strong liars
 cout << "bound is " << bound << " and ncount is " << ncount << "\n";
 cout << trialStrongLiarCount(9) << "\n";
 
-for(long n = 1; n < 15; n++){
-  cout << "n = " << n << ", ord_2(n) = " << Ord2(n) << ", odd part is " << OddDivisor(n) << "\n";
+vector<long> factors;
+for(long i = 2; i < 20; i++){
+  factors.clear();
+  trialFactor(i, factors);
+  cout << i << ": ";
+  for(long j = 0; j < factors.size(); j++){
+    cout << factors.at(j) << " ";
+  }
+  cout << "\n";
 }
 
 /*

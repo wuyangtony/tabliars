@@ -5,6 +5,7 @@
 #include <NTL/RR.h>
 #include <list>
 #include <vector>
+#include <math.h>
 
 NTL_CLIENT
 
@@ -57,10 +58,9 @@ long OddDivisor(long n);
 /* returns ord_2(n), the largest power of 2 dividing n */
 long Ord2(long n);
 
-// Factor returns all the distinct prime factors of n, stored in the given list
+// Factor returns all the prime factors of n, stored in the given vector
 // uses trial division
-// written by Steven Hayman
-void trialFactor(long n, list<long>& factors);
+void trialFactor(long n, vector<long>& factors);
 
 // if m has a factor store it in f and return 1, otherwise return 0
 // helper function for Factor, written by Steven Hayman

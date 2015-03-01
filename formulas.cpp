@@ -111,10 +111,25 @@ long Ord2(long n){
 return ord;
 }
 
-// Factor returns all the distinct prime factors of n, stored in the given list
-// uses trial division
-// written by Steven Hayman
-void trialFactor(long n, list<long>& factors);
+// Factor returns all the  prime factors of n, stored in the given vector
+// uses trial division, complexity O(sqrt(n))
+void trialFactor(long n, vector<long>& factors){
+  while(n != 1){ // still work to do if non-trivial cofactor
+    long primefinder = 2;
+    // keep increasing the prime until it is a divisor.  
+    // First found must be prime, stop at sqrt of the cofactor
+    while(n % primefinder != 0 && primefinder < floor(sqrt(n))) primefinder++;  
+    // if primefinder divides n, add prime to list and continue
+    if(n % primefinder == 0){
+      factors.push_back(primefinder); // add to list
+      n = n / primefinder;  // update cofactor
+    }else{  // in this case the cofactor is prime
+      factors.push_back(n);
+      n = n / n;
+    }
+  }    
+return;
+}
 
 // if m has a factor store it in f and return 1, otherwise return 0
 // helper function for Factor, written by Steven Hayman
