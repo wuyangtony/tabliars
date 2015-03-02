@@ -10,16 +10,26 @@ Instead of using a probabilistic primality test, checks primality with
 a factored sieve */
 ZZ FirstNLiarFactored(ZZ a, vector<long> &factors);
 
-/* returns the number of strong liars of n, using the definition, 
-given by an NTL implementation */
-ZZ StrongLiarCount(ZZ n);
+/* returns the number of strong liars of n, using NTL MillerWitness*/
+ZZ StrongLiarCount(ZZ n){
+  if(n % 2 == 0) cout << "Error in StrongLiarCount: input needs to be odd\n";
   ZZ liarcount = to_ZZ(0); 
-  ZZ a = to_ZZ(a);
+  // now test each potential witness
+  for(ZZ i = to_ZZ(1); i < n; i++){
+    if(MillerWitness(n, i) == 0){ //MillerWitness returns 1 if i witness
+      liarcount++;
+    }
+  }
+return liarcount;
+}
 
 /* returns the number of Strong liars of n.  It does this using 
 the formula of Monier, not the definition */
 long trialStrongLiarCount(long n){
-  cout << "this function not implemented yet\n";
+  if(n % 2 == 0) cout << "Error in trialStrongLiarCount: input needs to be odd\n";
+  // first task is to factor n.  We do this using trial division
+  vector<long> factors;
+  trialFactor(n, factors);
 return 0;
 }
 
@@ -147,6 +157,10 @@ void trialFactor(long n, vector<long>& factors){
   }    
 return;
 }
+
+/* distincttrialFactor is same as trial factor, except only distinct prime 
+factors of n are returned.  Exploits that
+*/ 
 
 // if m has a factor store it in f and return 1, otherwise return 0
 // helper function for Factor, written by Steven Hayman

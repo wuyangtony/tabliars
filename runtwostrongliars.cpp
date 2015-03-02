@@ -35,28 +35,13 @@ vector<long> sieve = FactoredSieve(1000);
 long ncount=0;  // stores the count of odd composites with two strong liars
 
 cout << "bound is " << bound << " and ncount is " << ncount << "\n";
-cout << trialStrongLiarCount(9) << "\n";
 
-vector<long> factors;
-// now compare against sieveFactor
-for(long i=2; i < 20; i++){
-  factors.clear();
-  sieveFactor(i, factors, sieve);
-  cout << i << ": ";
-  for(long j = 0; j < factors.size(); j++){
-    cout << factors.at(j) << " ";
-  }
-  cout << "\n";
+cout << MillerWitness(to_ZZ(4), to_ZZ(3)) << "\n";
+
+for(ZZ i = to_ZZ(3); i < to_ZZ(30); i = i+2){
+  cout << i << ": " << StrongLiarCount(i) << "\n";
 }
-for(long i=2; i < 30; i++){
-  factors.clear();
-  distinctsieveFactor(i, factors, sieve);
-  cout << i << ": ";
-  for(long j = 0; j < factors.size(); j++){
-    cout << factors.at(j) << " ";
-  }
-  cout << "\n";
-}
+
 /*
 // more testing - using another method to count composites with two strong liars
   for(long i=1; i <= bound; i++){
