@@ -27,10 +27,27 @@ return liarcount;
 the formula of Monier, not the definition */
 long trialStrongLiarCount(long n){
   if(n % 2 == 0) cout << "Error in trialStrongLiarCount: input needs to be odd\n";
+  long liarcount = 0;
+
   // first task is to factor n.  We do this using trial division
   vector<long> factors;
   trialFactor(n, factors);
-return 0;
+  factors = distinctFactor(factors); // remove repeated primes
+
+  // compute the product of gcd(n', p') and smallest ord_2(p-1)
+  long gcdproduct = 1;
+  long minord = Ord2(factors.at(0)-1); // for smallest ord_2(p-1)
+  long tempord;
+  for(long i = 0; i < factors.size(); i++){
+    gcdproduct = gcdproduct * GCD(OddDivisor(n-1), OddDivisor(factors.at(i) - 1));
+    tempord = Ord2(factors.at(i)-1);
+    if(tempord < minord) minord = tempord;
+  }
+
+  // now, the number of strong liars is gcdproduct * (1 + (2^(rv)-1)/(2^r-1))
+  liarcount = gcdproduct * (1 + (power_long(2, factors.size() * minord)-1) / (power_long(2, factors.size()) - 1) );
+
+return liarcount;
 }
 
 /* returns the number of Fermat liars of n.  It does this using 
@@ -158,9 +175,22 @@ void trialFactor(long n, vector<long>& factors){
 return;
 }
 
-/* distincttrialFactor is same as trial factor, except only distinct prime 
-factors of n are returned.  Exploits that
-*/ 
+// Removes repeats from the factor list.  Assume here that factors is sorted
+vector<long> distinctFactor(vector<long>& factors){
+  vector<long> output;
+  long value = 0; // for storing the current value seen
+  long factor;  // for storing each element of factors in turn.  
+
+  // now loop through factors, looking for new values
+  for(long i = 0; i < factors.size(); i++){
+    factor = factors.at(i);
+    if(factor != value){ // if it does match value, no action taken
+      output.push_back(factor); // if new value, push it onto output
+      value = factor;  // and update value
+    }
+  }
+return output;
+}
 
 // if m has a factor store it in f and return 1, otherwise return 0
 // helper function for Factor, written by Steven Hayman

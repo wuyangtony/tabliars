@@ -62,6 +62,9 @@ long Ord2(long n);
 // uses trial division
 void trialFactor(long n, vector<long>& factors);
 
+// Removes repeats from the factor list.  Assume here that factors is sorted
+vector<long> distinctFactor(vector<long>& factors);
+
 // if m has a factor store it in f and return 1, otherwise return 0
 // helper function for Factor, written by Steven Hayman
 long findFactor(long& m, long& f);

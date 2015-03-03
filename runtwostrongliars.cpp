@@ -38,9 +38,11 @@ cout << "bound is " << bound << " and ncount is " << ncount << "\n";
 
 cout << MillerWitness(to_ZZ(4), to_ZZ(3)) << "\n";
 
-for(ZZ i = to_ZZ(3); i < to_ZZ(30); i = i+2){
-  cout << i << ": " << StrongLiarCount(i) << "\n";
+for(long i = 3; i < 100; i = i+2){
+  cout << i << ": " << StrongLiarCount(to_ZZ(i)) << " " << trialStrongLiarCount(i) << "\n";
 }
+
+
 
 /*
 // more testing - using another method to count composites with two strong liars
