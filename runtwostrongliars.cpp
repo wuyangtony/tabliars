@@ -36,12 +36,13 @@ long ncount=0;  // stores the count of odd composites with two strong liars
 
 cout << "bound is " << bound << " and ncount is " << ncount << "\n";
 
-cout << MillerWitness(to_ZZ(4), to_ZZ(3)) << "\n";
+cout << sieveTwoStrongLiarsCount(20) << "\n";
 
+/*
 for(long i = 3; i < 100; i = i+2){
   cout << i << ": " << StrongLiarCount(to_ZZ(i)) << " " << trialStrongLiarCount(i) << "\n";
 }
-
+*/
 
 
 /*

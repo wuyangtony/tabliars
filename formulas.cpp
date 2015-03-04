@@ -57,9 +57,69 @@ long FermatLiarCount(long n);
 /* Similar to trialStrongLiarCount, but uses a 
 sieving strategy which is more efficient.  Uses FactoredSieve
 and sieveFactor below
-Specifically, output is number of odd integers with 2 strong liars 
+Specifically, output is number of odd composite integers with 2 strong liars 
 */
-long  sieveTwoStrongLiarsCount(long x);
+long  sieveTwoStrongLiarsCount(long x){
+  long liarcount = 0;
+  // the sieve stores the smallest prime factor of i in position i
+  vector<long> sieve = FactoredSieve(x);
+  vector<long> factors; // for storing prime factorizations
+
+  // but we need another vector that stores which case we are in
+  // initialize to cases storing 2 for each odd entry, 0 for each even
+  // ultimately 1 will mean that odd number has two strong liars
+  vector<long> cases;
+  cases.reserve(x+1);
+  long i = 0;
+  while(i < x+1){ //x+1 so we get integers up to including x, plus 0
+    if(i % 2 == 0) cases.push_back(0);
+    else cases.push_back(2);
+    i++;
+  }
+  cases.at(1) = 0; // 1 is not a composite with two strong liars
+
+  // now, for all primes p <= x, all odd prime r|(p-1), 
+  // cross off n = p mod (pr), since for these r | gcd(n', p')
+  // we can start at p=3 since p=2 has no odd primes dividing p-1
+  long r;
+  long index;
+  for(long p = 3; p < sieve.size(); p++){
+    if(sieve.at(p) == p){ // then p is prime
+      cases.at(p) = 0; // primes are not composites with two strong liars
+      distinctsieveFactor(p-1, factors, sieve);
+
+      for(long j = 0; j < factors.size(); j++){
+        r = factors.at(j);
+        if(r % 2 != 0){ // only keep r if it is odd
+          index = p;
+
+          while(index < x+1){ // now cross off n = p mod (pr)
+            cases.at(index) = 0;
+            index = index + p*r;
+          } // end while
+        } // end if r odd
+      } // end for factors
+    } // end if prime
+  } // end for p
+
+  // next we need to ensure that the remaining composites have a factor = 3 (4)
+  for(long p = 3; p < sieve.size(); p++){
+    if(sieve.at(p) == p && p%4 == 3){
+      index = p;
+      while(index < x+1){
+        if(cases.at(index) == 2) cases.at(index) = 1;
+        index = index + p;
+      }
+    } // end if p = 3 (4)
+  } // end for p
+
+  // finally, we count up the liars
+  for(long i = 0; i < cases.size(); i++){
+    if(cases.at(i) == 1) liarcount++;
+  }
+
+return liarcount;
+}
 
 /* this is a basic sieve of Erasthothenes.  It takes integers up to 
 x and sieves by primes up to sievebound, and returns the integers not sieved.
@@ -114,6 +174,7 @@ for recursive work) to give the full factorization
 Input is the sieve and a vector which will store the factors
 */
 void sieveFactor(long n, vector<long>& factors, const vector<long>& sieve){
+  factors.clear(); // make sure the factors vector is empty
   while(n != 1){ // we're done when the cofactor reaches 1
     long prime = sieve.at(n);  // gives smallest prime factor
     factors.push_back(prime);  // add it to the list of factors
@@ -124,13 +185,17 @@ return;
 
 /* This next only returns the distinct prime factors of n */
 void distinctsieveFactor(long n, vector<long>& factors, const vector<long>& sieve){
+  factors.clear(); // make sure the factors vector is empty
   // conveniently, in sieveFactor the primes are listed in order from 
   // smallest to largest, with repeated factors adjacent.  We can exploit this
   while(n != 1){
     long prime = sieve.at(n); // gives next prime
     n = n / prime;  // update cofactor
     // if prime already appears at end of factors, don't add it
-    if(factors.back() != prime) factors.push_back(prime);
+    if(factors.size() == 0) factors.push_back(prime);
+    else if(factors.back() != prime){
+      factors.push_back(prime);
+    }
   }
 return;
 }
