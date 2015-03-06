@@ -25,94 +25,54 @@ int main(){
 
 // BOUNDPOW is the power of 10 that forms the upper bound of all calculations. 
 // bound is the resulting integer value
-long BOUNDPOW = 4;
+long BOUNDPOW = 10;
 
 long bound = power_long(10, BOUNDPOW);
-time_t start, end; // for timings
+time_t start1, end1, start2, end2, start3, end3, start4, end4; // for timings
 
 // FactoredSieve returns array where nth entry contains smallest prime factor of n
-time(&start);
+time(&start1);
 vector<long> sieve = FactoredSieve(bound);
-time(&end);
-cout << "time taken creating factor sieve is " << difftime(end, start) << "\n";
+time(&end1);
+cout << "time taken creating factor sieve is " << difftime(end1, start1) << "\n";
 
 long ncount=0;  // stores the count of odd composites with two strong liars
 
-time(&start);
+/*
+time(&start2);
 // count the number of odd composites with two strong liars using definition
 for(long i = 3; i <= bound; i = i+2){
   if(sieve.at(i) != i && StrongLiarCount(to_ZZ(i)) == to_ZZ(2)) ncount++;
 }
-time(&end);
+time(&end2);
 
 cout << "bound is " << bound << " and ncount is " << ncount;
-cout << " time taken is " << difftime(end, start) << "\n";
+cout << " time taken is " << difftime(end2, start2) << "\n";
 
-time(&start);
+time(&start3);
 // count the number of composites with two strong liars using Monier
 ncount = 0;
 for(long i = 3; i <= bound; i=i+2){
   if(sieve.at(i) != i && trialStrongLiarCount(i) == 2) ncount++;
 }
-time(&end);
+time(&end3);
 
 cout << "bound is " << bound << " and ncount is " << ncount ;
-cout << " time taken is " << difftime(end, start) << "\n";
+cout << " time taken is " << difftime(end3, start3) << "\n";
+*/
 
-time(&start);
+time(&start4);
 // finally, count the number of composites with two strong liars using Shallue sieve
 ncount = sieveTwoStrongLiarsCount(bound);
-time(&end);
+time(&end4);
 
-cout << "bound is " << bound << " and ncount is " << ncount;
-cout << " time taken is " << difftime(end, start) << "\n";
+cout << "bound is 10 to the " << BOUNDPOW << " and ncount is " << ncount;
+cout << " time taken is " << difftime(end4, start4) << "\n";
 
-/*
-for(long i = 3; i < 100; i = i+2){
-  cout << i << ": " << StrongLiarCount(to_ZZ(i)) << " " << trialStrongLiarCount(i) << "\n";
-}
-*/
-
-
-/*
-// more testing - using another method to count composites with two strong liars
-  for(long i=1; i <= bound; i++){
-    if(trialStrongLiarCount(i) == 2){
-      if(sieve.at(i) == i) cout << i << " is prime and counted\n";
-      if(i % 2 == 0) cout << i << " is even and counted\n";
-      ncount++;    }
-  }
-  cout << "The number of integers up to " << bound << " with two strong liars is " << ncount << "\n";
-  cout << "\n";
-*/
-
-/*
-cout << "counting n with two strong liars up to " << bound << " which is 10 to the p
-ower " << power << "\n";
-time(&start);
-
-// strong liar count with sieve method
-ncount = sieveTwoStrongLiarsCount(bound);
-
-time(&end);
-
-cout << ncount << " : number with 2 strong liars up to 10 to the " << power << "\n";
-RR ratio = to_RR(ncount-1 + 0.0);
+RR ratio = to_RR(to_RR(ncount)/to_RR(bound));
 ratio = ratio * log(log(log(bound)));
-cout << "(count-1) * logloglog x is " << ratio << "\n";
-cout << "time taken is " << difftime(end,start) << "\n";
+cout << "(count)/x * logloglog x is " << ratio << "\n";
 
-// testing strong liar count
-for(long n = 1; n < bound; n++){
-    ncount = StrongLiarCount(n);
-    //cout << n << " has " << ncount << " number of strong liars\n";
-    if(ncount == 2 || ncount == 1) numone++;
-}
-  cout << numone << " : number with 2 or 1 Strong liars up to " << bound << " \n";
-  RR ratio = to_RR(numone + 0.0);
-  ratio = ratio * log(log(log(bound)));  
-  cout << ratio << "\n";
-*/
 
 
 

@@ -12,12 +12,10 @@
 # limit walltime to 2 days
 #PBS -l walltime=48:00:00
 
-# compute 5 has been having problems, let's use compute 4
-##PBS -l nodes=compute-0-4
 
 # change directory
 cd ~ashallue/counting_liars
 
 # run the command
-LD_LIBRARY_PATH=/share/apps/lib64 ./test
+LD_LIBRARY_PATH=/share/apps/lib64 ./runtwostrongliars
 
