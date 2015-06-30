@@ -25,7 +25,7 @@ int main(){
 
 // BOUNDPOW is the power of 10 that forms the upper bound of all calculations. 
 // bound is the resulting integer value
-long BOUNDPOW = 10;
+long BOUNDPOW = 9;
 
 long bound = power_long(10, BOUNDPOW);
 time_t start1, end1, start2, end2, start3, end3, start4, end4; // for timings
