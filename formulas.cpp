@@ -263,28 +263,34 @@ long MulOrder(long a, long n, vector<long>& factoredsieve){
   // catch the last prime power dividing n
   phi = phi * power_long(prime, exp-1) * (prime-1);
 
-  cout << "n = " << n << " and phi(n) = " << phi << "\n";
-
-/*
-  long order = phi;  // we'll divide out the appropriate primes
-  long p, e;  // p^e will be the largest power of p dividing phi(n)
-  for(long i = 0; i < factors.size(); i++){
+  // Now, I need the distinct factors of phi(n)
+  vector<long> phi_primes;
+  distinctsieveFactor(phi, phi_primes, factoredsieve);
+  
+  long order = 1;  // we'll build up per prime dividing phi
+  long p, e;  // e will be phi(n) with all p factors removed
+  long ai;  // ai will equal a^e mod n, then raised to p powers
+  long orderfactor;  //will be power of p that divides order
+  for(long i = 0; i < phi_primes.size(); i++){
 
     // identify the largest power of p that divides phi
-    p = factors.at(i);
-   // e = 0;
-   // while(phi % p == 0) e++;
+    p = phi_primes.at(i);
+    e = phi;
+    while(e % p == 0) e = e / p;
 
-    // now, subtract from e until a^{phi/p^e} != 1 mod n
-    while(PowerMod(a, order, n) == 1 && order % p == 0){
-      
-    //  cout << "p = " << p << " order = " << order << "\n";
-      order = order / p;
-    } // end while 
+    // now take (a^e)^p until we get identity mod n
+    ai = PowerMod(a, e, n);
+    orderfactor = 1;
+    while(ai != 1){
+      ai = PowerMod(ai, p, n);
+      orderfactor = orderfactor * p;
+    }
+    // ai^{orderfactor} = 1 mod n, so multiply order my orderfactor
+    order = order * orderfactor;
 
   } // end for
 return order;
-*/
+
 }
 
 // Factor returns all the  prime factors of n, stored in the given vector

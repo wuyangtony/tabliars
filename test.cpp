@@ -20,12 +20,11 @@ int main() {
   vector<long> sieve;
   sieve = FactoredSieve(lengthofsieve);
 
-  for(long i = 0; i < sieve.size(); i++){
-    cout << sieve.at(i) << " ";
+  for(long a = 1; a < 45; a++){
+    if(GCD(a,45)==1){
+    cout << "order of " << a << " mod 45 is " << MulOrder(a,45,sieve) << "\n";
+    }
   }
-  cout << "\n";
-
-  MulOrder(2, 3*3*3*3*5*7, sieve);
 
 /*
   mark(sieve);

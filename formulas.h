@@ -60,7 +60,8 @@ long Ord2(long n);
 
 /* returns multiplicative order of a modulo n
 prints to cout an error if a is not a unit.  Input includes factored sieve
-This is a poly time algorithm
+This is a poly time algorithm, but currently it is a loglog factor slower 
+than theoretically possible since I do not use precomputation in exp.
 */
 long MulOrder(long a, long n, vector<long>& factoredsieve);
 
