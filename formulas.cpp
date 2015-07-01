@@ -220,6 +220,73 @@ long Ord2(long n){
 return ord;
 }
 
+/* returns multiplicative order of a modulo n
+prints to cout an error if a is not a unit.  Input includes factored sieve.
+This is a poly time algorithm 
+*/
+long MulOrder(long a, long n, vector<long>& factoredsieve){
+  // first check that a unit and that n fits into the sieve
+  if( GCD(a,n) != 1){ 
+    cout << "Error in MulOrder: a = " << a << " not a unit\n";
+    return 0;
+  }
+  if(n >= factoredsieve.size()){ 
+    cout << "Error in MulOrder: " << n << "is bigger than the size of the factored sieve\n";
+    return 0;
+  }
+
+  // next we need to compute phi(n).  We'll do this using factorization of n
+  long phi = 1;
+  vector<long> n_primes;
+  sieveFactor(n, n_primes, factoredsieve);
+
+  // now find the next prime power dividing n, and multiply phi by correct term
+  long index = 0;
+  long prime = n_primes.at(index);
+  long exp = 1;
+  index++;
+  while(index < n_primes.size()){
+    if(n_primes.at(index) == prime){
+      index++;
+      exp++; // in this case, have another instance of prime
+    }    
+    else{
+      // phi = phi * p^(e-1) * (p-1)
+      phi = phi * power_long(prime, exp-1) * (prime - 1);
+
+      // new prime, reset exp and increment index
+      prime = n_primes.at(index);
+      exp = 1;
+      index++; 
+    } 
+  } // end while
+  // catch the last prime power dividing n
+  phi = phi * power_long(prime, exp-1) * (prime-1);
+
+  cout << "n = " << n << " and phi(n) = " << phi << "\n";
+
+/*
+  long order = phi;  // we'll divide out the appropriate primes
+  long p, e;  // p^e will be the largest power of p dividing phi(n)
+  for(long i = 0; i < factors.size(); i++){
+
+    // identify the largest power of p that divides phi
+    p = factors.at(i);
+   // e = 0;
+   // while(phi % p == 0) e++;
+
+    // now, subtract from e until a^{phi/p^e} != 1 mod n
+    while(PowerMod(a, order, n) == 1 && order % p == 0){
+      
+    //  cout << "p = " << p << " order = " << order << "\n";
+      order = order / p;
+    } // end while 
+
+  } // end for
+return order;
+*/
+}
+
 // Factor returns all the  prime factors of n, stored in the given vector
 // uses trial division, complexity O(sqrt(n))
 void trialFactor(long n, vector<long>& factors){

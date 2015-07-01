@@ -16,15 +16,16 @@ NTL_CLIENT
 int main() {
 
   /*Ask for user input and creates vector of that length*/
-  long lengthofsieve = 100;
-  /*Vector that stores all numbers to be evaluated as prime or composite*/
-  vector<long> sieve(lengthofsieve);
+  long lengthofsieve = 3000;
+  vector<long> sieve;
+  sieve = FactoredSieve(lengthofsieve);
 
-  time_t start, end;
-  
-  lowestprime(sieve);
-  prime(sieve); 
+  for(long i = 0; i < sieve.size(); i++){
+    cout << sieve.at(i) << " ";
+  }
+  cout << "\n";
 
+  MulOrder(2, 3*3*3*3*5*7, sieve);
 
 /*
   mark(sieve);

@@ -58,6 +58,12 @@ long OddDivisor(long n);
 /* returns ord_2(n), the largest power of 2 dividing n */
 long Ord2(long n);
 
+/* returns multiplicative order of a modulo n
+prints to cout an error if a is not a unit.  Input includes factored sieve
+This is a poly time algorithm
+*/
+long MulOrder(long a, long n, vector<long>& factoredsieve);
+
 // Factor returns all the prime factors of n, stored in the given vector
 // uses trial division
 void trialFactor(long n, vector<long>& factors);
