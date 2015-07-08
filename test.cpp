@@ -10,21 +10,33 @@
 #include <NTL/RR.h>  
 #include "sievepractice.h"
 #include "lowestprimesieve.h"
+#include "tab_psp.h"
 NTL_CLIENT
 
 
 int main() {
 
-  /*Ask for user input and creates vector of that length*/
-  long lengthofsieve = 3000;
+  /*Ask for user input and creates vector of that length*/ 
+  long BOUND = 3000000;
+  long BASE = 11;
   vector<long> sieve;
-  sieve = FactoredSieve(lengthofsieve);
+  sieve = FactoredSieve(BOUND);
 
-  for(long a = 1; a < 45; a++){
-    if(GCD(a,45)==1){
-    cout << "order of " << a << " mod 45 is " << MulOrder(a,45,sieve) << "\n";
-    }
+  cout << MillerWitness(conv<ZZ>(4), conv<ZZ>(9%4)) << "\n";
+
+  vector<ZZ> psp = TrivialStrongTab(conv<ZZ>(BASE), conv<ZZ>(BOUND));
+
+  for(long i=0; i < psp.size(); i++){
+    cout << psp.at(i) << " ";
   }
+  cout << "\n";
+
+  vector<long> output;
+  SieveStrongTab(BASE, BOUND, output, sieve);
+  for(long i=0; i < output.size(); i++){
+    if(output.at(i) == 1) cout << i << " ";
+  }
+  cout << "\n";
 
 /*
   mark(sieve);
