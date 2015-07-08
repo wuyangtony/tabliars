@@ -17,26 +17,19 @@ NTL_CLIENT
 int main() {
 
   /*Ask for user input and creates vector of that length*/ 
-  long BOUND = 3000000;
-  long BASE = 11;
+  long BOUND = 3000;
+  long BASE = 1;
   vector<long> sieve;
   sieve = FactoredSieve(BOUND);
 
-  cout << MillerWitness(conv<ZZ>(4), conv<ZZ>(9%4)) << "\n";
 
-  vector<ZZ> psp = TrivialStrongTab(conv<ZZ>(BASE), conv<ZZ>(BOUND));
+  vector<ZZ> psp = TrivialFermatTab(conv<ZZ>(BASE), conv<ZZ>(BOUND));
 
   for(long i=0; i < psp.size(); i++){
     cout << psp.at(i) << " ";
   }
   cout << "\n";
 
-  vector<long> output;
-  SieveStrongTab(BASE, BOUND, output, sieve);
-  for(long i=0; i < output.size(); i++){
-    if(output.at(i) == 1) cout << i << " ";
-  }
-  cout << "\n";
 
 /*
   mark(sieve);
