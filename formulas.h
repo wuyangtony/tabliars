@@ -52,6 +52,10 @@ void sieveFactor(long n, vector<long>& factors, const vector<long>& sieve);
 /* This next only returns the distinct prime factors of n */
 void distinctsieveFactor(long n, vector<long>& factors, const vector<long>& sieve);
 
+/* A sieve that returns the primes up to bound in O(bound) time.
+This is a dual linear sieve of Pritchard*/
+vector<long> LinearPrimeSieve(long bound);
+
 /* returns the largest odd divisor of n */
 long OddDivisor(long n);
 

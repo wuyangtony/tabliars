@@ -3,8 +3,8 @@ TAGS = -lntl -lgmp -lm -O2 -static
 
 all: test runwitness runtwostrongliars 
 
-test: test.o formulas.o tab_carmichael.o tab_liars.o first_liar.o sievepractice.o lowestprimesieve.o tab_psp.o
-	g++ $(PATHS) formulas.o tab_carmichael.o tab_liars.o tab_psp.o first_liar.o test.o sievepractice.o lowestprimesieve.o -o test $(TAGS)
+test: test.o formulas.o tab_carmichael.o tab_liars.o first_liar.o sievepractice.o lowestprimesieve.o tab_psp.o DoubleLinkedListArray.o
+	g++ $(PATHS) formulas.o tab_carmichael.o tab_liars.o tab_psp.o first_liar.o test.o sievepractice.o lowestprimesieve.o DoubleLinkedListArray.o -o test $(TAGS)
 
 runwitness:	runreliablewitness.o formulas.o tab_carmichael.o tab_liars.o
 	g++ $(PATHS) formulas.o tab_carmichael.o tab_liars.o runreliablewitness.o -o runwitness $(TAGS)
@@ -41,6 +41,9 @@ runtwostrongliars.o:	runtwostrongliars.cpp
 
 lowestprimesieve.o: lowestprimesieve.cpp
 	g++ $(PATHS) -c lowestprimesieve.cpp
+
+DoubleLinkedListArray.o:	DoubleLinkedListArray.cpp
+	g++ $(PATHS) -c DoubleLinkedListArray.cpp
 
 clean:
 	rm *.o

@@ -200,6 +200,54 @@ void distinctsieveFactor(long n, vector<long>& factors, const vector<long>& siev
 return;
 }
 
+/* A sieve that returns the primes up to bound in O(bound) time.
+This is a dual linear sieve of Pritchard*/
+vector<long> LinearPrimeSieve(long bound){
+  vector<long> primes; // the output
+  vector<long> ints; // the array to be sieved
+  vector<long> shortprimes; // primes up to sqrt(bound) using basic sieve
+  long ip;  // index of the current prime
+  bool done; // for while loop
+
+  // we need to know what sqrt(bound) is
+  long sqrtbound = floor(sqrt(bound));
+  // first, we need the primes up to \sqrt(bound);
+  vector<long> factors = FactoredSieve(sqrtbound);
+  // factoredsieve returns smallest factor of i, so prime if this is i
+  for(long i = 0; i < factors.size(); i++){
+    if(factors.at(i) == i && i > 1) shortprimes.push_back(i);
+  }
+
+  // now itialize ints with all 1's (though 0,1 not prime)
+  for(long i = 0; i <= bound; i++) ints.push_back(1);
+  ints.at(0) = 0;  ints.at(1) = 0;
+
+  // main loop.  Dual, so we loop over f, then p
+  // works since n uniquely written as n = pf with gcd(q,f)=1 for q < p
+  for(long f = 2; f < bound / 2; f++){
+    ip = 0; // start at p = 2
+    done = false;
+    while(!done){
+      // cross off n = p*f
+      ints.at(shortprimes.at(ip) * f) = 0;
+
+      // done if p | f or next prime makes pf too big
+      if(f % shortprimes.at(ip) == 0){
+        done = true;
+      }else{
+        ip++;
+        if(shortprimes.at(ip)*f > bound) done = true; 
+      }
+    } // end while over primes
+  } // end for main loop
+
+  // finally, push the primes onto the output vector and return it.
+  for(long i = 0; i < ints.size(); i++){
+    if(ints.at(i) == 1) primes.push_back(i); 
+  }
+return primes;
+}
+
 /* returns the largest odd divisor of n */
 long OddDivisor(long n){
   long div = n; // if n odd then that is what is returned

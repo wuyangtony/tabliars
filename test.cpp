@@ -11,6 +11,7 @@
 #include "sievepractice.h"
 #include "lowestprimesieve.h"
 #include "tab_psp.h"
+#include "DoubleLinkedListArray.h"
 NTL_CLIENT
 
 
@@ -22,15 +23,11 @@ int main() {
   vector<long> sieve;
   sieve = FactoredSieve(BOUND);
 
-
-  vector<ZZ> psp = TrivialFermatTab(conv<ZZ>(BASE), conv<ZZ>(BOUND));
-
-  for(long i=0; i < psp.size(); i++){
-    cout << psp.at(i) << " ";
+  vector<long> primes = LinearPrimeSieve(BOUND);
+  for(long i = 0; i < primes.size(); i++){
+    cout << primes.at(i) << " ";
   }
   cout << "\n";
-
-
 /*
   mark(sieve);
   primes(sieve);
