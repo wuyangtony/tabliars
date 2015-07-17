@@ -11,6 +11,7 @@ from my "Tabulating pseudoprimes and tabulating liars " paper
 #include <NTL/ZZ.h>
 #include <vector>
 #include "formulas.h"
+#include "DoubleLinkedListArray.h"
 
 NTL_CLIENT
 
@@ -25,14 +26,22 @@ pseudoprime to the base a.  Requires a factored sieve.
 */
 void SieveStrongTab(long a, long bound, vector<long>& ints, vector<long>& factoredsieve);
 
-/* Same goal, but now the Sieve takes linear time ( O(n) ) by 
-touching each composite only once */
-void LinearSieveStrongTab(long a, long bound, vector<long>& ints, vector<long>& factoredsieve);
 
 /* Tests Fermat condition by simply powering, and ProbPrime for primality.
 returns a vector containing all a-Fermat psp up to and including bound */
 vector<ZZ> TrivialFermatTab(ZZ a, ZZ bound);
 
+/* A linear sieve technique for tabulating Fermat pseudoprimes.
+Uses the DoubleLinkedListArray for contast time deletions
+
+Note!  Does not work!  In fact, whole idea might be flawed.  See README
+*/
+vector<long> LinearSieveFermatTab(long a, long bound, vector<long>& factoredsieve);
+
+/* Returns the set F(q) for a linear sieve strategy for tabulating Fermat psp
+F(q) = {3 <= f <= n | gcd(q,n)=1, for r < q, r nmid f or f = 1 mod r\ell_a(r)}
+*/
+vector<long> FermatSieveF(long p, long e, long n, long a);
 
 #endif //TAB_PSP_H
 

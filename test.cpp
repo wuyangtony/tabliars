@@ -18,14 +18,15 @@ NTL_CLIENT
 int main() {
 
   /*Ask for user input and creates vector of that length*/ 
-  long BOUND = 3000;
-  long BASE = 1;
+  long BOUND = 10000;
+  long BASE = 2;
   vector<long> sieve;
   sieve = FactoredSieve(BOUND);
 
-  vector<long> primes = LinearPrimeSieve(BOUND);
-  for(long i = 0; i < primes.size(); i++){
-    cout << primes.at(i) << " ";
+
+  vector<long> pseudo = LinearSieveFermatTab(BASE, BOUND, sieve);
+  for(long i=0; i < pseudo.size(); i++){
+    cout << pseudo.at(i) << " ";
   }
   cout << "\n";
 /*
