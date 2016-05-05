@@ -31,6 +31,10 @@ void SieveStrongTab(long a, long bound, vector<long>& ints, vector<long>& factor
 returns a vector containing all a-Fermat psp up to and including bound */
 vector<ZZ> TrivialFermatTab(ZZ a, ZZ bound);
 
+/* Applies a wheel to speed up the sieve for Fermat psp
+*/
+vector<ZZ> WheelFermatTab(long a, long bound, vector<long>& factoredsieve);
+
 /* A linear sieve technique for tabulating Fermat pseudoprimes.
 Uses the DoubleLinkedListArray for contast time deletions
 

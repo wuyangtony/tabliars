@@ -143,6 +143,13 @@ vector<ZZ> TrivialFermatTab(ZZ a, ZZ bound){
 return psps;
 }
 
+/* Applies a wheel to speed up the sieve for Fermat psp
+*/
+vector<ZZ> WheelFermatTab(long a, long bound, vector<long>& factoredsieve){
+
+
+}
+
 /* A linear sieve technique for tabulating Fermat pseudoprimes.
 Uses the DoubleLinkedListArray for contast time deletions
 
