@@ -17,8 +17,66 @@ NTL_CLIENT
 
 int main() {
 
+  long n, a;
+  int method;
+  cout << "Enter a positive integer as the bound:" << endl;
+  cin >> n;
+  cout << "Enter a positive integer as the base:" << endl;
+  cin >> a;
+  cout << "Choose a method of tabulation:" << endl;
+  cout << " 1) Original   2) Paper   3) Tony's " << endl;
+  cin >> method;
+
+  vector<long> f = FactoredSieve(n);
+
+  vector<long> factors; // vector of longs to store factors of n
+  vector<long> ints; // vector of indicators of strong pseudoprimes
+
+  clock_t duration; // used for timing
+  
+  if (method == 1) {
+    duration = clock();
+    SieveStrongTab(a, n, ints, f);
+    duration = clock() - duration;
+  }
+  else if (method == 2) {
+    duration = clock();
+    SieveStrongTabOnPaper(a, n, ints, f);
+    duration = clock() - duration;
+  }
+  else if (method == 3) {
+    duration = clock();
+    SieveStrongTabByTony(a, n, ints, f);
+    duration = clock() - duration;
+  }
+  else {
+    cout << "Please choose either 1 or 2." << endl;
+    return 0;
+  }
+
+  cout << "Tabulating all pseudoprimes...." << endl;
+
+  for (long i=0; i<=n; i++) {
+    if (ints.at(i) == 1) {
+      cout << i << " is a stong pseudoprime to base " << a << endl;
+    }
+  }
+
+  double result = ((double)duration) / CLOCKS_PER_SEC;
+  // Output the result of timing
+  cout << "It takes " << result << " seconds with method " << method << ".\n";
+/*
+  vector<ZZ> output;
+  output = TrivialStrongTab(to_ZZ(2), to_ZZ(100000));
+
+  cout << "Looking at output of TrivialStrongTab\n";
+  for(long i = 0; i < output.size(); i++){
+    cout << output.at(i) << " ";
+  }
+  cout << "\n";
+*/
   /*Ask for user input and creates vector of that length*/ 
-  long BOUND = 10000;
+/*  long BOUND = 10000;
   long BASE = 2;
   vector<long> sieve;
   sieve = FactoredSieve(BOUND);
@@ -29,6 +87,7 @@ int main() {
     cout << pseudo.at(i) << " ";
   }
   cout << "\n";
+*/
 /*
   mark(sieve);
   primes(sieve);
