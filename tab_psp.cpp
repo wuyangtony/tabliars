@@ -14,10 +14,10 @@ vector<ZZ> TrivialStrongTab(ZZ a, ZZ bound){
   //say that n is a pseudoprime in this case
   for(ZZ n = conv<ZZ>(3); n <= bound; n = n+2){
     if(a % n != 0){
-    if(!ProbPrime(n) && !MillerWitness(n, a%n)){
-      psps.push_back(n);
+      if(!ProbPrime(n) && !MillerWitness(n, a%n)){
+        psps.push_back(n);
+      }
     }
-  }
   }
 return psps;
 }
@@ -31,7 +31,7 @@ Note frequency of bound+1.  Want to include the number equal to bound.
 */
 void SieveStrongTab(long a, long bound, vector<long>& ints, vector<long>& factoredsieve){
   // bound should be valid for the factored sieve
-  if(bound+1 != factoredsieve.size()){
+  if(bound+1 < factoredsieve.size()){
     cout << "Error in SieveStrongTab: bound does not match size of factoredsieve\n";
     cout << "bound = " << bound << " vs sieve size = " << factoredsieve.size() << "\n";
     return;
@@ -122,6 +122,221 @@ void SieveStrongTab(long a, long bound, vector<long>& ints, vector<long>& factor
 return;
 }
 
+/**********************************************************************
+A new function reflecting the 4th major revision in the paper
+**********************************************************************/
+void SieveStrongTabOnPaper(long a, long bound, vector<long>& P, vector<long>& factoredsieve){
+  // Make sure the bound matches the size of the factored sieve vector
+  if (bound > factoredsieve.size()) {
+    cout << "Error: wrong size!!!" << endl;
+    cout << "bound = " << bound << " VS sieve size = " << factoredsieve.size() << endl;
+    return;
+  }
+
+  // Initialize integers vector to have correct size, start as all 1's
+  P.clear();
+  P.reserve(bound+1); //include bound as a number checked
+
+  // Make sure the base is a positive integer
+  if (a <= 0) {
+    // Make sure P is not empty
+    for (long i=0; i<=bound; i++) {
+      P.push_back(0);
+    }
+    cout << "Error: the base is not a positive integer." << endl;
+    return;
+  }
+
+  // If the base is positive, then continue.
+  for (long i=0; i<=bound; i++) {
+    P.push_back(1);
+  }
+  P.at(0) = 0; P.at(1) = 0; // 0 and 1 are definitely not pseudoprimes
+
+  // A hash table that stores multiplicative orders
+  unordered_map<long, long> orders;
+
+  // First big for-loop through all the primes below the bound
+  for (long p=2; p<=bound; p++) { 
+    
+    if (factoredsieve.at(p) == p) {
+      P.at(p) = 0; // primes are not pseudoprimes
+      
+      if (a%p == 0 || p == 2) {
+        // Require that a is not divisible by p, and p is odd
+        long multiple = p;
+        while (multiple <= bound) {
+          P.at(multiple) = 0;
+          multiple = multiple + p;
+        }
+      }
+      // Loop over prime powers
+      long power = p;
+      if (power != 2) { // cross off even integers
+        while (power < bound) {
+          // A hash table to store multiplicative orders
+          //   Key:   the prime power q
+          //   Value: the multiplicative order of a mod q
+          pair<long, long> newpair(power, MulOrder(a, power, factoredsieve));
+          orders.insert(newpair);
+          
+          power = power * p;
+        }
+      }
+    } 
+  }
+
+  // Now loop through the rest of P with P[n] == 1
+  for (long n=2; n<=bound; n++) {
+    
+    if (P.at(n) == 1) {
+      // backup for next smallest prime factor
+      long workingN = n;
+      // locate the first smallest prime factor
+      long primepower = factoredsieve.at(workingN);
+      // used for retrieving the multiplicative order
+      long order;
+
+      do {
+        // record the initial prime factor
+        long primefactor = primepower;
+        // repeatedly get the prime power
+        while (workingN % (primepower * primefactor) == 0) {
+          primepower = primepower * primefactor;
+        }
+        // retrieve multiplicative order from the hash table
+        order = orders.at(primepower);
+        // update to the next prime power
+        workingN = workingN / primepower;
+        primepower = factoredsieve.at(workingN);
+      } while (primepower != 1 && n % order == 1);
+
+      // need to convert from long to ZZ for MillerWitness()
+      ZZ azz = conv<ZZ>(a);
+      ZZ nzz = conv<ZZ>(n);
+
+      if (n % order != 1) {
+        P.at(n) = 0;
+        continue; // stop the loop
+      }
+      // strong pseudoprime test
+      if (MillerWitness(nzz, azz) == 1) {
+        P.at(n) = 0;
+      }
+    }
+  }
+return;
+}
+
+/*************************************************************
+A revise to the algorithm in the paper by myself
+*************************************************************/
+void SieveStrongTabByTony(long a, long bound, vector<long>& P, vector<long>& factoredsieve){
+  // Make sure the bound matches the size of the factored sieve vector
+  if (bound > factoredsieve.size()) {
+    cout << "Error: wrong size!!!" << endl;
+    cout << "bound = " << bound << " VS sieve size = " << factoredsieve.size() << endl;
+    return;
+  }
+
+  // Initialize integers vector to have correct size, start as all 1's
+  P.clear();
+  P.reserve(bound+1); //include bound as a number checked
+
+  // Make sure the base is a positive integer
+  if (a <= 0) {
+    // Make sure P is not empty
+    for (long i=0; i<=bound; i++) {
+      P.push_back(0);
+    }
+    cout << "Error: the base is not a positive integer." << endl;
+    return;
+  }
+
+  // If the base is positive, then continue.
+  for (long i=0; i<=bound; i++) {
+    P.push_back(1);
+  }
+  P.at(0) = 0; P.at(1) = 0; // 0 and 1 are definitely not pseudoprimes
+
+  // A hash table that stores multiplicative orders
+  unordered_map<long, long> orders;
+
+  // Loop through all the integers below the bound
+  for (long n=2; n<=bound; n++) { 
+    
+    // If n is prime, get MulOrder of a mod powers of n
+    if (factoredsieve.at(n) == n) {
+
+      P.at(n) = 0; // primes are not pseudoprimes
+      
+      // Require that a is not divisible by n, and n is even
+      if (a % n == 0 || n == 2) {
+        // Cross off multiples of the prime and even integers
+        long multiple = n;
+        while (multiple <= bound) {
+          P.at(multiple) = 0;
+          multiple = multiple + n;
+        }
+      }
+      // Loop over prime powers
+      long power = n;
+      if (power != 2) { // cross off even integers
+        while (power < bound) {
+          // A hash table to store multiplicative orders
+          //   Key:   the prime power q
+          //   Value: the multiplicative order of a mod q
+          pair<long, long> newpair(power, MulOrder(a, power, factoredsieve));
+          orders.insert(newpair);
+          
+          power = power * n;
+        }
+      }
+    }
+    // If n is composite, check spsp
+    else {
+
+      if (n % 2 != 0) { // cross off even integers
+        // backup for next smallest prime factor
+        long workingN = n;
+        cout << "The current composite is " << n << endl;
+        // locate the first smallest prime factor
+        long primepower = factoredsieve.at(workingN);
+        // used for retrieving the multiplicative order
+        long order;
+
+        do {
+          // record the initial prime factor
+          long primefactor = primepower;
+          // repeatedly get the prime power
+          while (workingN % (primepower * primefactor) == 0) {
+            primepower = primepower * primefactor;
+          }
+          // retrieve multiplicative order from the hash table
+          order = orders.at(primepower);
+          // update to the next prime power
+          workingN = workingN / primepower;
+          primepower = factoredsieve.at(workingN);
+        } while (primepower != 1 && n % order == 1);
+
+        // need to convert from long to ZZ for MillerWitness()
+        ZZ azz = conv<ZZ>(a);
+        ZZ nzz = conv<ZZ>(n);
+
+        if (n % order != 1) {
+          P.at(n) = 0;
+          //continue; // stop the loop
+        }
+        // strong pseudoprime test
+        if (MillerWitness(nzz, azz) == 1) {
+          P.at(n) = 0;
+        }
+      }
+    }
+  }
+return;
+}
+
 
 /* Tests Fermat condition by simply powering, and ProbPrime for primality.
 returns a vector containing all a-Fermat psp up to and including bound */
@@ -135,10 +350,10 @@ vector<ZZ> TrivialFermatTab(ZZ a, ZZ bound){
   for(ZZ n = conv<ZZ>(2); n <= bound; n++){
     base = a % n;
     if(base != 0){
-    if(!ProbPrime(n) && PowerMod(base, n-1, n) == 1){
-      psps.push_back(n);
+      if(!ProbPrime(n) && PowerMod(base, n-1, n) == 1){
+        psps.push_back(n);
+      }
     }
-  }
   }
 return psps;
 }

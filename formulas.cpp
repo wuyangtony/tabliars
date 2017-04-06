@@ -137,7 +137,7 @@ long BasicSieve(long x, RR sievebound){
 }
 
 /*
-This uses a sieve of Erasthothenes to factor all integers up to n
+This uses a sieve of Erasthothenes to factor all integers up to x
 Specifically, a vector is returned that in position i contains the smallest 
 prime factor of i.
 */
@@ -275,11 +275,11 @@ This is a poly time algorithm
 long MulOrder(long a, long n, vector<long>& factoredsieve){
   // first check that a unit and that n fits into the sieve
   if( GCD(a,n) != 1){ 
-    cout << "Error in MulOrder: a = " << a << " not a unit\n";
+    //cout << "Error in MulOrder: a = " << a << " not a unit of " << n << endl;
     return 0;
   }
   if(n >= factoredsieve.size()){ 
-    cout << "Error in MulOrder: " << n << "is bigger than the size of the factored sieve\n";
+    //cout << "Error in MulOrder: " << n << "is bigger than the size of the factored sieve\n";
     return 0;
   }
 
