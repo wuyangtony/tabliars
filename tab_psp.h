@@ -10,6 +10,7 @@ from my "Tabulating pseudoprimes and tabulating liars " paper
 
 #include <NTL/ZZ.h>
 #include <vector>
+#include <unordered_map>
 #include "formulas.h"
 #include "DoubleLinkedListArray.h"
 
@@ -26,6 +27,15 @@ pseudoprime to the base a.  Requires a factored sieve.
 */
 void SieveStrongTab(long a, long bound, vector<long>& ints, vector<long>& factoredsieve);
 
+/* A new algorithm relecting the 4th major revise on paper with 
+prime powers and multiplicative orders
+*/
+void SieveStrongTabOnPaper(long a, long bound, vector<long>& P, vector<long>& factoredsieve);
+
+/************************************************************************* 
+ *A new implementation of the above, reflecting Tony's own revision*/
+void SieveStrongTabByTony(long a, long bound, vector<long>& ints, vector<long>& factoredsieve);
+//************************************************************************
 
 /* Tests Fermat condition by simply powering, and ProbPrime for primality.
 returns a vector containing all a-Fermat psp up to and including bound */

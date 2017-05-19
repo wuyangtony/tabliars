@@ -1,5 +1,5 @@
 PATHS = -I/usr/local/include -L/usr/local/lib
-TAGS = -lntl -lgmp -lm -O2 -static 
+TAGS = -lntl -lgmp -lm -O2 
 
 all: test runwitness runtwostrongliars 
 

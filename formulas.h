@@ -42,7 +42,7 @@ prime factor of i.
 */
 vector<long> FactoredSieve(long n);
 
-/* Since the factoredsieve stores only the largest prime factor, the 
+/* Since the factoredsieve stores only the smallest prime factor, the 
 next routine uses that information (with access to the entire sieve 
 for recursive work) to give the full factorization
 Input is the sieve and a vector which will store the factors
