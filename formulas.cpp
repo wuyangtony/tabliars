@@ -168,6 +168,37 @@ vector<long> FactoredSieve(long x){
 return ints;
 }
 
+/*
+ * Find the first generator of the multiplicative group mod p, given p
+ * as any prime power
+ * Input   1)p_power: a long integer representing a prime power
+ * Output: the first number that generates the mult group
+*/
+long firstGenerator(long p_power) {
+  // need to use list of all sieve factors
+  vector<long> sieve = FactoredSieve(p_power);
+  // Thm: g is a generator iff mult order of g mod p_power
+  //      is equal to p_power(p-1)/p = p_power - p_power/p
+  long q = p_power - p_power / sieve[p_power];
+  // test each potential canditate, starting from 2
+  long g = 2;
+  // indicate whether generator found
+  bool found = false;
+  // As long as generator not found and cadidate smaller
+  // than the prime power, keep checking
+  while (!found && g < p_power) {
+    // get MulOrder(g, p_power)
+    long order = MulOrder(g, p_power, sieve);
+    if (order == q) {
+      found = true;
+    }
+    else {
+      g++;
+    }
+  }
+  return g;
+}
+
 /* Since the factoredsieve stores only the smallest prime factor, the 
 next routine uses that information (with access to the entire sieve 
 for recursive work) to give the full factorization
