@@ -16,8 +16,20 @@ NTL_CLIENT
 
 
 int main() {
-
-  long n, a;
+  
+  long p;
+  cout << "Enter a prime power: ";
+  cin >> p;
+  clock_t duration; // used for timing
+  duration = clock();
+  long g = firstGenerator(p);
+  duration = clock() - duration;
+  if (g == p) cout << "Error: input not a prime power." << endl;
+  else cout << "The first generator for mult group mod " << p << " is " << g << endl;
+  double result = ((double)duration) / CLOCKS_PER_SEC;
+  // Output the result of timing
+  cout << "It takes " << result << " seconds to find finish all this work.\n";
+ /* long n, a;
   int method;
   cout << "Enter a positive integer as the bound:" << endl;
   cin >> n;
@@ -64,9 +76,9 @@ int main() {
 
   double result = ((double)duration) / CLOCKS_PER_SEC;
   // Output the result of timing
-  cout << "It takes " << result << " seconds with method " << method << ".\n";
-/*
-  vector<ZZ> output;
+  cout << "It takes " << result << " seconds with method " << method << ".\n"; 
+*/
+/* vector<ZZ> output;
   output = TrivialStrongTab(to_ZZ(2), to_ZZ(100000));
 
   cout << "Looking at output of TrivialStrongTab\n";
@@ -74,14 +86,11 @@ int main() {
     cout << output.at(i) << " ";
   }
   cout << "\n";
-*/
-  /*Ask for user input and creates vector of that length*/ 
-/*  long BOUND = 10000;
+ 
+  long BOUND = 10000;
   long BASE = 2;
   vector<long> sieve;
   sieve = FactoredSieve(BOUND);
-
-
   vector<long> pseudo = LinearSieveFermatTab(BASE, BOUND, sieve);
   for(long i=0; i < pseudo.size(); i++){
     cout << pseudo.at(i) << " ";
@@ -101,3 +110,5 @@ for(long n = 3; n < 2050; n++){
 }
 */
 }
+
+  
