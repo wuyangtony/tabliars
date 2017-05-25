@@ -18,10 +18,6 @@ ZZ StrongLiarCount(ZZ n);
 the formula of Monier, not the definition */
 long trialStrongLiarCount(long n);
 
-/* returns the number of Fermat liars of n.  It does this using 
-the formula of Monier, not the definition */
-long FermatLiarCount(long n);
-
 /* Similar to trialStrongLiarCount, but uses a 
 sieving strategy which is more efficient.  Uses FactoredSieve
 and sieveFactor below
@@ -84,12 +80,17 @@ void trialFactor(long n, vector<long>& factors);
 // Removes repeats from the factor list.  Assume here that factors is sorted
 vector<long> distinctFactor(vector<long>& factors);
 
-// if m has a factor store it in f and return 1, otherwise return 0
-// helper function for Factor, written by Steven Hayman
-long findFactor(long& m, long& f);
 
 // this is a place holder.  For now it is implemented as NTL Jacobi(a,n)
 long slow_jacobi(long a, long n);
+
+/* returns the number of Fermat liars of n.  It does this using 
+the formula of Monier, not the definition */
+long FermatLiarCount(long n);
+
+// if m has a factor store it in f and return 1, otherwise return 0
+// helper function for Factor, written by Steven Hayman
+long findFactor(long& m, long& f);
 
 
 #endif  //FORMULAS_H

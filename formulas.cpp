@@ -2,13 +2,7 @@
 
 NTL_CLIENT
 
-/* Finds the smallest composite integer N such that a is a liar for N */ 
-ZZ FirstNLiarRandom(ZZ a);
 
-/* Finds the smallest composite integer N such that a is a liar for N 
-Instead of using a probabilistic primality test, checks primality with 
-a factored sieve */
-ZZ FirstNLiarFactored(ZZ a, vector<long> &factors);
 
 /* returns the number of strong liars of n, using NTL MillerWitness*/
 ZZ StrongLiarCount(ZZ n){
@@ -50,9 +44,6 @@ long trialStrongLiarCount(long n){
 return liarcount;
 }
 
-/* returns the number of Fermat liars of n.  It does this using 
-the formula of Monier, not the definition */
-long FermatLiarCount(long n);
 
 /* Similar to trialStrongLiarCount, but uses a 
 sieving strategy which is more efficient.  Uses FactoredSieve
@@ -409,13 +400,21 @@ vector<long> distinctFactor(vector<long>& factors){
 return output;
 }
 
-// if m has a factor store it in f and return 1, otherwise return 0
-// helper function for Factor, written by Steven Hayman
-long findFactor(long& m, long& f);
-
 // this is a place holder.  For now it is implemented as NTL Jacobi(a,n)
 long slow_jacobi(long a, long n){
   return Jacobi(to_ZZ(a), to_ZZ(n));
 }
+
+
+// ***************************************************************
+// Below are the functions that have not been implemented hitherto
+
+/* returns the number of Fermat liars of n.  It does this using 
+the formula of Monier, not the definition */
+long FermatLiarCount(long n);
+
+// if m has a factor store it in f and return 1, otherwise return 0
+// helper function for Factor, written by Steven Hayman
+long findFactor(long& m, long& f);
 
 
