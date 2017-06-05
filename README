@@ -17,4 +17,4 @@ tab_liars.  Algorithm from Shallue for tabulating strong liars.  Also what littl
 
 tab_psp.  Tabulating Fermat and strong pseudoprimes.  Method from Shallue is implemented and works.  Attempted linear sieve for Fermat psp does not work.  The obstruction is that an element of one F set will be removed while being needed for a later F set.  I'm not sure how to fix that.
 
-
+Tony has been doing some updates.  I'll let him write about them.
