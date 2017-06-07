@@ -1,0 +1,6 @@
+This time let's go all the way to 2^30, which is roughly a billion
+See if we can finish running the program within the 10 and half hours runtime.
+The bound is 1073741824
+Creating the factored sieve up to the bound....
+Factored sieve up to bound created.
+It takes 1.47333 minutes to create.

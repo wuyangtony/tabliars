@@ -1,13 +1,12 @@
 #include <ctime>
-#include <time.h>
+#include <list>
 #include <vector>
+#include <NTL/ZZ.h> 
+#include <NTL/RR.h>
 #include "formulas.h"
 #include "tab_carmichael.h"
 #include "tab_liars.h"
-#include "first_liar.h"
-#include <NTL/ZZ.h>
-#include <list>
-#include <NTL/RR.h>  
+#include "first_liar.h" 
 #include "sievepractice.h"
 #include "lowestprimesieve.h"
 #include "tab_psp.h"
@@ -16,20 +15,45 @@ NTL_CLIENT
 
 
 int main() {
-  
-  long p;
-  cout << "Enter a prime power: ";
-  cin >> p;
+
+  // Find the first pimre with different first generators
+  const unsigned long long bound = 1 << 64 - 1;
+  long itself, squared, order;
+  bool found;
+  vector<long> boundsieve = FactoredSieve(bound);
+  for (long p=3; p*p<=bound; p++) {
+    // Loop thru only odd prime numbers
+    if (boundsieve.at(p) == p) {
+      itself = firstGenerator(p, boundsieve);
+      squared = firstGenerator(p*p, boundsieve);      
+    }
+    // Compare itself and squared
+    if (itself != squared) {
+      cout << "Congratulations! The first such odd prime number is " << p << ".\n";
+      return 0;
+    }
+  }
+  cout << "Unfortunately there is no such prime within " << bound << ".\n";
+  /*
+  long n;
+  cout << "Enter an integer: ";
+  cin >> n;
   clock_t duration; // used for timing
   duration = clock();
-  long g = firstGenerator(p);
+  long generator = firstGenerator(n);
   duration = clock() - duration;
-  if (g == p) cout << "Error: input not a prime power." << endl;
-  else cout << "The first generator for mult group mod " << p << " is " << g << endl;
+  if (generator == n) {
+    cout << "There exists no generator for multiplicative group mod " << n << endl;
+  }s
+  else {
+    cout << "The first generator for multiplicative group mod " << n << " is " << generator << endl;
+  }
   double result = ((double)duration) / CLOCKS_PER_SEC;
   // Output the result of timing
-  cout << "It takes " << result << " seconds to find finish all this work.\n";
- /* long n, a;
+  cout << "It takes " << result << " seconds to finish all this work.\n";
+  */
+
+  /*long n, a;
   int method;
   cout << "Enter a positive integer as the bound:" << endl;
   cin >> n;
@@ -76,9 +100,9 @@ int main() {
 
   double result = ((double)duration) / CLOCKS_PER_SEC;
   // Output the result of timing
-  cout << "It takes " << result << " seconds with method " << method << ".\n"; 
-*/
-/* vector<ZZ> output;
+  cout << "It takes " << result << " seconds with method " << method << ".\n";*/
+/*
+  vector<ZZ> output;
   output = TrivialStrongTab(to_ZZ(2), to_ZZ(100000));
 
   cout << "Looking at output of TrivialStrongTab\n";
@@ -86,11 +110,14 @@ int main() {
     cout << output.at(i) << " ";
   }
   cout << "\n";
- 
-  long BOUND = 10000;
+*/
+  /*Ask for user input and creates vector of that length*/ 
+/*  long BOUND = 10000;
   long BASE = 2;
   vector<long> sieve;
   sieve = FactoredSieve(BOUND);
+
+
   vector<long> pseudo = LinearSieveFermatTab(BASE, BOUND, sieve);
   for(long i=0; i < pseudo.size(); i++){
     cout << pseudo.at(i) << " ";
@@ -109,6 +136,82 @@ for(long n = 3; n < 2050; n++){
   }
 }
 */
+
+//  vector<long> sieve = FactoredSieve(bound);
+/*
+  vector< vector<long> > comps = three_carmichael(bound, sieve);
+  print_carslist(comps);
+
+  vector<bool> witnesses1, witnesses2;
+  SieveReliableWitness(bound, comps, witnesses1, sieve);
+  NaiveReliableWitness(bound, comps, witnesses2);
+
+  for(long i=0; i < witnesses1.size(); i++){
+    if(witnesses1.at(i) != witnesses2.at(i)){
+       cout << "disagreement at i = " << i << "\n";
+       cout << "sieve gives " << witnesses1.at(i) << " naive gives " << witnesses2.at(i) << "\n";
+    } 
+  }
+  cout << "end of check\n";
+*/
+/* 
+// does 69 and 95 really only have 2 strong liars
+cout << "strong liars for 95:\n";
+for(ZZ i = to_ZZ(1); i < 95; i++){
+  if(!MillerWitness(to_ZZ(95), i)) cout << i  << " is a liar\n";
 }
 
-  
+// more testing - using another method to count composites with two strong liars
+  for(long i=1; i <= bound; i++){
+    if(trialStrongLiarCount(i) == 2)4
+      if(sieve.at(i) == i) cout << i << " is prime and counted\n";
+      if(i % 2 == 0) cout << i << " is even and counted\n";
+      ncount++;
+    }
+  }
+  cout << "The number of integers up to " << bound << " with two strong liars is " << ncount << "\n";
+  cout << "\n";
+
+
+
+cout << "counting n with two strong liars up to " << bound << " which is 10 to the power " << power << "\n";
+
+time(&start);
+
+// strong liar count with sieve method
+ncount = sieveTwoStrongLiarsCount(bound);
+
+time(&end);
+
+cout << ncount << " : number with 2 strong liars up to 10 to the " << power << "\n";RR ratio = to_RR(ncount-1 + 0.0);
+ratio = ratio * log(log(log(bound)));
+cout << "(count-1) * logloglog x is " << ratio << "\n";
+cout << "time taken is " << difftime(end,start) << "\n";
+*/
+/* testing strong liar count
+for(long n = 1; n < bound; n++){
+    ncount = StrongLiarCount(n);
+    //cout << n << " has " << ncount << " number of strong liars\n";
+    if(ncount == 2 || ncount == 1) numone++;
+}
+  cout << numone << " : number with 2 or 1 Strong liars up to " << bound << " \n";
+  RR ratio = to_RR(numone + 0.0);
+  ratio = ratio * log(log(log(bound)));  
+  cout << ratio << "\n";
+*/
+/*
+  // test the Factor command
+  list<long> factors;
+  for(long n = 0; n < 100; n++){
+    Factor(n, factors);
+    list<long>::iterator i;
+    for( i=factors.begin(); i != factors.end(); i++){
+      cout << *i << " ";
+    }
+    cout << "\n";
+    factors.clear();
+  }	
+
+*/
+return 0;
+}

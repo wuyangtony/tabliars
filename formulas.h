@@ -9,6 +9,32 @@
 
 NTL_CLIENT
 
+/*
+This uses a sieve of Erasthothenes to factor all integers up to n
+Specifically, a vector is returned that in position i contains the smallest 
+prime factor of i.
+@para		x: a positive integer
+@return		a vector of first prime factors
+*/
+vector<long> FactoredSieve(long x);
+
+/* 
+This is a poly time algorithm, but currently it is a loglog factor slower 
+than theoretically possible since I do not use precomputation in exp.
+@para		a: 	the base number
+		n:	the modulo number
+		sieve: 	a constant reference to a vector of factored sieve
+@return		multiplicative order of a mod n
+*/
+long MulOrder(long a, long n, const vector<long>& sieve);
+
+/*
+This funtion finds the first generator of a multiplicative group
+@para		p_power: a prime power
+		sieve:   a constant reference to a vector of factored sieve
+@return		the first generatort for mult group mod p_power
+*/
+long firstGenerator(long p_power, const vector<long> sieve);
 
 /* returns the number of strong liars of n, using the definition, 
 given by an NTL implementation */
@@ -31,21 +57,6 @@ That is, the output is the number of integers up to x not divisible
 by any of the primes up to sievebound */
 long BasicSieve(long x, RR sievebound);
 
-/*
-This uses a sieve of Erasthothenes to factor all integers up to n
-Specifically, a vector is returned that in position i contains the smallest 
-prime factor of i.
-*/
-vector<long> FactoredSieve(long n);
-
-/*
- * Find the first generator of multiplicative group mod p,
- * given p as a prime power
- * Input:   1) p_power: a long integer representing a prime power
- * Output:  a number that generates mult group mod p_power
-*/
-long firstGenerator(long p_power);
-
 /* Since the factoredsieve stores only the smallest prime factor, the 
 next routine uses that information (with access to the entire sieve 
 for recursive work) to give the full factorization
@@ -66,13 +77,6 @@ long OddDivisor(long n);
 /* returns ord_2(n), the largest power of 2 dividing n */
 long Ord2(long n);
 
-/* returns multiplicative order of a modulo n
-prints to cout an error if a is not a unit.  Input includes factored sieve
-This is a poly time algorithm, but currently it is a loglog factor slower 
-than theoretically possible since I do not use precomputation in exp.
-*/
-long MulOrder(long a, long n, vector<long>& factoredsieve);
-
 // Factor returns all the prime factors of n, stored in the given vector
 // uses trial division
 void trialFactor(long n, vector<long>& factors);
@@ -80,17 +84,16 @@ void trialFactor(long n, vector<long>& factors);
 // Removes repeats from the factor list.  Assume here that factors is sorted
 vector<long> distinctFactor(vector<long>& factors);
 
-
 // this is a place holder.  For now it is implemented as NTL Jacobi(a,n)
 long slow_jacobi(long a, long n);
 
+
+// Below are functions not implemented yet.
 /* returns the number of Fermat liars of n.  It does this using 
 the formula of Monier, not the definition */
 long FermatLiarCount(long n);
-
 // if m has a factor store it in f and return 1, otherwise return 0
 // helper function for Factor, written by Steven Hayman
 long findFactor(long& m, long& f);
-
 
 #endif  //FORMULAS_H

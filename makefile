@@ -1,19 +1,25 @@
 PATHS = -I/usr/local/include -L/usr/local/lib
 TAGS = -lntl -lgmp -lm -O2 
 
-all: test runwitness runtwostrongliars 
+all: test runwitness runtwostrongliars testtonysconjecture
 
 test: test.o formulas.o tab_carmichael.o tab_liars.o first_liar.o sievepractice.o lowestprimesieve.o tab_psp.o DoubleLinkedListArray.o
 	g++ $(PATHS) formulas.o tab_carmichael.o tab_liars.o tab_psp.o first_liar.o test.o sievepractice.o lowestprimesieve.o DoubleLinkedListArray.o -o test $(TAGS)
 
-runwitness:	runreliablewitness.o formulas.o tab_carmichael.o tab_liars.o
+runwitness: runreliablewitness.o formulas.o tab_carmichael.o tab_liars.o
 	g++ $(PATHS) formulas.o tab_carmichael.o tab_liars.o runreliablewitness.o -o runwitness $(TAGS)
 
-runtwostrongliars:	runtwostrongliars.o formulas.o
+runtwostrongliars: runtwostrongliars.o formulas.o
 	g++ $(PATHS) formulas.o runtwostrongliars.o -o runtwostrongliars $(TAGS)
 
+testtonysconjecture: testtonysconjecture.o formulas.o
+	g++ $(PATHS) formulas.o testtonysconjecture.o -o testtonysconjecture $(TAGS)
+
 test.o: test.cpp
-	g++ $(PATHS) -c test.cpp	
+	g++ $(PATHS) -c test.cpp
+
+testtonysconjecture.o: testtonysconjecture.cpp
+	g++ $(PATHS) -c testtonysconjecture.cpp
 
 runreliablewitness.o: 	runreliablewitness.cpp
 	g++ $(PATHS) -c runreliablewitness.cpp
