@@ -81,7 +81,7 @@ void SieveStrongTab(long a, long bound, vector<long>& ints, vector<long>& factor
         }
       }
       else while(q <= bound){
-        ord_aq = MulOrder(a, q, factoredsieve); //mult order of a mod q  
+        ord_aq = mulOrder(a, q, factoredsieve); //mult order of a mod q  
         twopower = Ord2(ord_aq);  // the power of 2 dividing that order
       
         //loop over multiples n of q prime, updating TwoPower array
@@ -177,7 +177,7 @@ void SieveStrongTabOnPaper(long a, long bound, vector<long>& P, vector<long>& fa
           // A hash table to store multiplicative orders
           //   Key:   the prime power q
           //   Value: the multiplicative order of a mod q
-          pair<long, long> newpair(power, MulOrder(a, power, factoredsieve));
+          pair<long, long> newpair(power, mulOrder(a, power, factoredsieve));
           orders.insert(newpair);
           
           power = power * p;
@@ -286,7 +286,7 @@ void SieveStrongTabByTony(long a, long bound, vector<long>& P, vector<long>& fac
           // A hash table to store multiplicative orders
           //   Key:   the prime power q
           //   Value: the multiplicative order of a mod q
-          pair<long, long> newpair(power, MulOrder(a, power, factoredsieve));
+          pair<long, long> newpair(power, mulOrder(a, power, factoredsieve));
           orders.insert(newpair);
           
           power = power * n;
@@ -420,7 +420,7 @@ vector<long> LinearSieveFermatTab(long a, long bound, vector<long>& factoredsiev
             storage.remove(q*f);
             f = storage.at(f).getprev();
           }else{
-            order = MulOrder(a, q, factoredsieve);
+            order = mulOrder(a, q, factoredsieve);
             if(p-1 % order != 0 && f % order != 1){ // other non psp
               storage.remove(q*f);
               f = storage.at(f).getprev();
@@ -470,7 +470,9 @@ Note, this is a brute force algorithm.  Not fast.
 */
 vector<long> FermatSieveF(long p, long e, long n, long a){
   // factored sieve required for computing orders
-  vector<long> factors = FactoredSieve(n);
+  vector<long> factors;
+  factors.reserve(n+1);
+  factoredSieve(n, factors);
 
   // factors of a are needed as well
   vector<long> afactors;
@@ -505,7 +507,7 @@ vector<long> FermatSieveF(long p, long e, long n, long a){
           primepower = r;
           while(primepower < n){
             
-            order = MulOrder(a, primepower, factors);
+            order = mulOrder(a, primepower, factors);
 
             //f is included if for all r, r does not divide f, or f=1 (ell_a(r))
             if(f % primepower == 0 && f % order == 1) include = false;
@@ -519,5 +521,3 @@ vector<long> FermatSieveF(long p, long e, long n, long a){
 
 return fs;
 }
-
-

@@ -26,7 +26,9 @@ int main(int argc, char* argv[]){
   }
 
   // more than one program requires all integers to be factored
-  vector<long> sieve = FactoredSieve(bound);
+  vector<long> sieve;
+  sieve.reserve(bound+1);
+  factoredSieve(bound, sieve);
 
   // we'll generate all 3-Carmichaels up to bound and store in comps
   vector< vector< long > > comps = three_carmichael(bound, sieve);

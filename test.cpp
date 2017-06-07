@@ -16,24 +16,6 @@ NTL_CLIENT
 
 int main() {
 
-  // Find the first pimre with different first generators
-  const unsigned long long bound = 1 << 64 - 1;
-  long itself, squared, order;
-  bool found;
-  vector<long> boundsieve = FactoredSieve(bound);
-  for (long p=3; p*p<=bound; p++) {
-    // Loop thru only odd prime numbers
-    if (boundsieve.at(p) == p) {
-      itself = firstGenerator(p, boundsieve);
-      squared = firstGenerator(p*p, boundsieve);      
-    }
-    // Compare itself and squared
-    if (itself != squared) {
-      cout << "Congratulations! The first such odd prime number is " << p << ".\n";
-      return 0;
-    }
-  }
-  cout << "Unfortunately there is no such prime within " << bound << ".\n";
   /*
   long n;
   cout << "Enter an integer: ";

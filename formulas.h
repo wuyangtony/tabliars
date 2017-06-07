@@ -3,9 +3,8 @@
 
 #include <NTL/ZZ.h>
 #include <NTL/RR.h>
-#include <list>
 #include <vector>
-#include <math.h>
+#include <cmath>
 
 NTL_CLIENT
 
@@ -13,32 +12,49 @@ NTL_CLIENT
 This uses a sieve of Erasthothenes to factor all integers up to n
 Specifically, a vector is returned that in position i contains the smallest 
 prime factor of i.
-@para		x: a positive integer
-@return		a vector of first prime factors
+@para		x:    a constant reference to a positive integer
+			ints: a reference to factored sieve
+@return		void, but ints is passed by reference, which will be written
 */
-vector<long> FactoredSieve(long x);
+void factoredSieve(const long& x, vector<long>& ints);
+
+/*
+Based on sieve of Erasthothenes, this will give a vector of all prime factors
+of integer n, including repeats.
+@para		n:		 a positive integer
+			sieve:	 a constant reference to factored sieve up to n
+			factors: a reference to a vector of all prime factors of n
+@return		void, but factors is passed by reference, which will be written
+*/
+void getPrimeFactors(long n, const vector<long>& sieve, vector<long>& factors);
+
+/*
+This does the same thing as getPrimeFactors(), with the only difference of getting
+rid of all repeating prime factors.
+@para		n:		 a positive integer
+			sieve:	 a constant reference to factored sieve up to n
+			factors: a reference to a vector of all prime factors of n
+@return		void, but factors is passed by reference, which will be written
+*/
+void getDistinctPrimeFactors(long n, const vector<long>& sieve, vector<long>& factors);
 
 /* 
 This is a poly time algorithm, but currently it is a loglog factor slower 
 than theoretically possible since I do not use precomputation in exp.
-@para		a: 	the base number
-		n:	the modulo number
-		sieve: 	a constant reference to a vector of factored sieve
+@para		a: 		a constant reference to the base number
+			n: 		a constant reference to the modulo number
+			sieve: 	a constant reference to a vector of factored sieve
 @return		multiplicative order of a mod n
 */
-long MulOrder(long a, long n, const vector<long>& sieve);
+long mulOrder(const long& a, const long& n, const vector<long>& sieve);
 
 /*
 This funtion finds the first generator of a multiplicative group
-@para		p_power: a prime power
-		sieve:   a constant reference to a vector of factored sieve
+@para		p_power: a constant reference to a prime power
+			sieve:   a constant reference to a vector of factored sieve
 @return		the first generatort for mult group mod p_power
 */
-long firstGenerator(long p_power, const vector<long> sieve);
-
-/* returns the number of strong liars of n, using the definition, 
-given by an NTL implementation */
-ZZ StrongLiarCount(ZZ n);
+long firstGenerator(const long& p_power, const vector<long> sieve);
 
 /* returns the number of Strong liars of n.  It does this using 
 the formula of Monier, not the definition */
@@ -57,16 +73,6 @@ That is, the output is the number of integers up to x not divisible
 by any of the primes up to sievebound */
 long BasicSieve(long x, RR sievebound);
 
-/* Since the factoredsieve stores only the smallest prime factor, the 
-next routine uses that information (with access to the entire sieve 
-for recursive work) to give the full factorization
-Input is the sieve and a vector which will store the factors
-*/
-void sieveFactor(long n, vector<long>& factors, const vector<long>& sieve);
-
-/* This next only returns the distinct prime factors of n */
-void distinctsieveFactor(long n, vector<long>& factors, const vector<long>& sieve);
-
 /* A sieve that returns the primes up to bound in O(bound) time.
 This is a dual linear sieve of Pritchard*/
 vector<long> LinearPrimeSieve(long bound);
@@ -83,6 +89,10 @@ void trialFactor(long n, vector<long>& factors);
 
 // Removes repeats from the factor list.  Assume here that factors is sorted
 vector<long> distinctFactor(vector<long>& factors);
+
+/* returns the number of strong liars of n, using the definition, 
+given by an NTL implementation */
+ZZ StrongLiarCount(ZZ n);
 
 // this is a place holder.  For now it is implemented as NTL Jacobi(a,n)
 long slow_jacobi(long a, long n);

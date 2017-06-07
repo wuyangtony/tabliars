@@ -32,7 +32,9 @@ time_t start1, end1, start2, end2, start3, end3, start4, end4; // for timings
 
 // FactoredSieve returns array where nth entry contains smallest prime factor of n
 time(&start1);
-vector<long> sieve = FactoredSieve(bound);
+vector<long> sieve;
+sieve.reserve(bound+1);
+factoredSieve(bound, sieve);
 time(&end1);
 cout << "time taken creating factor sieve is " << difftime(end1, start1) << "\n";
 

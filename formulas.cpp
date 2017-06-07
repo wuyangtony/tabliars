@@ -2,10 +2,15 @@
 
 NTL_CLIENT
 
-vector<long> FactoredSieve(long x){
-  // initialize output vector so that position n contains n
-  vector<long> ints;
-  ints.reserve(x+1);
+/*
+This uses a sieve of Erasthothenes to factor all integers up to n
+Specifically, a vector is returned that in position i contains the smallest 
+prime factor of i.
+@para     x:    a constant reference to a positive integer
+          ints: a reference to factored sieve
+@return   void, but ints is passed by reference, which will be written
+*/
+void factoredSieve(const long& x, vector<long>& ints){
   for(long i = 0; i < x+1; i++){
     ints.push_back(i);
   }
@@ -23,10 +28,57 @@ vector<long> FactoredSieve(long x){
     prime++;
     while(ints.at(prime) != prime) prime++;
   }
-return ints;
 }
 
-long MulOrder(long a, long n, const vector<long>& sieve){
+/*
+Based on sieve of Erasthothenes, this will give a vector of all prime factors
+of integer n, including repeats.
+@para     n:       a positive integer
+          sieve:   a constant reference to factored sieve up to n
+          factors: a reference to a vector of all prime factors of n
+@return   void, but factors is passed by reference, which will be written
+*/
+void getPrimeFactors(long n, const vector<long>& sieve, vector<long>& factors) {
+  factors.clear(); // make sure the factors vector is empty
+  while(n != 1){ // we're done when the cofactor reaches 1
+    long prime = sieve.at(n);  // gives smallest prime factor
+    factors.push_back(prime);  // add it to the list of factors
+    n = n / prime;  // update cofactor
+  }
+}
+
+/*
+This does the same thing as getPrimeFactors(), with the only difference of getting
+rid of all repeating prime factors.
+@para     n:       a positive integer
+          sieve:   a constant reference to factored sieve up to n
+          factors: a reference to a vector of all prime factors of n
+@return   void, but factors is passed by reference, which will be written
+*/
+void getDistinctPrimeFactors(long n, const vector<long>& sieve, vector<long>& factors) {
+  factors.clear(); // make sure the factors vector is empty
+  // conveniently, in sieveFactor the primes are listed in order from 
+  // smallest to largest, with repeated factors adjacent.  We can exploit this
+  while(n != 1){
+    long prime = sieve.at(n); // gives next prime
+    n = n / prime;  // update cofactor
+    // if prime already appears at end of factors, don't add it
+    if(factors.size() == 0) factors.push_back(prime);
+    else if(factors.back() != prime){
+      factors.push_back(prime);
+    }
+  }
+}
+
+/* 
+This is a poly time algorithm, but currently it is a loglog factor slower 
+than theoretically possible since I do not use precomputation in exp.
+@para     a:      a constant reference to the base number
+          n:      a constant reference to the modulo number
+          sieve:  a constant reference to a vector of factored sieve
+@return   multiplicative order of a mod n
+*/
+long mulOrder(const long& a, const long& n, const vector<long>& sieve) {
   // first check that a unit and that n fits into the sieve
   if(GCD(a,n) != 1){ 
     //cout << "Error in MulOrder: a = " << a << " not a unit of " << n << endl;
@@ -39,7 +91,7 @@ long MulOrder(long a, long n, const vector<long>& sieve){
   // next we need to compute phi(n).  We'll do this using factorization of n
   long phi = 1;
   vector<long> n_primes;
-  sieveFactor(n, n_primes, sieve);
+  getPrimeFactors(n, sieve, n_primes);
   // now find the next prime power dividing n, and multiply phi by correct term
   long index = 0;
   long prime = n_primes.at(index);
@@ -64,7 +116,7 @@ long MulOrder(long a, long n, const vector<long>& sieve){
   phi = phi * power_long(prime, exp-1) * (prime-1);
   // Now, I need the distinct factors of phi(n)
   vector<long> phi_primes;
-  distinctsieveFactor(phi, phi_primes, sieve);
+  getDistinctPrimeFactors(phi, sieve, phi_primes);
   
   long order = 1;  // we'll build up per prime dividing phi
   long p, e;  // e will be phi(n) with all p factors removed
@@ -88,7 +140,14 @@ long MulOrder(long a, long n, const vector<long>& sieve){
 return order;
 }
 
-long firstGenerator(long p_power, const vector<long> sieve) {
+
+/*
+This funtion finds the first generator of a multiplicative group
+@para   p_power: a constant reference to a prime power
+        sieve:   a constant reference to a vector of factored sieve
+@return the first generatort for mult group mod p_power
+*/
+long firstGenerator(const long& p_power, const vector<long> sieve) {
   // Thm: g is generator iff mul ord of g mod p_power
   //    is equal to (p-1)*p_power/p = p_power - p_power/p
   long q = p_power - p_power / sieve.at(p_power);
@@ -99,7 +158,7 @@ long firstGenerator(long p_power, const vector<long> sieve) {
   // As long as generator not found and candidate smaller
   // than the prime power, keep checking.
   while (!found && g < p_power) {
-    long order = MulOrder(g, p_power, sieve);
+    long order = mulOrder(g, p_power, sieve);
     if (order == q) {
       found = true;
     }
@@ -142,23 +201,6 @@ vector<long> distinctFactor(vector<long>& factors){
 return output;
 }
 
-/* This next only returns the distinct prime factors of n */
-void distinctsieveFactor(long n, vector<long>& factors, const vector<long>& sieve){
-  factors.clear(); // make sure the factors vector is empty
-  // conveniently, in sieveFactor the primes are listed in order from 
-  // smallest to largest, with repeated factors adjacent.  We can exploit this
-  while(n != 1){
-    long prime = sieve.at(n); // gives next prime
-    n = n / prime;  // update cofactor
-    // if prime already appears at end of factors, don't add it
-    if(factors.size() == 0) factors.push_back(prime);
-    else if(factors.back() != prime){
-      factors.push_back(prime);
-    }
-  }
-return;
-}
-
 /* A sieve that returns the primes up to bound in O(bound) time.
 This is a dual linear sieve of Pritchard*/
 vector<long> LinearPrimeSieve(long bound){
@@ -171,7 +213,9 @@ vector<long> LinearPrimeSieve(long bound){
   // we need to know what sqrt(bound) is
   long sqrtbound = floor(sqrt(bound));
   // first, we need the primes up to \sqrt(bound);
-  vector<long> factors = FactoredSieve(sqrtbound);
+  vector<long> factors;
+  factors.reserve(sqrtbound+1);
+  factoredSieve(sqrtbound, factors);
   // FactoredSieve returns smallest factor of i, so prime if this is i
   for(long i = 0; i < factors.size(); i++){
     if(factors.at(i) == i && i > 1) shortprimes.push_back(i);
@@ -227,21 +271,6 @@ long Ord2(long n){
 return ord;
 }
 
-/* Since the factoredsieve stores only the smallest prime factor, the 
-next routine uses that information (with access to the entire sieve 
-for recursive work) to give the full factorization
-Input is the sieve and a vector which will store the factors
-*/
-void sieveFactor(long n, vector<long>& factors, const vector<long>& sieve){
-  factors.clear(); // make sure the factors vector is empty
-  while(n != 1){ // we're done when the cofactor reaches 1
-    long prime = sieve.at(n);  // gives smallest prime factor
-    factors.push_back(prime);  // add it to the list of factors
-    n = n / prime;  // update cofactor
-  }
-return;
-}
-
 /* Similar to trialStrongLiarCount, but uses a 
 sieving strategy which is more efficient.  Uses FactoredSieve
 and sieveFactor below
@@ -250,7 +279,9 @@ Specifically, output is number of odd composite integers with 2 strong liars
 long  sieveTwoStrongLiarsCount(long x){
   long liarcount = 0;
   // the sieve stores the smallest prime factor of i in position i
-  vector<long> sieve = FactoredSieve(x);
+  vector<long> sieve;
+  sieve.reserve(x+1);
+  factoredSieve(x, sieve);
   vector<long> factors; // for storing prime factorizations
 
   // but we need another vector that stores which case we are in
@@ -274,7 +305,7 @@ long  sieveTwoStrongLiarsCount(long x){
   for(long p = 3; p < sieve.size(); p++){
     if(sieve.at(p) == p){ // then p is prime
       cases.at(p) = 0; // primes are not composites with two strong liars
-      distinctsieveFactor(p-1, factors, sieve);
+      getDistinctPrimeFactors(p-1, factors, sieve);
 
       for(long j = 0; j < factors.size(); j++){
         r = factors.at(j);
