@@ -147,7 +147,7 @@ This funtion finds the first generator of a multiplicative group
         sieve:   a constant reference to a vector of factored sieve
 @return the first generatort for mult group mod p_power
 */
-long firstGenerator(const long& p_power, const vector<long> sieve) {
+long firstGenerator(const long& p_power, const vector<long>& sieve) {
   // Thm: g is generator iff mul ord of g mod p_power
   //    is equal to (p-1)*p_power/p = p_power - p_power/p
   long q = p_power - p_power / sieve.at(p_power);

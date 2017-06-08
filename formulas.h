@@ -54,7 +54,7 @@ This funtion finds the first generator of a multiplicative group
 			sieve:   a constant reference to a vector of factored sieve
 @return		the first generatort for mult group mod p_power
 */
-long firstGenerator(const long& p_power, const vector<long> sieve);
+long firstGenerator(const long& p_power, const vector<long>& sieve);
 
 /* returns the number of Strong liars of n.  It does this using 
 the formula of Monier, not the definition */

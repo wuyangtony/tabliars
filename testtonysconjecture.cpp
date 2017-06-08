@@ -9,9 +9,8 @@ NTL_CLIENT
 // conjecture is true when each prime candidate get significantly large
 int main() {
 	cout << "Test 2: Last time I've reached the runtime limit before reaching the bound." << endl;
-	cout << "This time I'll make the runtime longer, which will be 46 hours, all the way until next time we meet." << endl; 
+	cout << "This time I'll make the runtime longer, all the way until next time we meet." << endl; 
 	cout << "BTW, I forgot to mention last time that the bound actually set the range for prime squared." << endl; 
-	cout << "That means with 2^30 as the bound, the actual range of prime I'm able to test is 2^15, which is about 32000, which is not quite 'large', but at least it can provide with some guidance for the next step." << endl;
 	const long x = 1;
 	const long bound = x << 30;
 	cout << "The bound is " << bound << endl;
@@ -49,8 +48,7 @@ int main() {
 	}
 	duration = clock() - duration;
 	result = ((double)duration) / CLOCKS_PER_SEC;
-	result = result / 60.0;
 	cout << "Unfortunately there is no such prime within " << y << ".\n";
-	cout << "It takes " << result << " minutes to finish that." << endl;
+	cout << "It takes " << result << " seconds to finish that." << endl;
 	return 0;
 }
