@@ -7,8 +7,8 @@
 NTL_CLIENT
 
 int main(int argc, char* argv[]) {
-	long bound_a = 5000000; // bound of witnesses
-	long bound_n = 2047; // bound of composits numbers
+	long bound_a = 2046; // bound of witnesses
+	long bound_n = 2046; // bound of composits numbers
 	vector<long> sieve;
 	vector<long> c; // vector of composite up to bound
 	vector<bool> a; // all possible base up to bound 

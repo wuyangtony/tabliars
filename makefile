@@ -1,7 +1,7 @@
 PATHS = -I/usr/local/include -L/usr/local/lib
 TAGS = -lntl -lgmp -lm -O2 
 
-all: test runwitness runtwostrongliars runreliablewitness testtonysconjecture testreliablewitnesslchen
+all: test runwitness runtwostrongliars runreliablewitness testtonysconjecture testreliablewitnesslchen testifrelwitness
 
 test: test.o formulas.o tab_carmichael.o tab_liars.o first_liar.o sievepractice.o lowestprimesieve.o tab_psp.o DoubleLinkedListArray.o
 	g++ $(PATHS) formulas.o tab_carmichael.o tab_liars.o tab_psp.o first_liar.o test.o sievepractice.o lowestprimesieve.o DoubleLinkedListArray.o -o test $(TAGS)
@@ -14,6 +14,9 @@ runtwostrongliars: runtwostrongliars.o formulas.o
 
 runreliablewitness: runreliablewitness.o formulas.o tab_carmichael.o tab_liars.o
 	g++ $(PATHS) formulas.o tab_carmichael.o tab_liars.o runreliablewitness.o -o runreliablewitness $(TAGS)
+
+testifrelwitness: test_if_witness.o formulas.o 
+	g++ $(PATHS) formulas.o test_if_witness.o -o testifrelwitness $(TAGS)
 
 testtonysconjecture: testtonysconjecture.o formulas.o
 	g++ $(PATHS) formulas.o testtonysconjecture.o -o testtonysconjecture $(TAGS)
@@ -35,6 +38,9 @@ testreliablewitnesslchen.o: test_reliable_witness_lchen.cpp
 
 reliable_witness_lchen.o: reliable_witness_lchen.cpp
 	g++ $(PATHS) -c reliable_witness_lchen.cpp
+
+testifrelwitness.o: test_if_witness.cpp
+	g++ $(PATHS) -c test_if_witness.cpp
 
 formulas.o: formulas.cpp
 	g++ $(PATHS) -c formulas.cpp
