@@ -2,7 +2,7 @@ INCLUDE = -I/usr/local/include
 LIB = -L/usr/local/lib
 TAGS = -lntl -lgmp -lm -O2 
 
-all: test runwitness runtwostrongliars testtonysconjecture
+all: test runwitness runtwostrongliars test_tonysconjecture
 
 test: test.o formulas.o tab_carmichael.o tab_liars.o first_liar.o sievepractice.o lowestprimesieve.o tab_psp.o DoubleLinkedListArray.o
 	g++ $(INCLUDE) $(LIB) formulas.o tab_carmichael.o tab_liars.o tab_psp.o first_liar.o test.o sievepractice.o lowestprimesieve.o DoubleLinkedListArray.o -o test $(TAGS)
@@ -16,15 +16,15 @@ runtwostrongliars: runtwostrongliars.o formulas.o
 	g++ $(INCLUDE) $(LIB) formulas.o runtwostrongliars.o -o runtwostrongliars $(TAGS)
 	mv runtwostrongliars ../bin/
 
-testtonysconjecture: testtonysconjecture.o formulas.o
+test_tonysconjecture: test_tonysconjecture.o formulas.o
 	g++ $(INCLUDE) $(LIB) formulas.o testtonysconjecture.o -o testtonysconjecture $(TAGS)
 	mv testtonysconjecture ../bin/
 
 test.o: test.cpp
 	g++ $(INCLUDE) -c test.cpp
 
-testtonysconjecture.o: testtonysconjecture.cpp
-	g++ $(INCLUDE) -c testtonysconjecture.cpp
+test_tonysconjecture.o: test_tonysconjecture.cpp
+	g++ $(INCLUDE) -c test_tonysconjecture.cpp
 
 runreliablewitness.o: 	runreliablewitness.cpp
 	g++ $(INCLUDE) -c runreliablewitness.cpp
