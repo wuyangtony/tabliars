@@ -23,14 +23,12 @@ int main() {
 	cin >> a;
 	clock_t duration; // used for timing
 
-	vector<long> spsp; // vector that stores all strong pseudprimes
-
-	cout << "Choose an algorithm:" << endl;
-	cout << " 1) Original   2) Paper   3) Tony's " << endl;
 	int method;
-	cin >> method;
-
+	vector<long> spsp; // vector that stores all strong pseudprimes
 	while (true) {
+		cout << "Choose an algorithm:" << endl;
+		cout << " 1) Original   2) Paper   3) Tony's " << endl;
+		cin >> method;
 		if (method == 1) {
 			duration = clock();
 			SieveStrongTab(a, n, ints, f);
@@ -50,7 +48,7 @@ int main() {
 			break;
 		}
 		else {
-			cout << "Please choose either 1, 2 or 3." << endl;
+			cerr << "Please choose either 1, 2 or 3." << endl;
 		}
 	}
 
