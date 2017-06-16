@@ -2,7 +2,7 @@ INCLUDE = -I/usr/local/include
 LIB = -L/usr/local/lib
 TAGS = -lntl -lgmp -lm -O2 
 
-all: test runwitness runtwostrongliars test_tonysconjecture
+all: test runwitness runtwostrongliars test_tabspsp test_tonysconjecture
 
 test: test.o formulas.o tab_carmichael.o tab_liars.o first_liar.o sievepractice.o lowestprimesieve.o tab_psp.o DoubleLinkedListArray.o
 	g++ $(INCLUDE) $(LIB) formulas.o tab_carmichael.o tab_liars.o tab_psp.o first_liar.o test.o sievepractice.o lowestprimesieve.o DoubleLinkedListArray.o -o test $(TAGS)
@@ -16,12 +16,19 @@ runtwostrongliars: runtwostrongliars.o formulas.o
 	g++ $(INCLUDE) $(LIB) formulas.o runtwostrongliars.o -o runtwostrongliars $(TAGS)
 	mv runtwostrongliars ../bin/
 
+test_tabspsp: test_tabspsp.o formulas.o tab_psp.o
+	g++ $(INCLUDE) $(LIB) formulas.o tab_psp.o test_tabspsp.o -o test_tabspsp $(TAGS)
+	mv test_tabspsp ../bin/
+
 test_tonysconjecture: test_tonysconjecture.o formulas.o
 	g++ $(INCLUDE) $(LIB) formulas.o testtonysconjecture.o -o testtonysconjecture $(TAGS)
 	mv testtonysconjecture ../bin/
 
 test.o: test.cpp
 	g++ $(INCLUDE) -c test.cpp
+
+test_tabspsp.o: test_tabspsp.cpp
+	g++ $(INCLUDE) -c test_tabspsp.cpp
 
 test_tonysconjecture.o: test_tonysconjecture.cpp
 	g++ $(INCLUDE) -c test_tonysconjecture.cpp

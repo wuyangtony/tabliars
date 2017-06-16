@@ -369,7 +369,7 @@ Uses the DoubleLinkedListArray for contast time deletions
 
 NOTE!!!  Does not work!  In fact, whole idea might be flawed.  See README
 */
-vector<long> LinearSieveFermatTab(long a, long bound, vector<long>& factoredsieve){
+/*vector<long> LinearSieveFermatTab(long a, long bound, vector<long>& factoredsieve){
   // first, set up the linked list
   DoubleLinkedListArray storage = DoubleLinkedListArray(bound+1);
   storage.remove(0); storage.remove(1); // 0,1 not pseudoprimes
@@ -460,7 +460,7 @@ for(long i=0; i < bound+1; i++){
   if(storage.at(i).ison()) pseudoprimes.push_back(i);
 }
 return pseudoprimes;
-}
+}*/
 
 /* Returns the set F(q) for a linear sieve strategy for tabulating Fermat psp
 F(q) = {3 <= f <= n | gcd(q,f)=1, for r < q, r nmid f or f = 1 mod \ell_a(r)}
