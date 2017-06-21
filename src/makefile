@@ -30,6 +30,9 @@ test.o: test.cpp
 test_tabspsp.o: test_tabspsp.cpp
 	g++ $(INCLUDE) -c test_tabspsp.cpp
 
+Odometer.o: Odometer.cpp
+	g++ $(INCLUDE) -c Odometer.cpp
+
 test_tonysconjecture.o: test_tonysconjecture.cpp
 	g++ $(INCLUDE) -c test_tonysconjecture.cpp
 
