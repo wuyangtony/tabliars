@@ -2,7 +2,7 @@ INCLUDE = -I/usr/local/include
 LIB = -L/usr/local/lib
 TAGS = -lntl -lgmp -lm -O2 
 
-all: test runwitness runtwostrongliars test_tabspsp test_tonysconjecture
+all: test runwitness runtwostrongliars test_tabspsp test_tonysconjecture test_odometer
 
 test: test.o formulas.o tab_carmichael.o tab_liars.o first_liar.o sievepractice.o lowestprimesieve.o tab_psp.o DoubleLinkedListArray.o
 	g++ $(INCLUDE) $(LIB) formulas.o tab_carmichael.o tab_liars.o tab_psp.o first_liar.o test.o sievepractice.o lowestprimesieve.o DoubleLinkedListArray.o -o test $(TAGS)
@@ -21,8 +21,12 @@ test_tabspsp: test_tabspsp.o formulas.o tab_psp.o
 	mv test_tabspsp ../bin/
 
 test_tonysconjecture: test_tonysconjecture.o formulas.o
-	g++ $(INCLUDE) $(LIB) formulas.o testtonysconjecture.o -o testtonysconjecture $(TAGS)
-	mv testtonysconjecture ../bin/
+	g++ $(INCLUDE) $(LIB) formulas.o test_tonysconjecture.o -o test_tonysconjecture $(TAGS)
+	mv test_tonysconjecture ../bin/
+
+test_odometer: test_odometer.o Odometer.o
+	g++ $(INCLUDE) $(LIB) Odometer.o test_odometer.o -o test_odometer $(TAGS)
+	mv test_odometer ../bin/
 
 test.o: test.cpp
 	g++ $(INCLUDE) -c test.cpp
@@ -66,8 +70,5 @@ lowestprimesieve.o: lowestprimesieve.cpp
 DoubleLinkedListArray.o:	DoubleLinkedListArray.cpp
 	g++ $(INCLUDE) -c DoubleLinkedListArray.cpp
 
-clean:
+clean: 
 	rm *.o
-
-clobber: clean
-	rm test
