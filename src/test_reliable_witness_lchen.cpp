@@ -1,6 +1,7 @@
 #include <iostream>
-#include "reliable_witness_lchen.h"
-#include "formulas.h"
+#include <vector>
+#include "../include/reliable_witness_lchen.h"
+#include "../include/formulas.h"
 #include <NTL/ZZ.h>
 #include <NTL/RR.h>
 

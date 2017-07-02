@@ -1,9 +1,10 @@
 #ifndef RELIABLE_WITNESS_LCHEN_H
-#define TAB_LIARS_H
+#define RELIABLE_WITNESS_LCHEN_H
 
-#include "formulas.h"
 #include <NTL/ZZ.h>
 #include <NTL/RR.h>
+#include <vector>
+
 NTL_CLIENT
 
 /** This function is a motified version of NaiveReliableWitness. 
@@ -11,5 +12,7 @@ NTL_CLIENT
  * Very basic - straightforward Miller_Rabin applied for each a, each n.
  */
 void NewNaiveReliableWitness(long bound, const vector<long> &comps, vector<bool> &liars);
+void TestFunction();
+
 
 #endif
