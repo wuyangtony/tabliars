@@ -1,7 +1,73 @@
 #include <iostream>
 #include <vector>
 #include <math.h> 
+#include <cstdlib>
+#include "../include/Odometer.h"
 using namespace std;
+
+void OdometerGen(const vector<long> &exponents, const vector<long> &comp_bases, vector<long> &comps_set) {
+	cout << "exponents size is " << exponents.size() << endl;
+	cout << "comp_bases size is " << comp_bases.size() << endl;
+
+	if (exponents.size() != comp_bases.size()) {
+		cout << "the bases are not valid. " << endl;
+		return;
+	}
+	long temp_comp;
+	long height = 1;
+	// counting the height of the metrix
+	for (int i = 0; i < exponents.size(); i++) {
+		height = height * (exponents.at(i) + 1);
+	}
+	// comps_set.reserve(height);
+	Odometer o(exponents);
+	long curheight = 0;
+	while (curheight < height-1) {
+		//cout << "gennnnnnnnnn" << endl;
+		o.spin(1);
+		// check if the addition of the exponents are larger than 1
+		long addition = 0;
+		for(long i = 0; i < o.size(); i++) {
+			addition += o.get(i);
+		}
+		if (addition > 1) {
+			long comp = 1;
+			for (int j = 0; j < o.size(); j++) {
+				temp_comp = pow(comp_bases[j], o.get(j));
+				comp = comp * temp_comp;
+			}
+			comps_set.push_back(comp);
+		}
+		curheight++;
+	}
+	return;
+}
+
+// Need a function to autometic generate two vectors. 
+// One is for bases, one is for exponents. 
+// Note thet the size of the two vectors should be the same. 
+// Two ways to change the bound. one is just increasing the value of exponents;
+// another way is adding another prime bases. 
+// If we only increase the value of exponents, we will have repeat work to do. 
+// In another words, we will check a range of composit number repeatedly. 
+
+
+// Set the exponents to be the same, then add the base. 
+// (need function: generate next prime number)
+// void BoundGen1(vector<long> &exponents, vector<long> &comp_bases, base) {
+
+// }
+
+// Set the base to be the same, then increase the exponents. 
+void BoundGen2(vector<long> &expo_gen, const vector<long> &comp_bases, long exponent) {
+	for (int i = 0; i < comp_bases.size(); i++) {
+		expo_gen.at(i) = exponent;
+	}
+}
+
+
+// ----------------------- previous functions, not be used currently -----------------------
+
 
 // Input: vector<long>, stores exponents (k1, k2, ..., kn)
 // Output: vector<vector<long>>, each element <j1, j2, ..., jn>, 0 < ji < ki
@@ -17,30 +83,23 @@ vector<vector<long> > ExponentList(const vector<long> &exponents) {
 		height = height * (exponents.at(i) + 1);
 	}
 	long width = exponents.size();
-
 	vector<vector<long> > exps_list(height, vector<long> (width,1));
-	
 	long reptition = 1;
 	for (int col = width - 1; col >= 0; col--) {
 		long exp = 0;
 		long count = 1;
-
 		if (col != width - 1) {
 			reptition = reptition * (exponents.at(col + 1) + 1);
 		}
-
 		for (int row = 0; row < height; row++) {
 			// for the rightmost column
 			if (exp == exponents.at(col) + 1) {
 				exp = 0;
 			}
-
 			exps_list[row][col] = exp;
-
 			if (col == width - 1) {
 				exp++;
 			}
-
 			else {
 				if (count == reptition) {
 					count = 1;
@@ -51,33 +110,29 @@ vector<vector<long> > ExponentList(const vector<long> &exponents) {
 		}
 	}
 
-
 	for (int i = 0; i < height; i++) {
 		long comp = 0;
 		for (int j = 0; j < width; j++) {
 			comp = comp + exps_list[i][j];
 		}
 		//cout << comp << endl;
-
 		if (comp < 2) {
 				exps_list.erase(exps_list.begin()+i);
 				height--;
 				i--;
 		}
-
 	}
-
 	return exps_list;
 }
+
 
 // I have a question here: why when I use function type void, data cannot pass by reference. 
 // The parameters are just place holders but not passed data here. 
 vector<long> CompsGen(vector<vector<long> > &exps_list, const vector<long> &comp_bases) {
+
 	// condition check
 	long temp_comp = 0;
-
 	cout << comp_bases.size() << endl;
-
 	if (exps_list[1].size() != comp_bases.size()) {
 		cout << "the bases are not valid. " << endl;
 		return comp_bases;
@@ -103,16 +158,11 @@ vector<long> CompsGen(vector<vector<long> > &exps_list, const vector<long> &comp
 void CompsGen2(const vector<vector<long> > &exps_list, const vector<long> &comp_bases, vector<long> &comps_list) {
 	// condition check
 	long temp_comp;
-
-	comps_list.reserve(exps_list.size());
-
 	cout << comp_bases.size() << endl;
-
 	if (exps_list[1].size() != comp_bases.size()) {
 		cout << "the bases are not valid. " << endl;
 		return;
 	}
-
 	for (int i = 0; i < exps_list.size(); i++) {
 		long comp = 1;
 		for (int j = 0; j < comp_bases.size(); j++) {

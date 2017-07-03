@@ -11,7 +11,7 @@ NTL_CLIENT
  * Result in the witnesses vector is a 1 if a is a reliable witness.
  * Very basic - straightforward Miller_Rabin applied for each a, each n.
  */
-void NewNaiveReliableWitness(long bound, const vector<long> &comps, vector<bool> &liars);
+void NewNaiveReliableWitness(long bound, const vector<long> &comps, vector<bool> &witnesses, vector<bool> &ifreliable);
 void TestFunction();
 
 

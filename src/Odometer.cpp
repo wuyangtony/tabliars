@@ -1,10 +1,12 @@
 // Implementation of Odometer class
 #include "../include/Odometer.h"
+#include <iostream>
+
 
 // Constructor
 //   parameter b is the vector of bases to initialize the odometer
 Odometer :: Odometer(const vector<long>& b) {
-	// initialize the bases
+	// initialize the base, the base means the list of prime factor 
 	bases = b;
 	// get the number of wheels/digits
 	number_of_wheels = b.size();
@@ -12,7 +14,7 @@ Odometer :: Odometer(const vector<long>& b) {
 	// multiplication of all bases
 	spins_per_cycle = b.at(0);
 	for (long i=1; i<number_of_wheels; i++) {
-		spins_per_cycle *= b.at(i);
+		spins_per_cycle = spins_per_cycle * (b.at(i));
 	}
 	// initialize the digits
 	digits.reserve(number_of_wheels);
@@ -39,8 +41,8 @@ void Odometer :: spin(long n) {
 	long temp;
 	// add 1 starting from last item of digits and check carries
 	for (long i=number_of_wheels-1; i>=0; i--) {
-		temp = (digits.at(i) + carry) % bases.at(i);
-		carry = (digits.at(i) + carry) / bases.at(i);
+		temp = (digits.at(i) + carry) % (bases.at(i)+1);
+		carry = (digits.at(i) + carry) / (bases.at(i)+1);
 		digits.at(i) = temp;
 	}
 }

@@ -13,6 +13,7 @@ int main(int argc, char* argv[]) {
 	vector<long> sieve;
 	vector<long> c; // vector of composite up to bound
 	vector<bool> a; // all possible base up to bound 
+	vector<bool> ifwit;
 	
 	cout << "0 < a <= " << bound_a << endl;
 	cout << "0 < n <= " << bound_n << endl;	
@@ -35,7 +36,7 @@ int main(int argc, char* argv[]) {
 	cout << " " << endl;
 
 	// generate reliable witnesses using function in reliable_witness_lchen.cpp
- 	NewNaiveReliableWitness(bound_a, c, a);
+ 	NewNaiveReliableWitness(bound_a, c, a, ifwit);
 // 	for (long i = 0; i < a.size(); i++) {
 // 		if (a.at(i) == 1) {
 // 			cout << i << " ";
