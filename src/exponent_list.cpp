@@ -5,10 +5,8 @@
 #include "../include/Odometer.h"
 using namespace std;
 
-void OdometerGen(const vector<long> &exponents, const vector<long> &comp_bases, vector<long> &comps_set) {
-	cout << "exponents size is " << exponents.size() << endl;
-	cout << "comp_bases size is " << comp_bases.size() << endl;
-
+void OdometerGen(const vector<long> &exponents, const vector<long> &comp_bases, vector<long> &comps_set, vector<int> &prev_height) {
+	// exception check 
 	if (exponents.size() != comp_bases.size()) {
 		cout << "the bases are not valid. " << endl;
 		return;
@@ -20,12 +18,16 @@ void OdometerGen(const vector<long> &exponents, const vector<long> &comp_bases, 
 		height = height * (exponents.at(i) + 1);
 	}
 	// comps_set.reserve(height);
+	// cout << "in OdemeterGen, the height is " << height << endl; 
 	Odometer o(exponents);
-	long curheight = 0;
-	while (curheight < height-1) {
-		//cout << "gennnnnnnnnn" << endl;
+	long curheight;
+	for(curheight = 0; curheight < height; curheight++) {
+		//cout << "the generated comp is " << o << endl;
 		o.spin(1);
-		// check if the addition of the exponents are larger than 1
+		// check if the addition of the exponents is larger than 1
+		if (curheight < prev_height.at(0)) {
+			continue;
+		}
 		long addition = 0;
 		for(long i = 0; i < o.size(); i++) {
 			addition += o.get(i);
@@ -38,8 +40,10 @@ void OdometerGen(const vector<long> &exponents, const vector<long> &comp_bases, 
 			}
 			comps_set.push_back(comp);
 		}
-		curheight++;
 	}
+	// cout << " check curheight is " << curheight << endl; 
+	// cout << "In the OdometerGen, the comps_set size is " << comps_set.size() << endl; 
+	prev_height.at(0) = curheight;
 	return;
 }
 
