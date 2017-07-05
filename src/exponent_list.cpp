@@ -17,17 +17,19 @@ void OdometerGen(const vector<long> &exponents, const vector<long> &comp_bases, 
 	for (int i = 0; i < exponents.size(); i++) {
 		height = height * (exponents.at(i) + 1);
 	}
+	vector<long> odo_bases;
+	odo_bases.reserve(exponents.size());
+	for (int i = 0; i < exponents.size(); i++) {
+		odo_bases.push_back(exponents.at(i) + 1);
+	}
 	// comps_set.reserve(height);
 	// cout << "in OdemeterGen, the height is " << height << endl; 
-	Odometer o(exponents);
+	Odometer o(odo_bases);
 	long curheight;
 	for(curheight = 0; curheight < height; curheight++) {
-		//cout << "the generated comp is " << o << endl;
+		cout << "the generated exp_list is " << o << endl;
 		o.spin(1);
 		// check if the addition of the exponents is larger than 1
-		if (curheight < prev_height.at(0)) {
-			continue;
-		}
 		long addition = 0;
 		for(long i = 0; i < o.size(); i++) {
 			addition += o.get(i);
@@ -41,8 +43,8 @@ void OdometerGen(const vector<long> &exponents, const vector<long> &comp_bases, 
 			comps_set.push_back(comp);
 		}
 	}
-	// cout << " check curheight is " << curheight << endl; 
-	// cout << "In the OdometerGen, the comps_set size is " << comps_set.size() << endl; 
+	cout << " check curheight is " << curheight << endl; 
+	cout << "In the OdometerGen, the comps_set size is " << comps_set.size() << endl; 
 	prev_height.at(0) = curheight;
 	return;
 }

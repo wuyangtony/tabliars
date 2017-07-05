@@ -22,10 +22,8 @@ void NewNaiveReliableWitness(long bound, const vector<long> &comps, vector<bool>
 
 	// when a = 0, the program cannot enter the inner for loop. 
 	for (long a = 1; a < bound; a++) {
-		//cout << "jjjjjjjjjjjjjjjjjjjj" << endl;
 		//cout << "comps.size()" << comps.size() << endl;
 		for (long k = 0; k < comps.size(); k++) { 
-			//cout << "qqqqqqqqqqqqqqqqqq" << endl;
 			// apply miller-rabin test
 			// if a % i = 0, then a is neither a strong witness nor a strong liar
 			if (to_ZZ(a) % to_ZZ(comps.at(k)) == 0) {

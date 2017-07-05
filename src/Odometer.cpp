@@ -41,8 +41,8 @@ void Odometer :: spin(long n) {
 	long temp;
 	// add 1 starting from last item of digits and check carries
 	for (long i=number_of_wheels-1; i>=0; i--) {
-		temp = (digits.at(i) + carry) % (bases.at(i)+1);
-		carry = (digits.at(i) + carry) / (bases.at(i)+1);
+		temp = (digits.at(i) + carry) % bases.at(i);
+		carry = (digits.at(i) + carry) / bases.at(i);
 		digits.at(i) = temp;
 	}
 }

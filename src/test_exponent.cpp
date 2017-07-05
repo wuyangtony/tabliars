@@ -16,8 +16,8 @@ int main() {
 	// vector<long> comps_list;
 	vector<long> comps_set;
 	// long arr[] = {1,2,3}; // exponent list 
-	long exponent = 2;
-	long arr2[] = {3, 5, 7, 11, 13}; // bases
+	long exponent = 1;
+	long arr2[] = {3, 5, 7, 11, 13, 17}; // bases
 	int ifwit;
 	int arr2_size = sizeof(arr2)/sizeof(arr2[0]);
 	vector<bool> a;
@@ -61,6 +61,7 @@ int main() {
 		}
 
 		exponent = exponent + 1;
+		comps_set.clear();
 	}
 	//vector<vector<long> > exps_list = ExponentList(exponents);
 	// for (int i = 0; i < exps_list.size(); i++) {
