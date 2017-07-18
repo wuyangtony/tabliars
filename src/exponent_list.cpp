@@ -27,7 +27,7 @@ void OdometerGen(const vector<long> &exponents, const vector<long> &comp_bases, 
 	Odometer o(odo_bases);
 	long curheight;
 	for(curheight = 0; curheight < height; curheight++) {
-		cout << "the generated exp_list is " << o << endl;
+		//cout << "the generated exp_list is " << o << endl;
 		o.spin(1);
 		// check if the addition of the exponents is larger than 1
 		long addition = 0;
