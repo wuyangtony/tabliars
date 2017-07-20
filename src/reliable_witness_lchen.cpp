@@ -74,6 +74,10 @@ void NewNaiveReliableWitness(long bound, const vector<long> &comps, vector<bool>
     if (count_wit > 0) {
         ifreliable.at(0) = 1;
         cout << "there are " << count_wit << " reliable witnesses for this composite set. " << endl;
+        cout << "the count_wit is " << count_wit << " , the bound is " << bound << endl;
+        double percentage = double(count_wit)/double(bound) * 100;
+
+        cout << "the percentage of reliable witness is " << percentage << "%." <<endl; 
         cout << "Increase the bound of a ..." << endl; 
     }
 
@@ -82,5 +86,5 @@ void NewNaiveReliableWitness(long bound, const vector<long> &comps, vector<bool>
 }
 
 void TestFunction() {
-	cout << "test function works" << endl;
+    cout << "test function works" << endl;
 }
