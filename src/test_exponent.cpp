@@ -17,7 +17,7 @@ int main() {
 	vector<long> comps_set;
 	// long arr[] = {1,2,3}; // exponent list 
 	long exponent = 1;
-	long arr2[] = {3, 5, 7, 11, 13, 17}; // bases
+	long arr2[] = {3, 5, 7, 11}; // bases
 	int ifwit;
 	int arr2_size = sizeof(arr2)/sizeof(arr2[0]);
 	vector<bool> a;
@@ -67,7 +67,7 @@ int main() {
 			// in tab_psp.cpp. 
 			long base_set[] = {2, 3, 5, 7, 11, 13, 17};
 			long spsp_bound = 10000000;
-			for (int i = 0; i < spsp_bound; i++) {
+			for (int i = 0; i < sizeof(base_set); i++) {
 				cout << "add a base-" << base_set[i] <<" spsp to comps_set" << endl;
 				long first_i_spsp = FirstStrongTab(base_set[i], spsp_bound);
 				comps_set.push_back(first_i_spsp);
