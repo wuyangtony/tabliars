@@ -43,8 +43,7 @@ void NewNaiveReliableWitness(long bound, const vector<long> &comps, vector<bool>
 		for (long k = 0; k < comps.size(); k++) { 
 			// apply miller-rabin test
 			// if a % i = 0, then a is neither a strong witness nor a strong liar
-            // for each k，只要有一个a不是witness，那这个a就不是reliable witness
-            // for all k, 这个a是witness，那这个a就是reliable witness
+            // for all k, if a is a witness，then it is a reliable witness
 			if (to_ZZ(a) % to_ZZ(comps.at(k)) == 0) {
 				// witnesses.at(a) = 0;
                 // a is not a reliable witness, change it to 0
@@ -78,13 +77,8 @@ void NewNaiveReliableWitness(long bound, const vector<long> &comps, vector<bool>
         double percentage = double(count_wit)/double(bound) * 100;
 
         cout << "the percentage of reliable witness is " << percentage << "%." <<endl; 
-        cout << "Increase the bound of a ..." << endl; 
     }
 
 	//cout << endl;
 	return; 
-}
-
-void TestFunction() {
-    cout << "test function works" << endl;
 }

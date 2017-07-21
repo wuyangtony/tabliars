@@ -520,3 +520,26 @@ vector<long> FermatSieveF(long p, long e, long n, long a){
 
 return fs;
 }
+
+/* Basically the same with TrivalStrongTab. Return the first strong 
+  pseudoprime instead all of them.*/
+long FirstStrongTab(long a, long bound) {
+  long first_psps = 0; // will hold the pseudoprimes found
+
+  //n is a psp if it is odd, composite, and a not a Miller Witness
+  //note base is a%n, since MillerWitness requires a < n
+  //also note: if a % n = 0, a neither a witness nor a liar, so I don't 
+  //say that n is a pseudoprime in this case
+  for(long n = (3); n <= bound; n = n+2) {
+    if(to_ZZ(a) % to_ZZ(n) != 0){
+      if(!ProbPrime(n) && !MillerWitness(to_ZZ(n), to_ZZ(a) % to_ZZ(n))) {
+        first_psps = n;
+        break;
+      }
+    }
+  }
+  if (first_psps == 0) {
+    cout << "no " << a << "-spsp can be found within the bound " << bound << "." << endl;
+  }
+  return first_psps;
+}

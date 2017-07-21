@@ -12,7 +12,5 @@ NTL_CLIENT
  * Very basic - straightforward Miller_Rabin applied for each a, each n.
  */
 void NewNaiveReliableWitness(long bound, const vector<long> &comps, vector<bool> &witnesses, vector<bool> &ifreliable);
-void TestFunction();
-
 
 #endif

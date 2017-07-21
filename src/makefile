@@ -22,10 +22,10 @@ test_tonysconjecture: test_tonysconjecture.o formulas.o
 test_odometer: test_odometer.o Odometer.o
 	g++ $(INCLUDE) $(LIB) Odometer.o test_odometer.o -o test_odometer $(TAGS)
 
-test_exponent: test_exponent.o exponent_list.o reliable_witness_lchen.o Odometer.o
-	g++ $(INCLUEDE) $(LIB) test_exponent.o exponent_list.o reliable_witness_lchen.o Odometer.o -o test_exponent $(TAGS)
+test_exponent: test_exponent.o exponent_list.o reliable_witness_lchen.o Odometer.o tab_psp.o formulas.o
+	g++ $(INCLUEDE) $(LIB) test_exponent.o exponent_list.o reliable_witness_lchen.o Odometer.o tab_psp.o formulas.o -o test_exponent $(TAGS)
 
-test_reliable_witness_lchen:  test_reliable_witness_lchen.o reliable_witness_lchen.o formulas.o
+test_reliable_witness_lchen:  test_reliable_witness_lchen.o reliable_witness_lchen.o formulas.o 
 	g++ $(INCLUEDE) $(LIB) test_reliable_witness_lchen.o reliable_witness_lchen.o formulas.o -o test_reliable_witness_lchen $(TAGS)
 
 test.o: test.cpp
