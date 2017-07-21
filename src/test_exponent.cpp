@@ -68,8 +68,11 @@ int main() {
 			long base_set[] = {2, 3, 5, 7, 11, 13, 17};
 			long spsp_bound = 10000000;
 			for (int i = 0; i < sizeof(base_set); i++) {
-				cout << "add a base-" << base_set[i] <<" spsp to comps_set" << endl;
 				long first_i_spsp = FirstStrongTab(base_set[i], spsp_bound);
+				if (first_i_spsp == 0) {
+					continue;
+				}
+				cout << "add a base-" << base_set[i] <<" spsp " << first_i_spsp << " to comps_set" << endl;
 				comps_set.push_back(first_i_spsp);
 				NewNaiveReliableWitness(bound, comps_set, a, ifreliable);
 			}
