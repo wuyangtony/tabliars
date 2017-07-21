@@ -76,7 +76,10 @@ void NewNaiveReliableWitness(long bound, const vector<long> &comps, vector<bool>
         cout << "the count_wit is " << count_wit << " , the bound is " << bound << endl;
         double percentage = double(count_wit)/double(bound) * 100;
 
-        cout << "the percentage of reliable witness is " << percentage << "%." <<endl; 
+        cout << "the percentage of reliable witness up to bound is " << percentage << "%." <<endl; 
+    }
+    else {
+        cout << "there are no reliable witness for the composite set." << endl;
     }
 
 	//cout << endl;
