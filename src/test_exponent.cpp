@@ -24,6 +24,8 @@ int main() {
 	vector<bool> ifreliable;
 	vector<int> prev_height;
 	prev_height.push_back(0);
+	long new_bound;
+
 
 	// vector<long> exponents (arr, arr + sizeof(arr) / sizeof(arr[0]) );
 	vector<long> comp_bases (arr2, arr2 + sizeof(arr2) / sizeof(arr2[0]) );
@@ -75,8 +77,10 @@ int main() {
 					continue;
 				}
 				cout << "add a base-" << base_set[i] <<" spsp " << first_i_spsp << " to comps_set" << endl;
+				Gen_New_bound(new_bound, comp_bases, first_i_spsp, bound);
+				cout << "the new bound is " << new_bound << endl;
 				comps_set.push_back(first_i_spsp);
-				NewNaiveReliableWitness(bound, comps_set, a, ifreliable);
+				NewNaiveReliableWitness(new_bound, comps_set, a, ifreliable);
 			}
 		}
 

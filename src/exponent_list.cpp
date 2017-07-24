@@ -2,7 +2,10 @@
 #include <vector>
 #include <math.h> 
 #include <cstdlib>
+#include <algorithm>
 #include "../include/Odometer.h"
+#include "../include/formulas.h"
+
 using namespace std;
 
 void OdometerGen(const vector<long> &exponents, const vector<long> &comp_bases, vector<long> &comps_set, vector<int> &prev_height) {
@@ -71,6 +74,45 @@ void BoundGen2(vector<long> &expo_gen, const vector<long> &comp_bases, long expo
 	}
 }
 
+
+// change the bound and see the distribution of reliable witness and see if we can shrink the bound
+// use factor sieve to factor the base-a spsp. Then find the gcd to calculate lcm. 
+void Gen_New_bound(long &new_bound, const vector<long> &comp_bases, long first_i_spsp, long bound) {
+	vector<long> sieve;
+	vector<long> factors;
+	factoredSieve(first_i_spsp, sieve);
+	getPrimeFactors(first_i_spsp, sieve, factors);
+	//std::sort(comp_bases.begin(), comp_bases.end());
+	//std::sort(factors.begin(), factors.end());
+	vector<long> common;
+	for (int i = 0; i < comp_bases.size(); i++) {
+	    if (std::find(factors.begin(), factors.end(), comp_bases.at(i)) != factors.end()) {
+	        common.push_back(comp_bases.at(i));
+	    }
+	}
+	set_intersection(comp_bases.begin(), comp_bases.end(), factors.begin(), factors.end(), back_inserter(common));
+	// cout << "the factors are: ";
+	// for(int i = 0; i < factors.size(); i++) {
+	// 	cout << factors.at(i) << " ";
+	// }
+	// cout << endl;
+	// cout << "the intersection is: ";
+	// for (int i = 0; i < common.size(); i++) {
+	// 	cout << common.at(i) << " ";
+	// }
+	// cout << endl;
+	new_bound = (first_i_spsp * bound);
+
+	if (common.size() == 0) {
+		return;
+	}
+	else {
+		for (int i = 0; i < common.size(); i++) {
+			new_bound = new_bound/common.at(i);
+		}
+	}
+	return;
+}
 
 // ----------------------- previous functions, not be used currently -----------------------
 
