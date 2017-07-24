@@ -25,6 +25,7 @@ int main() {
 	vector<int> prev_height;
 	prev_height.push_back(0);
 	long new_bound;
+	long count_wit;
 
 
 	// vector<long> exponents (arr, arr + sizeof(arr) / sizeof(arr[0]) );
@@ -54,7 +55,7 @@ int main() {
 		cout << "after calling OdometerGem, the size of the comps_set is " << comps_set.size() << endl;
 		cout << "test reliable witness... " << endl;
 
-		NewNaiveReliableWitness(bound, comps_set, a, ifreliable);
+		NewNaiveReliableWitness(bound, comps_set, a, ifreliable, count_wit);
 
 		if (ifreliable.at(0) == 0) {
 			cout << "this set doesn't have reliable witness." << endl;
@@ -80,7 +81,10 @@ int main() {
 				Gen_New_bound(new_bound, comp_bases, first_i_spsp, bound);
 				cout << "the new bound is " << new_bound << endl;
 				comps_set.push_back(first_i_spsp);
-				NewNaiveReliableWitness(new_bound, comps_set, a, ifreliable);
+				NewNaiveReliableWitness(new_bound, comps_set, a, ifreliable, count_wit);
+				double wit_perc_tobound = double(count_wit)/double(bound) * 100;
+				cout << "the prev bound is " << bound << endl;
+				cout << "the percentage of reliable witness up to prev bound is " << wit_perc_tobound << "%." <<endl; 
 			}
 		}
 

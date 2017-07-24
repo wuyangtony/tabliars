@@ -74,6 +74,9 @@ void BoundGen2(vector<long> &expo_gen, const vector<long> &comp_bases, long expo
 	}
 }
 
+// bool compare (int i, int j) {
+//   return (i==j);
+// }
 
 // change the bound and see the distribution of reliable witness and see if we can shrink the bound
 // use factor sieve to factor the base-a spsp. Then find the gcd to calculate lcm. 
@@ -91,16 +94,20 @@ void Gen_New_bound(long &new_bound, const vector<long> &comp_bases, long first_i
 	    }
 	}
 	set_intersection(comp_bases.begin(), comp_bases.end(), factors.begin(), factors.end(), back_inserter(common));
-	// cout << "the factors are: ";
-	// for(int i = 0; i < factors.size(); i++) {
-	// 	cout << factors.at(i) << " ";
-	// }
-	// cout << endl;
-	// cout << "the intersection is: ";
-	// for (int i = 0; i < common.size(); i++) {
-	// 	cout << common.at(i) << " ";
-	// }
-	// cout << endl;
+	sort( common.begin(), common.end() );
+	common.erase( unique( common.begin(), common.end() ), common.end() );
+    //std::unique (common.begin(), common.end(), compare); 
+
+	cout << "the factors are: ";
+	for(int i = 0; i < factors.size(); i++) {
+		cout << factors.at(i) << " ";
+	}
+	cout << endl;
+	cout << "the intersection is: ";
+	for (int i = 0; i < common.size(); i++) {
+		cout << common.at(i) << " ";
+	}
+	cout << endl;
 	new_bound = (first_i_spsp * bound);
 
 	if (common.size() == 0) {

@@ -10,6 +10,7 @@ NTL_CLIENT
 int main(int argc, char* argv[]) {
 	long bound_a = 2046; // bound of witnesses
 	long bound_n = 2046; // bound of composits numbers
+	long count_wit;
 	vector<long> sieve;
 	vector<long> c; // vector of composite up to bound
 	vector<bool> a; // all possible base up to bound 
@@ -36,7 +37,7 @@ int main(int argc, char* argv[]) {
 	cout << " " << endl;
 
 	// generate reliable witnesses using function in reliable_witness_lchen.cpp
- 	NewNaiveReliableWitness(bound_a, c, a, ifwit);
+ 	NewNaiveReliableWitness(bound_a, c, a, ifwit, count_wit);
 // 	for (long i = 0; i < a.size(); i++) {
 // 		if (a.at(i) == 1) {
 // 			cout << i << " ";

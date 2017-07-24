@@ -6,7 +6,7 @@
  * Result in the witnesses vector is a 1 if a is a reliable witness.
  * Very basic - straightforward Miller_Rabin applied for each a, each n.
  */
-void NewNaiveReliableWitness(long bound, const vector<long> &comps, vector<bool> &witnesses, vector<bool> &ifreliable) {
+void NewNaiveReliableWitness(long bound, const vector<long> &comps, vector<bool> &witnesses, vector<bool> &ifreliable, long &count_wit) {
     long IfWitness;
 
 	// cout << "test naive reliable witness comps.size() : " << comps.size() << endl;
@@ -26,7 +26,7 @@ void NewNaiveReliableWitness(long bound, const vector<long> &comps, vector<bool>
 
     // update: we want to count the number of reliable witnesses for a given comps set.
     // need a long object to track the number.
-    long count_wit = 0;
+    count_wit = 0;
 
 	// witnesses.reserve(bound);
 
