@@ -10,9 +10,18 @@
 #define TAB_LIARS_H
 
 #include <NTL/ZZ.h>
+#include <vector>
+#include <cmath>
 #include "formulas.h"
+#include "Odometer.h"
 
 NTL_CLIENT
+
+/*
+Tony's implementation of finding all Fermat liars using generators and then select
+all strong liars with MillerWitness() test
+*/
+void tony_tabliars(const long& n, const vector<long>& sieve, vector<long>& liars);
 
 /* the vector comps is a list of factored carmichael numbers
 Thm: a strong liar iff (a|p) matches for all p dividing n

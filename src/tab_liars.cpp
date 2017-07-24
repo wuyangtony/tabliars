@@ -2,6 +2,75 @@
 
 NTL_CLIENT
 
+/*
+Tony's implementation of finding all Fermat liars using generators
+*/
+void tony_tabliars(const long& n, const vector<long>& sieve, vector<long>& liars)
+{
+  // get distince prime factors of n
+  vector<long> primefactors;
+  getDistinctPrimeFactors(n, sieve, primefactors);
+  // get generators for each factor
+  vector<long> generators;
+  generators.reserve(primefactors.size());
+  for (long i=0; i<primefactors.size(); ++i)
+  {
+    long g = firstGenerator(primefactors.at(i), sieve);
+    generators.push_back(g);
+  }
+  // now fg stores set of (factor, generator) pairs, use CRT to get g hats
+  vector<long> ghats;
+  ghats.reserve(primefactors.size());
+  // compute product of all prime factors
+  long prod = 1;
+  for (long i=0; i<primefactors.size(); ++i)
+  {
+    prod *= primefactors.at(i);
+  }
+  // Instead of having separate arrays for partial products and inverses,
+  // compute the sum of their products since remainders are all 1s
+  long cpsum = 0;
+  // an array of complex products of partial product and its inverse
+  long cp[primefactors.size()];
+  for (long i=0; i<primefactors.size(); ++i)
+  {
+    long pp = prod / primefactors.at(i);
+    long in = inverseMod(pp, primefactors.at(i));
+    cp[i] = pp * in;
+    cpsum += cp[i];
+  }
+  // ghats[i] = (cpsum + cp[i]*(generators[i]-1)) % prod
+  for (long i=0; i<generators.size(); ++i)
+  {
+    long g = cpsum + cp[i] * (generators[i]-1);
+    ghats.push_back(g%prod);
+  }
+  // use orders to create an Odometer
+  vector<long> orders;
+  orders.reserve(primefactors.size());
+  // for each ghat, raise it to power d = (p-1) / gcd(n-1, p-1)
+  for (long i=0; i<ghats.size(); ++i)
+  {
+    long power = primefactors.at(i)-1;
+    long order = GCD(n-1, power);
+    orders.push_back(order);
+    power = power / GCD(n-1, power);
+    ghats.at(i) = pow(ghats.at(i), power);
+  }
+  // orders are bases of the Odometer
+  Odometer exp = new Odometer(orders);
+  // take product of ghats[i]^exp[i]
+  long l = 1;
+  for (long i=0; i<exp.max(); ++i)
+  {
+    for (long j=0; j<exp.size(); ++j)
+    {
+      l *= pow(ghats[j], exp[j]);
+    }
+    liars.push_back(l);
+    exp.spin();
+  }
+}
 
 /* the vector comps is a list of factored carmichael numbers
 Thm: a strong liar iff (a|p) matches for all p dividing n
@@ -32,7 +101,6 @@ void naive_tabliars(long bound, const vector< vector<long> > &comps, vector<bool
     } //end for comps
     cout << "\n";
   } // end for on a
-return;
 }
 
 /* the vector comps can be an list of factored composite numbers here.result in the witnesses vector is a 1 if a is a reliable witness
@@ -65,7 +133,6 @@ void NaiveReliableWitness(long bound, const vector< vector<long> > &comps, vecto
       }
     } // end for n in comps
   }//end for a
-return;
 }
 
 
@@ -96,7 +163,6 @@ bool IsCarLiar(long a, const vector<long> &n){
       break;  // no need to continue checking
     }
   }
-
 return output;
 }
 
@@ -142,8 +208,6 @@ void SieveReliableWitness(long bound, const vector< vector<long> > &comps, vecto
     // if different from default, update witnesses vector
     if(iswitness == 0) witnesses.at(a) = 0; 
   }
-
-return;
 }
 
 
@@ -230,8 +294,6 @@ void IsLiarOrd2(long bound, const vector<long> &n, vector<bool> &liars, const ve
     // after checking all p, we know ord2's are equal so a is liar
     liars.at(a) = isliar;
   } //end for a up to bound 
-
-return;
 }
 
 /* subroutine.  Given a vector of longs and prime p, changes the vector so that 
@@ -271,8 +333,6 @@ void PowerAll(long bound, vector<long> &A, long d, long p, const vector<long> &f
     while(nextprime <= bound && factors.at(nextprime) != nextprime) nextprime++;
     primepower = nextprime;
   } // end while
-
-return;
 }
 
 /* print the entries of a vector<bool> that are 1 */
@@ -281,6 +341,5 @@ void PrintOnes(const vector<bool> &input){
     if(input.at(i)) cout << i << " ";
   }
   cout << "\n";
-return;
 }
 

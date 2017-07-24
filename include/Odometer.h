@@ -27,6 +27,9 @@ public:
 	// return the size of the odometer
 	long size() const;
 
+	// return spins per cycle
+	long max() const;
+
 	// get specific digit of the odometer
 	long get(const long& n) const;
 
