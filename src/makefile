@@ -16,6 +16,10 @@ runtwostrongliars: runtwostrongliars.o formulas.o
 test_tabspsp: test_tabspsp.o formulas.o tab_psp.o
 	g++ $(INCLUDE) $(LIB) formulas.o tab_psp.o test_tabspsp.o -o test_tabspsp $(TAGS)
 
+test_tabfliar: test_tabfliar.o formulas.o tab_liars.o
+	g++ $(INCLUDE) $(LIB) formulas.o tab_liars.o test_tabfliar.o -o test_fliar $(TAGS)
+	mv test_fliar ../bin/
+
 test_tonysconjecture: test_tonysconjecture.o formulas.o
 	g++ $(INCLUDE) $(LIB) formulas.o test_tonysconjecture.o -o test_tonysconjecture $(TAGS)
 
@@ -39,6 +43,9 @@ Odometer.o: Odometer.cpp
 
 test_tonysconjecture.o: test_tonysconjecture.cpp
 	g++ $(INCLUDE) -c test_tonysconjecture.cpp
+
+test_tabfliar.o: test_tabfliar.cpp
+	g++ $(INCLUDE) -c test_tabfliar.cpp
 
 runreliablewitness.o: 	runreliablewitness.cpp
 	g++ $(INCLUDE) -c runreliablewitness.cpp

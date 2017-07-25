@@ -3,34 +3,33 @@
 NTL_CLIENT
 
 /*
-This uses a sieve of Erasthothenes to factor all integers up to x
-Specifically, a vector is returned that in position i contains the smallest 
-prime factor of i.
+This function is basically the preliminary of everything. 
+It uses a sieve of Erasthothenes to factor all integers up to x.
+Specifically, it creates an array the stores in position i the smallest prime factor of i.
 @para     x:    a constant reference to a positive integer
           ints: a reference to factored sieve
 @return   void, but ints is passed by reference, which will be written
 */
-void factoredSieve(const long& x, vector<long>& ints){
-  // Allocate memory for ints in advance
+void factoredSieve(const long& x, vector<long>& ints)
+{
+  // Allocate x+1 elements in memory for ints
   ints.reserve(x+1);
   // Initialize ints with identical values and indices
-  for(long i = 0; i < x+1; i++){
-    ints.push_back(i);
-  }
+  for(long i = 0; i < x+1; i++) ints.push_back(i);
   // Thm: if x composite, its smallest prime factor < sqrt(x)
-  long bound = sqrt(x);  // so we sieve up to sqrt(x)
-  long prime = 2;
-  while(prime <= bound){
-    // for multiplies of p, set smallest prime factor to be p if 
-    // a smaller prime factor wasn't already found
-    for(long n = 2*prime; n <= x; n = n+prime){
-      if(ints.at(n) == n) ints.at(n) = prime;
-    } 
-    // now find the next prime
-    // this occurs when ints.at(n) = n
-    do {
-      prime++;
-    } while (ints.at(prime) != prime);
+  const long bound = sqrt(x);
+  // Start with the first prime 2
+  long p = 2;
+  // For multiplies of p, set smallest prime factor to be p if smaller factor not yet found
+  while(p <= bound)
+  {
+    for(long n=2*p; n<=x; n+=p) if(ints.at(n) == n) ints.at(n) = p;
+    // now find the next prime, this occurs when ints.at(n) = n
+    do
+    { // p has to be incremented at least once
+      ++p;
+    }
+    while (ints.at(p) != p);
   }
 }
 
@@ -174,24 +173,40 @@ long firstGenerator(const long& p_power, const vector<long>& sieve) {
 }
 
 /*
-Based on firstGenerator() and getDistinctPrimeFactors(), this produces a list 
-of first generators respectively for the prime factors of given composite
-@para		comp:  a constant reference to a composite integer
-			sieve: a constant reference to a vector of factored sieve
-			glist: a reference to the list of generators
-@return		void, but glist is passed by reference, which will be written
+Credit to Ruchir Carg, the author of this algorithm from GeeksforGeeks.com
+@para   a: the number to be found inverse of
+      p: the modulo
+@returns  the multiplicative inverse of a mod p
 */
-void compositeGenerators(const long& comp, const vector<long>& sieve, vector<long>& glist) {
-	// First get a list of prime factors of comp
-	vector<long> primefactors;
-	getDistinctPrimeFactors(comp, sieve, primefactors);
-	// For each prime factor, get their first generators
-	// and push them to glist
-	long g; // store generator for each prime factor
-	for (long i=0; i<primefactors.size(); i++) {
-		g = firstGenerator(primefactors.at(i), sieve);
-		glist.push_back(g);
-	}
+long inverseMod(long a, long p)
+{
+  // based on extended Eucliddan algorithm, in which we are finding
+  // x and y such that ax + py = 1, then ax % p = 1.
+  // require gcd(a, p) = 1, but in our context it is always true
+  const long m = p; // have original p stored
+  long temp; // for swapping
+  long q; // store p dividing a
+  long x = 1, y = 0;
+  // base case: mod 1 has not units
+  if (p == 1) return 0;
+  // loop recursively until final remainder is zero
+  while (a > 1)
+  {
+    // q is quotient
+    q = a / p;
+    // p is remainder now
+    temp = p;
+    p = a % p;
+    a = temp;
+    // x, y are coefficients of Bézout's identity
+    temp = y;
+    y = x - q * y;
+    x = temp;
+  }
+  // make x positive
+  if (x < 0) x += m;
+
+  return x;
 }
 
 /*

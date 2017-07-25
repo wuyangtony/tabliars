@@ -10,10 +10,4 @@ NTL_CLIENT
  * Very basic - straightforward Miller_Rabin applied for each a, each n.
  */
 vector<vector<long> > ExponentList(const vector<long> &exponents);
-vector<long> CompsGen(vector<vector<long> > &exp_list, const vector<long> &bases);
-void CompsGen2(const vector<vector<long> > &exps_list, const vector<long> &comp_bases, vector<long> &comps_list);
-void OdometerGen(const vector<long> &exponents, const vector<long> &comp_bases, vector<long> &comps_set, vector<int> &prev_height);
-void BoundGen2(vector<long> &expo_gen, const vector<long> &comp_bases, long exponent);
-void Gen_New_bound(long &new_bound, const vector<long> &comp_bases, long first_i_spsp, long bound);
-
 #endif

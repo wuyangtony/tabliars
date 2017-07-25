@@ -29,6 +29,12 @@ long Odometer :: size() const {
 	return number_of_wheels;
 }
 
+// Get spins per cycle of the odometer object
+long Odometer :: max() const {
+	return spins_per_cycle;
+}
+
+// Get certain digit
 long Odometer :: get(const long& n) const {
 	return digits.at(n);
 }

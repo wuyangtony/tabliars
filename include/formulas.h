@@ -55,14 +55,12 @@ This funtion finds the first generator of a multiplicative group
 long firstGenerator(const long& p_power, const vector<long>& sieve);
 
 /*
-Based on firstGenerator() and getDistinctPrimeFactors(), this produces a list 
-of first generators respectively for the prime factors of given composite
-@para		comp:  a constant reference to a composite integer
-			sieve: a constant reference to a vector of factored sieve
-			glist: a reference to the list of generators
-@return		void, but glist is passed by reference, which will be written
+Credit to Ruchir Carg, the author of this algorithm from GeeksforGeeks.com
+@para		a: the number to be found inverse of
+			p: the modulo
+@returns	the multiplicative inverse of a mod p
 */
-void compositeGenerators(const long& comp, const vector<long>& sieve, vector<long>& glist);
+long inverseMod(long a, long p);
 
 /*
 This finds the largest odd divisor
