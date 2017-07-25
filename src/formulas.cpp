@@ -173,6 +173,43 @@ long firstGenerator(const long& p_power, const vector<long>& sieve) {
 }
 
 /*
+Credit to Ruchir Carg, the author of this algorithm from GeeksforGeeks.com
+@para   a: the number to be found inverse of
+      p: the modulo
+@returns  the multiplicative inverse of a mod p
+*/
+long inverseMod(long a, long p)
+{
+  // based on extended Eucliddan algorithm, in which we are finding
+  // x and y such that ax + py = 1, then ax % p = 1.
+  // require gcd(a, p) = 1, but in our context it is always true
+  const long m = p; // have original p stored
+  long temp; // for swapping
+  long q; // store p dividing a
+  long x = 1, y = 0;
+  // base case: mod 1 has not units
+  if (p == 1) return 0;
+  // loop recursively until final remainder is zero
+  while (a > 1)
+  {
+    // q is quotient
+    q = a / p;
+    // p is remainder now
+    temp = p;
+    p = a % p;
+    a = temp;
+    // x, y are coefficients of Bézout's identity
+    temp = y;
+    y = x - q * y;
+    x = temp;
+  }
+  // make x positive
+  if (x < 0) x += m;
+
+  return x;
+}
+
+/*
 This finds the largest odd divisor
 @para   n: a constant reference to an integer
 @return   the largeest odd divisor of n

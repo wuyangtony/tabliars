@@ -55,6 +55,14 @@ This funtion finds the first generator of a multiplicative group
 long firstGenerator(const long& p_power, const vector<long>& sieve);
 
 /*
+Credit to Ruchir Carg, the author of this algorithm from GeeksforGeeks.com
+@para		a: the number to be found inverse of
+			p: the modulo
+@returns	the multiplicative inverse of a mod p
+*/
+long inverseMod(long a, long p);
+
+/*
 This finds the largest odd divisor
 @para		n: a constant reference to an integer
 @return		the largeest odd divisor of n

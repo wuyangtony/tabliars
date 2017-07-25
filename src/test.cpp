@@ -15,41 +15,6 @@ NTL_CLIENT
 
 int main() {
 
-  long n;
-  cout << "Enter a composite: " << endl;
-  cin >> n;
-  cout << "Creating factored sieve..." << endl;
-  vector<long> factoredsieve;
-  factoredSieve(n, factoredsieve);
-  cout << "Factored sieve created." << endl;
-  cout << "Creating list of generators..." << endl;
-  vector<long> generators;
-  compositeGenerators(n, factoredsieve, generators);
-  cout << "Generators created." << endl;
-  cout << "The list of generators for " << n << " are:" << endl;
-  for (long i=0; i<generators.size()-1; i++) {
-    cout << generators.at(i) << ", ";
-  }
-  cout << generators.at(generators.size()-1) << endl;
-  /*
-  long n;
-  cout << "Enter an integer: ";
-  cin >> n;
-  clock_t duration; // used for timing
-  duration = clock();
-  long generator = firstGenerator(n);
-  duration = clock() - duration;
-  if (generator == n) {
-    cout << "There exists no generator for multiplicative group mod " << n << endl;
-  }s
-  else {
-    cout << "The first generator for multiplicative group mod " << n << " is " << generator << endl;
-  }
-  double result = ((double)duration) / CLOCKS_PER_SEC;
-  // Output the result of timing
-  cout << "It takes " << result << " seconds to finish all this work.\n";
-  */
-/*
   vector<ZZ> output;
   output = TrivialStrongTab(to_ZZ(2), to_ZZ(100000));
 
@@ -58,9 +23,9 @@ int main() {
     cout << output.at(i) << " ";
   }
   cout << "\n";
-*/
-  /*Ask for user input and creates vector of that length*/ 
-/*  long BOUND = 10000;
+
+  // Ask for user input and creates vector of that length
+ long BOUND = 10000;
   long BASE = 2;
   vector<long> sieve;
   sieve = FactoredSieve(BOUND);
@@ -71,22 +36,22 @@ int main() {
     cout << pseudo.at(i) << " ";
   }
   cout << "\n";
-*/
-/*
+
+
   mark(sieve);
   primes(sieve);
-*/ 
 
-/*
+
+
 for(long n = 3; n < 2050; n++){
   if(n % 2 == 1 && !ProbPrime(to_ZZ(n))){
     cout << n << " : " << PowerMod(to_ZZ(2), n-1, to_ZZ(n)) << "\n";
   }
 }
-*/
 
-//  vector<long> sieve = FactoredSieve(bound);
-/*
+
+  vector<long> sieve = FactoredSieve(bound);
+
   vector< vector<long> > comps = three_carmichael(bound, sieve);
   print_carslist(comps);
 
@@ -101,8 +66,8 @@ for(long n = 3; n < 2050; n++){
     } 
   }
   cout << "end of check\n";
-*/
-/* 
+
+
 // does 69 and 95 really only have 2 strong liars
 cout << "strong liars for 95:\n";
 for(ZZ i = to_ZZ(1); i < 95; i++){
@@ -116,7 +81,6 @@ for(ZZ i = to_ZZ(1); i < 95; i++){
       if(i % 2 == 0) cout << i << " is even and counted\n";
       ncount++;
     }
-  }
   cout << "The number of integers up to " << bound << " with two strong liars is " << ncount << "\n";
   cout << "\n";
 
@@ -135,8 +99,8 @@ cout << ncount << " : number with 2 strong liars up to 10 to the " << power << "
 ratio = ratio * log(log(log(bound)));
 cout << "(count-1) * logloglog x is " << ratio << "\n";
 cout << "time taken is " << difftime(end,start) << "\n";
-*/
-/* testing strong liar count
+
+ // testing strong liar count
 for(long n = 1; n < bound; n++){
     ncount = StrongLiarCount(n);
     //cout << n << " has " << ncount << " number of strong liars\n";
@@ -146,8 +110,8 @@ for(long n = 1; n < bound; n++){
   RR ratio = to_RR(numone + 0.0);
   ratio = ratio * log(log(log(bound)));  
   cout << ratio << "\n";
-*/
-/*
+
+
   // test the Factor command
   list<long> factors;
   for(long n = 0; n < 100; n++){
@@ -160,6 +124,5 @@ for(long n = 1; n < bound; n++){
     factors.clear();
   }	
 
-*/
-return 0;
+  return 0;
 }

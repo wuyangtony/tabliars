@@ -58,14 +58,14 @@ void tony_tabliars(const long& n, const vector<long>& sieve, vector<long>& liars
     ghats.at(i) = pow(ghats.at(i), power);
   }
   // orders are bases of the Odometer
-  Odometer exp = new Odometer(orders);
+  Odometer exp = Odometer(orders);
   // take product of ghats[i]^exp[i]
   long l = 1;
   for (long i=0; i<exp.max(); ++i)
   {
     for (long j=0; j<exp.size(); ++j)
     {
-      l *= pow(ghats[j], exp[j]);
+      l *= pow(ghats.at(j), exp.get(j));
     }
     liars.push_back(l);
     exp.spin();
