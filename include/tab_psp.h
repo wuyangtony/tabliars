@@ -57,5 +57,10 @@ F(q) = {3 <= f <= n | gcd(q,n)=1, for r < q, r nmid f or f = 1 mod r\ell_a(r)}
 */
 vector<long> FermatSieveF(long p, long e, long n, long a);
 
+
+/* Basically the same with TrivalStrongTab. Return the first strong 
+  pseudoprime instead all of them.*/
+long FirstStrongTab(long a, long bound);
+
 #endif //TAB_PSP_H
 

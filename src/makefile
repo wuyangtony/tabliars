@@ -2,23 +2,19 @@ INCLUDE = -I/usr/local/include
 LIB = -L/usr/local/lib
 TAGS = -lntl -lgmp -lm -O2 
 
-all: test runwitness runtwostrongliars test_tabspsp test_tonysconjecture test_odometer
+all: test runwitness runtwostrongliars test_tabspsp test_tonysconjecture test_odometer test_exponent test_reliable_witness_lchen
 
 test: test.o formulas.o tab_carmichael.o tab_liars.o first_liar.o sievepractice.o lowestprimesieve.o tab_psp.o DoubleLinkedListArray.o
 	g++ $(INCLUDE) $(LIB) formulas.o tab_carmichael.o tab_liars.o tab_psp.o first_liar.o test.o sievepractice.o lowestprimesieve.o DoubleLinkedListArray.o -o test $(TAGS)
-	mv test ../bin/
 
 runwitness: runreliablewitness.o formulas.o tab_carmichael.o tab_liars.o
 	g++ $(INCLUDE) $(LIB) formulas.o tab_carmichael.o tab_liars.o runreliablewitness.o -o runwitness $(TAGS)
-	mv runwitness ../bin/
 
 runtwostrongliars: runtwostrongliars.o formulas.o
 	g++ $(INCLUDE) $(LIB) formulas.o runtwostrongliars.o -o runtwostrongliars $(TAGS)
-	mv runtwostrongliars ../bin/
 
 test_tabspsp: test_tabspsp.o formulas.o tab_psp.o
 	g++ $(INCLUDE) $(LIB) formulas.o tab_psp.o test_tabspsp.o -o test_tabspsp $(TAGS)
-	mv test_tabspsp ../bin/
 
 test_tabfliar: test_tabfliar.o formulas.o tab_liars.o
 	g++ $(INCLUDE) $(LIB) formulas.o tab_liars.o test_tabfliar.o -o test_fliar $(TAGS)
@@ -26,11 +22,15 @@ test_tabfliar: test_tabfliar.o formulas.o tab_liars.o
 
 test_tonysconjecture: test_tonysconjecture.o formulas.o
 	g++ $(INCLUDE) $(LIB) formulas.o test_tonysconjecture.o -o test_tonysconjecture $(TAGS)
-	mv test_tonysconjecture ../bin/
 
 test_odometer: test_odometer.o Odometer.o
 	g++ $(INCLUDE) $(LIB) Odometer.o test_odometer.o -o test_odometer $(TAGS)
-	mv test_odometer ../bin/
+
+test_exponent: test_exponent.o exponent_list.o reliable_witness_lchen.o Odometer.o tab_psp.o formulas.o
+	g++ $(INCLUEDE) $(LIB) test_exponent.o exponent_list.o reliable_witness_lchen.o Odometer.o tab_psp.o formulas.o -o test_exponent $(TAGS)
+
+test_reliable_witness_lchen:  test_reliable_witness_lchen.o reliable_witness_lchen.o formulas.o 
+	g++ $(INCLUEDE) $(LIB) test_reliable_witness_lchen.o reliable_witness_lchen.o formulas.o -o test_reliable_witness_lchen $(TAGS)
 
 test.o: test.cpp
 	g++ $(INCLUDE) -c test.cpp
@@ -76,6 +76,18 @@ lowestprimesieve.o: lowestprimesieve.cpp
 
 DoubleLinkedListArray.o:	DoubleLinkedListArray.cpp
 	g++ $(INCLUDE) -c DoubleLinkedListArray.cpp
+
+exponent_list.o: exponent_list.cpp
+	g++ $(INCLUDE) -c exponent_list.cpp
+
+test_exponent.o: test_exponent.cpp
+	g++ $(INCLUDE) -c test_exponent.cpp
+
+reliable_witness_lchen.o: reliable_witness_lchen.cpp
+	g++ $(INCLUDE) -c reliable_witness_lchen.cpp
+
+test_reliable_witness_lchen.o: test_reliable_witness_lchen.cpp
+	g++ $(INCLUDE) -c test_reliable_witness_lchen.cpp
 
 clean: 
 	rm *.o
