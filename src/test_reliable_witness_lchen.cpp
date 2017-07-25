@@ -11,8 +11,8 @@ int main(int argc, char* argv[]) {
 	// long IfWitness;
 	// IfWitness = MillerWitness(to_ZZ(2047), (to_ZZ(2) % to_ZZ(2047)));
 	// cout << IfWitness << end;
-	long bound_a = 2046; // bound of witnesses
-	long bound_n = 2046; // bound of composits numbers
+	long bound_a = 100; // bound of witnesses
+	long bound_n = 100; // bound of composits numbers
 	long count_wit;
 	vector<long> sieve;
 	vector<long> c; // vector of composite up to bound
