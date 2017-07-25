@@ -108,5 +108,12 @@ int main() {
 	 	long first_i_spsp = FirstStrongTab(base_set[i], spsp_bound);
 	 	cout << "base-" << base_set[i] <<" spsp is " << first_i_spsp << endl;
 	}
+	cout << "now check the ProbPrime function... " << endl;
+	long prime_set[] = {3, 5, 7, 11, 13, 17};
+	for (int i = 0; i < 6; i++) {
+		long probprime = ProbPrime(prime_set[i]);
+		cout << "for prime " << prime_set[i] << ", the ProbPrime is " << endl;
+	}
+
 	return 1; 
 }
