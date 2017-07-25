@@ -112,7 +112,7 @@ int main() {
 	long prime_set[] = {3, 5, 7, 11, 13, 17};
 	for (int i = 0; i < 6; i++) {
 		long probprime = ProbPrime(prime_set[i]);
-		cout << "for prime " << prime_set[i] << ", the ProbPrime is " << endl;
+		cout << "for prime " << prime_set[i] << ", the ProbPrime is " << probprime << endl;
 	}
 
 	return 1; 
