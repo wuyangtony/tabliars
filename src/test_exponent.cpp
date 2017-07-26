@@ -109,8 +109,8 @@ int main() {
 	 	cout << "base-" << base_set[i] <<" spsp is " << first_i_spsp << endl;
 	}
 	cout << "now check the ProbPrime function... " << endl;
-	long prime_set[] = {3, 5, 7, 11, 13, 17};
-	for (int i = 0; i < 6; i++) {
+	long prime_set[] = {3, 5, 7, 11, 13, 17, 19, 23, 101};
+	for (int i = 0; i < 9; i++) {
 		long probprime = ProbPrime(prime_set[i]);
 		cout << "for prime " << prime_set[i] << ", the ProbPrime is " << probprime << endl;
 	}
