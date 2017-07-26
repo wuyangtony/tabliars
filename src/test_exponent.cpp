@@ -3,15 +3,21 @@
 #include "../include/reliable_witness_lchen.h"
 #include "../include/tab_psp.h"
 #include <iostream>
+#include <fstream>
+#include <string>
 #include <vector>
 #include <cstdlib>
 #include <NTL/ZZ.h>
 #include <NTL/RR.h>
+
 using namespace std;
 
 NTL_CLIENT
 
+
 int main() {
+	ofstream myfile;
+	myfile.open("rel_wit.csv");
 	vector<long> expo_gen;
 	// vector<long> comps_list;
 	vector<long> comps_set;
@@ -105,6 +111,7 @@ int main() {
 				comps_set.push_back(first_i_spsp);
 				//NewNaiveReliableWitness(new_bound, comps_set, a, ifreliable, count_wit);
 				NewNaiveReliableWitness(bound, comps_set, a, ifreliable, count_wit);
+				myfile << bound << "," << base_set.at(i) << "," << first_i_spsp << "," << count_wit << endl;
 			}
 		}
 
@@ -126,6 +133,6 @@ int main() {
 	// 	long probprime = ProbPrime(prime_set[i]);
 	// 	cout << "for prime " << prime_set[i] << ", the ProbPrime is " << probprime << endl;
 	// }
-
+	myfile.close();
 	return 1; 
 }
