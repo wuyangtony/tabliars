@@ -110,8 +110,10 @@ int main() {
 				// cout << "the new bound is " << new_bound << endl;
 				comps_set.push_back(first_i_spsp);
 				//NewNaiveReliableWitness(new_bound, comps_set, a, ifreliable, count_wit);
+				myfile.open("rel_wit.csv", std::ios::app);
 				NewNaiveReliableWitness(bound, comps_set, a, ifreliable, count_wit);
 				myfile << bound << "," << base_set.at(i) << "," << first_i_spsp << "," << count_wit << endl;
+				myfile.close();
 			}
 		}
 
