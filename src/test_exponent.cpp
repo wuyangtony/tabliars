@@ -93,17 +93,18 @@ int main() {
 					continue;
 				}
 				cout << "add a base-" << base_set.at(i) <<" spsp " << first_i_spsp << " to comps_set" << endl;
-				if (i == 0) {
-					prev_bound = bound;
-				}
-				else {
-					prev_bound = new_bound;
-				}
-				Gen_New_bound(new_bound, comp_bases, first_i_spsp, prev_bound);
+				// if (i == 0) {
+				// 	prev_bound = bound;
+				// }
+				// else {
+				// 	prev_bound = new_bound;
+				// }
+				// Gen_New_bound(new_bound, comp_bases, first_i_spsp, prev_bound);
 				
-				cout << "the new bound is " << new_bound << endl;
+				// cout << "the new bound is " << new_bound << endl;
 				comps_set.push_back(first_i_spsp);
-				NewNaiveReliableWitness(new_bound, comps_set, a, ifreliable, count_wit);
+				//NewNaiveReliableWitness(new_bound, comps_set, a, ifreliable, count_wit);
+				NewNaiveReliableWitness(bound, comps_set, a, ifreliable, count_wit);
 			}
 		}
 
