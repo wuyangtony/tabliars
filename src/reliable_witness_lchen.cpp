@@ -1,5 +1,7 @@
 #include "../include/reliable_witness_lchen.h"
 #include <vector>
+#include <iostream>
+#include <fstream>
 
 
 /** This function is a modified version of Andrew's NaiveReliableWitness. 
@@ -87,6 +89,7 @@ void NewNaiveReliableWitness(long bound, const vector<long> &comps, vector<long>
         cout << endl;
     }
     else {
+    	ifreliable.at(0) = 0;
         cout << "there are no reliable witness for the composite set." << endl;
     }
 
