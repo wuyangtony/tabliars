@@ -17,7 +17,7 @@ NTL_CLIENT
 
 int main() {
 	ofstream myfile;
-	myfile.open("rel_wit.csv");
+	myfile.open("rel_wit2.csv");
 	vector<long> expo_gen;
 	// vector<long> comps_list;
 	vector<long> comps_set;
@@ -110,7 +110,7 @@ int main() {
 				// cout << "the new bound is " << new_bound << endl;
 				comps_set.push_back(first_i_spsp);
 				//NewNaiveReliableWitness(new_bound, comps_set, a, ifreliable, count_wit);
-				myfile.open("rel_wit.csv", std::ios::app);
+				myfile.open("rel_wit2.csv", std::ios::app);
 				NewNaiveReliableWitness(bound, comps_set, a, ifreliable, count_wit);
 				myfile << bound << "," << base_set.at(i) << "," << first_i_spsp << "," << count_wit << endl;
 				myfile.close();
