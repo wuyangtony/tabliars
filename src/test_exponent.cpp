@@ -17,7 +17,7 @@ NTL_CLIENT
 
 int main() {
 	ofstream myfile;
-	myfile.open("rel_wit3.csv");
+	myfile.open("rel_wit4.csv");
 	vector<long> expo_gen;
 	// vector<long> comps_list;
 	vector<long> comps_set;
@@ -26,7 +26,7 @@ int main() {
 	long arr2[] = {3, 5, 7, 11}; // bases
 	int ifwit;
 	int arr2_size = sizeof(arr2)/sizeof(arr2[0]);
-	vector<bool> a;
+	vector<long> witness;
 	vector<bool> ifreliable;
 	vector<int> prev_height;
 	prev_height.push_back(0);
@@ -62,7 +62,7 @@ int main() {
 		cout << "after calling OdometerGem, the size of the comps_set is " << comps_set.size() << endl;
 		cout << "test reliable witness... " << endl;
 
-		NewNaiveReliableWitness(bound, comps_set, a, ifreliable, count_wit);
+		NewNaiveReliableWitness(bound, comps_set, witness, ifreliable, count_wit);
 
 		if (ifreliable.at(0) == 0) {
 			cout << "this set doesn't have reliable witness." << endl;
@@ -110,9 +110,13 @@ int main() {
 				// cout << "the new bound is " << new_bound << endl;
 				comps_set.push_back(first_i_spsp);
 				//NewNaiveReliableWitness(new_bound, comps_set, a, ifreliable, count_wit);
-				myfile.open("rel_wit3.csv", std::ios::app);
-				NewNaiveReliableWitness(bound, comps_set, a, ifreliable, count_wit);
-				myfile << bound << "," << base_set.at(i) << "," << first_i_spsp << "," << count_wit << endl;
+				myfile.open("rel_wit4.csv", std::ios::app);
+				NewNaiveReliableWitness(bound, comps_set, witness, ifreliable, count_wit);
+				myfile << bound << "," << base_set.at(i) << "," << first_i_spsp << "," << count_wit;
+				for (int i = 0; i < witness.size(); i++) {
+					myfile << witness.at(i) << ",";
+				}
+				myfile << endl;
 				myfile.close();
 			}
 		}
