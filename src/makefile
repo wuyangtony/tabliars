@@ -2,9 +2,9 @@ INCLUDE = -I/usr/local/include
 LIB = -L/usr/local/lib
 TAGS = -lntl -lgmp -lm -O2 
 
-all: test runwitness runtwostrongliars test_tabspsp test_tonysconjecture test_odometer test_exponent test_reliable_witness_lchen
+all: test runwitness runtwostrongliars test_tabspsp test_tonysconjecture test_odometer test_exponent test_reliable_witness_lchen new_bound
 
-test: test.o formulas.o tab_carmichael.o tab_liars.o first_liar.o sievepractice.o lowestprimesieve.o tab_psp.o DoubleLinkedListArray.o
+test: test.o formulas.o tab_carmichael.o tab_liars.o first_liar.o sievepractice.o lowestprimesieve.o tab_psp.o DoubleLinkedListArray.o 
 	g++ $(INCLUDE) $(LIB) formulas.o tab_carmichael.o tab_liars.o tab_psp.o first_liar.o test.o sievepractice.o lowestprimesieve.o DoubleLinkedListArray.o -o test $(TAGS)
 
 runwitness: runreliablewitness.o formulas.o tab_carmichael.o tab_liars.o
@@ -28,6 +28,9 @@ test_odometer: test_odometer.o Odometer.o
 
 test_exponent: test_exponent.o exponent_list.o reliable_witness_lchen.o Odometer.o tab_psp.o formulas.o
 	g++ $(INCLUEDE) $(LIB) test_exponent.o exponent_list.o reliable_witness_lchen.o Odometer.o tab_psp.o formulas.o -o test_exponent $(TAGS)
+
+new_bound: new_bound.o exponent_list.o reliable_witness_lchen.o Odometer.o tab_psp.o formulas.o
+	g++ $(INCLUEDE) $(LIB) new_bound.o exponent_list.o reliable_witness_lchen.o Odometer.o tab_psp.o formulas.o -o new_bound $(TAGS)
 
 test_reliable_witness_lchen:  test_reliable_witness_lchen.o reliable_witness_lchen.o formulas.o 
 	g++ $(INCLUEDE) $(LIB) test_reliable_witness_lchen.o reliable_witness_lchen.o formulas.o -o test_reliable_witness_lchen $(TAGS)
@@ -82,6 +85,9 @@ exponent_list.o: exponent_list.cpp
 
 test_exponent.o: test_exponent.cpp
 	g++ $(INCLUDE) -c test_exponent.cpp
+
+new_bound.o: new_bound.cpp
+	g++ $(INCLUDE) -c new_bound.cpp
 
 reliable_witness_lchen.o: reliable_witness_lchen.cpp
 	g++ $(INCLUDE) -c reliable_witness_lchen.cpp
