@@ -7,6 +7,7 @@
  * Very basic - straightforward Miller_Rabin applied for each a, each n.
  */
 void NewNaiveReliableWitness(long bound, const vector<long> &comps, vector<long> &witnesses, vector<bool> &ifreliable, long &count_wit) {
+	witnesses.clear();
     long IfWitness;
 
 	// cout << "test naive reliable witness comps.size() : " << comps.size() << endl;

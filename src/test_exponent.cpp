@@ -17,7 +17,12 @@ NTL_CLIENT
 
 int main() {
 	ofstream myfile;
+	ofstream wit_file;
+	ofstream output;
 	myfile.open("rel_wit4.csv");
+	myfile.open("tab_wit.csv");
+	output.open("output_wit.txt");
+
 	vector<long> expo_gen;
 	// vector<long> comps_list;
 	vector<long> comps_set;
@@ -42,33 +47,45 @@ int main() {
 	}
 
 	for (int i = 0; i < 10; i++) {
+		output.open("output_wit.txt", std::ios::app);
+		wit_file.open("tab_wit.csv", std::ios::app);
+
 		long bound = 1;
 
 		for (int j = 0; j < arr2_size; j++) {
 			bound = bound * pow(arr2[j], exponent);
 		}
 
-		cout << "the bound is: " << bound << endl;
+		output << "the bound is: " << bound << endl;
 
 		BoundGen2(expo_gen, comp_bases, exponent);
-		cout << "now the exponents are: ";
+		output << "now the exponents are: ";
 		for (int k = 0; k < expo_gen.size(); k++) {
-			cout << expo_gen.at(k) << " ";
+			output << expo_gen.at(k) << " ";
 		}
-		cout << endl;
+		output << endl;
 
 		OdometerGen(expo_gen, comp_bases, comps_set, prev_height);
 
-		cout << "after calling OdometerGem, the size of the comps_set is " << comps_set.size() << endl;
-		cout << "test reliable witness... " << endl;
+		output << "after calling OdometerGem, the size of the comps_set is " << comps_set.size() << endl;
+		output << "test reliable witness... " << endl;
 
 		NewNaiveReliableWitness(bound, comps_set, witness, ifreliable, count_wit);
+		wit_file << bound << "," << "0" << "," << "0" << ",";
+		for (int i = 0; i < witness.size(); i++) {
+			wit_file << witness.at(i) << ",";
+		}
+		wit_file << endl;
+		wit_file.close();
+
+
 
 		if (ifreliable.at(0) == 0) {
-			cout << "this set doesn't have reliable witness." << endl;
-			cout << "the exponents are " << exponent << endl;
+			output << "this set doesn't have reliable witness." << endl;
+			output << "the exponents are " << exponent << endl;
 			break;
 		}
+		//output.close();
 		else {
 			//cout << "Increase the bound of a ..." << endl; 
 			// Instead of increase the bound of a, we can add a base-a spsp to comps_set,
@@ -86,19 +103,25 @@ int main() {
 				base_set.push_back(i);
 
 			}
+			//output.open("output_wit.csv", std::ios::app);
 
-			cout << "the base_set is " ;
+			output << "the base_set is " ;
 			for (int i = 0; i < base_set.size(); i++) {
-				cout << base_set.at(i) << " ";
+				output << base_set.at(i) << " ";
 			}
-			cout << endl;
+			output << endl;
 			long spsp_bound = 100000000;
+			//output.close();
+
 			for (int i = 0; i < base_set.size(); i++) {
+				output.open("output_wit.txt", std::ios::app);
+				myfile.open("rel_wit4.csv", std::ios::app);
+				wit_file.open("tab_wit.csv", std::ios::app);
 				long first_i_spsp = FirstStrongTab(base_set.at(i), spsp_bound);
 				if (first_i_spsp == 0) {
 					continue;
 				}
-				cout << "add a base-" << base_set.at(i) <<" spsp " << first_i_spsp << " to comps_set" << endl;
+				output << "add a base-" << base_set.at(i) <<" spsp " << first_i_spsp << " to comps_set" << endl;
 				// if (i == 0) {
 				// 	prev_bound = bound;
 				// }
@@ -110,18 +133,22 @@ int main() {
 				// cout << "the new bound is " << new_bound << endl;
 				comps_set.push_back(first_i_spsp);
 				//NewNaiveReliableWitness(new_bound, comps_set, a, ifreliable, count_wit);
-				myfile.open("rel_wit4.csv", std::ios::app);
 				NewNaiveReliableWitness(bound, comps_set, witness, ifreliable, count_wit);
 				myfile << bound << "," << base_set.at(i) << "," << first_i_spsp << "," << count_wit;
+				wit_file << bound << "," << base_set.at(i) << "," << first_i_spsp << ",";
 				for (int i = 0; i < witness.size(); i++) {
-					myfile << witness.at(i) << ",";
+					wit_file << witness.at(i) << ",";
 				}
-				myfile << endl;
+				wit_file << endl;
 				myfile.close();
+				wit_file.close();
+				output.close();
 			}
 		}
+		output.open("output_wit.txt", std::ios::app);
+		output << "now increase the bound.." << endl;
+		output.close();
 
-		cout << "now increase the bound.." << endl;
 		exponent = exponent + 1;
 		comps_set.clear();
 	}
@@ -139,6 +166,5 @@ int main() {
 	// 	long probprime = ProbPrime(prime_set[i]);
 	// 	cout << "for prime " << prime_set[i] << ", the ProbPrime is " << probprime << endl;
 	// }
-	myfile.close();
 	return 1; 
 }
