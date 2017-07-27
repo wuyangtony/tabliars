@@ -66,7 +66,7 @@ int main() {
 		cout << "test reliable witness... " << endl;
 
 		NewNaiveReliableWitness(bound, comps_set, witness, ifreliable, count_wit);
-		wit_file << bound << "," << "0" << "," << "0" << ",";
+		wit_file << bound << "," << count_wit << "," << "0" << "," << "0" << ",";
 		for (int i = 0; i < witness.size(); i++) {
 			wit_file << witness.at(i) << ",";
 		}
@@ -123,8 +123,8 @@ int main() {
 				wit_file.open("tab_wit.csv", std::ios::app);
 				NewNaiveReliableWitness(bound, comps_set, witness, ifreliable, count_wit);
 				if (ifreliable.at(0) == 0) break;
-				myfile << bound << "," << base_set.at(i) << "," << first_i_spsp << "," << count_wit << endl;
-				wit_file << bound << "," << base_set.at(i) << "," << first_i_spsp << ",";
+				myfile << bound << "," << count_wit << "," << base_set.at(i) << "," << first_i_spsp << "," << endl;
+				wit_file << bound << "," << count_wit <<"," << base_set.at(i) << "," << first_i_spsp << ",";
 				for (int i = 0; i < witness.size(); i++) {
 					wit_file << witness.at(i) << ",";
 				}
