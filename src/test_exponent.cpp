@@ -20,6 +20,9 @@ int main() {
 	ofstream wit_file;
 	myfile.open("rel_wit5.csv");
 	wit_file.open("tab_wit5.csv");
+	myfile.close();
+	wit_file.close();
+
 
 	vector<long> expo_gen;
 	// vector<long> comps_list;
