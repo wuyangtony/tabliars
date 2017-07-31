@@ -45,6 +45,7 @@ int main() {
 	}
 
 	for (int i = 0; i < 10; i++) {
+
 		long bound = 1;
 
 		for (int j = 0; j < arr2_size; j++) {
@@ -66,6 +67,7 @@ int main() {
 		cout << "test reliable witness... " << endl;
 
 		NewNaiveReliableWitness(bound, comps_set, witness, ifreliable, count_wit);
+		wit_file.open("tab_wit5.csv", std::ios::app);
 		wit_file << bound << "," << count_wit << "," << "0" << "," << "0" << ",";
 		for (int i = 0; i < witness.size(); i++) {
 			wit_file << witness.at(i) << ",";
