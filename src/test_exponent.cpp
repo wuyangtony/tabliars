@@ -19,7 +19,7 @@ int main() {
 	ofstream myfile;
 	ofstream wit_file;
 	myfile.open("rel_wit5.csv");
-	wit_file.open("tab_wit.csv");
+	wit_file.open("tab_wit5.csv");
 
 	vector<long> expo_gen;
 	// vector<long> comps_list;
@@ -119,8 +119,8 @@ int main() {
 				// cout << "the new bound is " << new_bound << endl;
 				comps_set.push_back(first_i_spsp);
 				//NewNaiveReliableWitness(new_bound, comps_set, a, ifreliable, count_wit);
-				myfile.open("rel_wit4.csv", std::ios::app);
-				wit_file.open("tab_wit.csv", std::ios::app);
+				myfile.open("rel_wit5.csv", std::ios::app);
+				wit_file.open("tab_wit5.csv", std::ios::app);
 				NewNaiveReliableWitness(bound, comps_set, witness, ifreliable, count_wit);
 				if (ifreliable.at(0) == 0) break;
 				myfile << bound << "," << count_wit << "," << base_set.at(i) << "," << first_i_spsp << "," << endl;
