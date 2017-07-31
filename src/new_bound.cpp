@@ -18,8 +18,6 @@ NTL_CLIENT
 int main() {
 	ofstream myfile;
 	// ofstream wit_file;
-	// myfile.open("new_bound.csv");
-
 	vector<long> expo_gen;
 	// vector<long> comps_list;
 	vector<long> comps_set;
@@ -102,8 +100,6 @@ int main() {
 			cout << endl;
 			long spsp_bound = 100000000;
 			for (int i = 0; i < base_set.size(); i++) {
-				myfile.open("new_bound.csv", std::ios::app);
-				myfile << "aaa" << endl;
 				long first_i_spsp = FirstStrongTab(base_set.at(i), spsp_bound);
 				if (first_i_spsp == 0) {
 					continue;
@@ -119,11 +115,11 @@ int main() {
 				
 				cout << "the new bound is " << new_bound << endl;
 				comps_set.push_back(first_i_spsp);
-				NewNaiveReliableWitness(new_bound, comps_set, witness, ifreliable, count_wit);
 				myfile.open("new_bound.csv", std::ios::app);
+				NewNaiveReliableWitness(new_bound, comps_set, witness, ifreliable, count_wit);
 				// wit_file.open("tab_wit.csv", std::ios::app);
 				// NewNaiveReliableWitness(bound, comps_set, witness, ifreliable, count_wit);
-				myfile << bound << "," << count_wit << "," << base_set.at(i) << "," << first_i_spsp << "," << endl;
+				myfile << bound << "," << new_bound << "," << count_wit << "," << base_set.at(i) << "," << first_i_spsp << "," << endl;
 				if (ifreliable.at(0) == 0) break;
 				// wit_file << bound << "," << count_wit <<"," << base_set.at(i) << "," << first_i_spsp << ",";
 				// for (int i = 0; i < witness.size(); i++) {
