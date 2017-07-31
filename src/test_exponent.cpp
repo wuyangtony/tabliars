@@ -18,7 +18,7 @@ NTL_CLIENT
 int main() {
 	ofstream myfile;
 	ofstream wit_file;
-	myfile.open("rel_wit4.csv");
+	myfile.open("rel_wit5.csv");
 	wit_file.open("tab_wit.csv");
 
 	vector<long> expo_gen;
@@ -26,7 +26,7 @@ int main() {
 	vector<long> comps_set;
 	// long arr[] = {1,2,3}; // exponent list 
 	long exponent = 1;
-	long arr2[] = {3, 5, 7, 11}; // bases
+	long arr2[] = {3, 5, 7, 11, 13}; // bases
 	int ifwit;
 	int arr2_size = sizeof(arr2)/sizeof(arr2[0]);
 	vector<long> witness;
