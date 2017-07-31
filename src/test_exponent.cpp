@@ -64,8 +64,8 @@ int main() {
 		cout << "after calling OdometerGem, the size of the comps_set is " << comps_set.size() << endl;
 		cout << "test reliable witness... " << endl;
 
+		wit_file.open("tab_wit6.csv", std::ios::app);
 		NewNaiveReliableWitness(bound, comps_set, witness, ifreliable, count_wit);
-		wit_file.open("tab_wit5.csv", std::ios::app);
 		wit_file << bound << "," << count_wit << "," << "0" << "," << "0" << ",";
 		for (int i = 0; i < witness.size(); i++) {
 			wit_file << witness.at(i) << ",";
@@ -119,8 +119,8 @@ int main() {
 				// cout << "the new bound is " << new_bound << endl;
 				comps_set.push_back(first_i_spsp);
 				//NewNaiveReliableWitness(new_bound, comps_set, a, ifreliable, count_wit);
-				myfile.open("rel_wit5.csv", std::ios::app);
-				wit_file.open("tab_wit5.csv", std::ios::app);
+				myfile.open("rel_wit6.csv", std::ios::app);
+				wit_file.open("tab_wit6.csv", std::ios::app);
 				NewNaiveReliableWitness(bound, comps_set, witness, ifreliable, count_wit);
 				if (ifreliable.at(0) == 0) break;
 				myfile << bound << "," << count_wit << "," << base_set.at(i) << "," << first_i_spsp << "," << endl;
