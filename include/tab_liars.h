@@ -18,10 +18,22 @@
 NTL_CLIENT
 
 /*
-Tony's implementation of finding all Fermat liars using generators and then select
-all strong liars with MillerWitness() test
+This is Tony's implementation of tabulating Fermat liars by constructing
+subset of multiplicative group modulo n.
+@para	n: 	   a composite integer whose Fermat liars are sought
+		sieve: a vector of factored sieve of n
+		liars: see return
+@return	void, but liars is passed by reference, which stores the outputs
 */
 void tony_tabliars(const long& n, const vector<long>& sieve, vector<long>& liars);
+
+/*
+The brute force method of finding Fermat liars.
+@para	n: 	   a composite integer whose Fermat liars are sought
+		liars: see return
+@return	void, but liars is passed by reference, which stores the outputs
+*/
+void brute_tabliars(const long&n, vector<long>& liars);
 
 /* the vector comps is a list of factored carmichael numbers
 Thm: a strong liar iff (a|p) matches for all p dividing n

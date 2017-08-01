@@ -3,7 +3,12 @@
 NTL_CLIENT
 
 /*
-Tony's implementation of finding all Fermat liars using generators
+This is Tony's implementation of tabulating Fermat liars by constructing
+subset of multiplicative group modulo n
+@para n:     a composite integer whose Fermat liars are sought
+    sieve: a vector of factored sieve of n
+    liars: see return
+@return void, but liars is passed by reference, which stores the outputs
 */
 void tony_tabliars(const long& n, const vector<long>& sieve, vector<long>& liars)
 {
@@ -55,20 +60,39 @@ void tony_tabliars(const long& n, const vector<long>& sieve, vector<long>& liars
     long order = GCD(n-1, power);
     orders.push_back(order);
     power = power / GCD(n-1, power);
-    ghats.at(i) = pow(ghats.at(i), power);
+    ghats.at(i) = PowerMod(ghats.at(i), power, n);
   }
   // orders are bases of the Odometer
   Odometer exp = Odometer(orders);
-  // take product of ghats[i]^exp[i]
-  long l = 1;
   for (long i=0; i<exp.max(); ++i)
   {
+    // take product of ghats[i]^exp[i]
+    long l = 1;
     for (long j=0; j<exp.size(); ++j)
     {
-      l *= pow(ghats.at(j), exp.get(j));
+
+      // use NTL's PowerMod() function
+      l *= PowerMod(ghats.at(j), exp.get(j), n);
     }
-    liars.push_back(l);
+    liars.push_back(l%n);
     exp.spin();
+  }
+}
+
+/*
+The brute force method of finding Fermat liars.
+@para n:     a composite integer whose Fermat liars are sought
+    liars: see return
+@return void, but liars is passed by reference, which stores the outputs
+*/
+void brute_tabliars(const long&n, vector<long>& liars)
+{
+  // linear search from 1 to n
+  for (long i=1; i<=n; ++i)
+  {
+    // use NTL's PowerMod() function
+    long r = PowerMod(i, n-1, n);
+    if (r == 1) liars.push_back(i);
   }
 }
 

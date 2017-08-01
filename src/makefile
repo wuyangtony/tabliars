@@ -1,4 +1,4 @@
-INCLUDE = -I/usr/local/include 
+INCLUDE = -std=C++11 -I/usr/local/include 
 LIB = -L/usr/local/lib
 TAGS = -lntl -lgmp -lm -O2 
 
@@ -16,8 +16,8 @@ runtwostrongliars: runtwostrongliars.o formulas.o
 test_tabspsp: test_tabspsp.o formulas.o tab_psp.o
 	g++ $(INCLUDE) $(LIB) formulas.o tab_psp.o test_tabspsp.o -o test_tabspsp $(TAGS)
 
-test_tabfliar: test_tabfliar.o formulas.o tab_liars.o
-	g++ $(INCLUDE) $(LIB) formulas.o tab_liars.o test_tabfliar.o -o test_fliar $(TAGS)
+test_tabfliar: test_tabfliar.o formulas.o tab_liars.o Odometer.o
+	g++ $(INCLUDE) $(LIB) formulas.o tab_liars.o Odometer.o test_tabfliar.o -o test_fliar $(TAGS)
 	mv test_fliar ../bin/
 
 test_tonysconjecture: test_tonysconjecture.o formulas.o
