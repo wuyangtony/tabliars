@@ -1,12 +1,15 @@
 #include "../include/reliable_witness_lchen.h"
 #include <vector>
+#include <iostream>
+#include <fstream>
 
 
 /** This function is a modified version of Andrew's NaiveReliableWitness. 
  * Result in the witnesses vector is a 1 if a is a reliable witness.
  * Very basic - straightforward Miller_Rabin applied for each a, each n.
  */
-void NewNaiveReliableWitness(long bound, const vector<long> &comps, vector<bool> &witnesses, vector<bool> &ifreliable, long &count_wit) {
+void NewNaiveReliableWitness(long bound, const vector<long> &comps, vector<long> &witnesses, vector<bool> &ifreliable, long &count_wit) {
+	witnesses.clear();
     long IfWitness;
 
 	// cout << "test naive reliable witness comps.size() : " << comps.size() << endl;
@@ -66,6 +69,7 @@ void NewNaiveReliableWitness(long bound, const vector<long> &comps, vector<bool>
 		if (check_wit == 1) {
 			//cout << a << " is a reliable witness for the set of composite. Increase the bound.." << endl;
 			//ifreliable.at(0) = 1;
+			witnesses.push_back(a);
             count_wit++;            
 		}
 	}
@@ -77,8 +81,15 @@ void NewNaiveReliableWitness(long bound, const vector<long> &comps, vector<bool>
         double percentage = double(count_wit)/double(bound) * 100;
 
         cout << "the percentage of reliable witness up to bound is " << percentage << "%." <<endl; 
+
+        cout << "the reliable witnesses are";
+        for (int i = 0; i < witnesses.size(); i++) {
+        	cout << witnesses.at(i) << " ";
+        }
+        cout << endl;
     }
     else {
+    	ifreliable.at(0) = 0;
         cout << "there are no reliable witness for the composite set." << endl;
     }
 

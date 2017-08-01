@@ -532,6 +532,7 @@ long FirstStrongTab(long a, long bound) {
   //say that n is a pseudoprime in this case
   for(long n = (3); n <= bound; n = n+2) {
     if(to_ZZ(a) % to_ZZ(n) != 0){
+      // 1 if prime, 0 if comps
       if(!ProbPrime(n) && !MillerWitness(to_ZZ(n), to_ZZ(a) % to_ZZ(n))) {
         first_psps = n;
         break;
