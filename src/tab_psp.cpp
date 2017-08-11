@@ -534,8 +534,10 @@ long FirstStrongTab(long a, long bound) {
     if(to_ZZ(a) % to_ZZ(n) != 0){
       // 1 if prime, 0 if comps
       if(!ProbPrime(n) && !MillerWitness(to_ZZ(n), to_ZZ(a) % to_ZZ(n))) {
-        first_psps = n;
-        break;
+        if (n > a) {
+          first_psps = n;
+          break;
+        }
       }
     }
   }

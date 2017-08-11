@@ -17,7 +17,14 @@ NTL_CLIENT
 
 int main() {
 	ofstream myfile;
+	ofstream timefile;
+
+	// myfile.open("new_bound_time.csv");
+
 	// ofstream wit_file;
+	// myfile.open("rel_wit4.csv");
+	// wit_file.open("tab_wit.csv");
+
 	vector<long> expo_gen;
 	// vector<long> comps_list;
 	vector<long> comps_set;
@@ -27,7 +34,7 @@ int main() {
 	int ifwit;
 	int arr2_size = sizeof(arr2)/sizeof(arr2[0]);
 	vector<long> witness;
-	vector<bool> ifreliable;
+	bool ifreliable;
 	vector<int> prev_height;
 	prev_height.push_back(0);
 	long new_bound;
@@ -62,16 +69,16 @@ int main() {
 		cout << "after calling OdometerGem, the size of the comps_set is " << comps_set.size() << endl;
 		cout << "test reliable witness... " << endl;
 
+		myfile.open("new_bound.csv", std::ios::app);
 		NewNaiveReliableWitness(bound, comps_set, witness, ifreliable, count_wit);
-		// wit_file << bound << "," << count_wit << "," << "0" << "," << "0" << ",";
-		// for (int i = 0; i < witness.size(); i++) {
-		// 	wit_file << witness.at(i) << ",";
-		// }
-		// wit_file << endl;
-		// wit_file.close();
+		long cur_count_wit = count_wit;
+
+		myfile << bound << "," << bound << "," << count_wit << "," << "N/A" << "," << "N/A" << "," << endl;
+
+		myfile.close();
 
 
-		if (ifreliable.at(0) == 0) {
+		if (ifreliable == 0) {
 			cout << "this set doesn't have reliable witness." << endl;
 			cout << "the exponents are " << exponent << endl;
 			break;
@@ -104,30 +111,32 @@ int main() {
 				if (first_i_spsp == 0) {
 					continue;
 				}
-				cout << "add a base-" << base_set.at(i) <<" spsp " << first_i_spsp << " to comps_set" << endl;
-				if (i == 0) {
-					prev_bound = bound;
+
+				// Test if the number of reliable witnesses decrease for the original bound
+				// after add a base-a spsp prime 
+				comps_set.push_back(first_i_spsp);
+				NewNaiveReliableWitness(bound, comps_set, witness, ifreliable, count_wit);
+				if (count_wit < cur_count_wit) {
+					cur_count_wit = count_wit;
+					cout << "add a base-" << base_set.at(i) <<" spsp " << first_i_spsp << " to comps_set" << endl;
+					if (i == 0) {
+						prev_bound = bound;
+					}
+					else {
+						prev_bound = new_bound;
+					}
+					Gen_New_bound(new_bound, comp_bases, first_i_spsp, prev_bound);
+					
+					cout << "the new bound is " << new_bound << endl;
+					NewNaiveReliableWitness(new_bound, comps_set, witness, ifreliable, count_wit);
+					if (ifreliable == 0) break;
+					myfile.open("new_bound.csv", std::ios::app);
+					myfile << bound << "," << new_bound << "," << count_wit << "," << base_set.at(i) << "," << first_i_spsp << "," << endl;
+					myfile.close();
 				}
 				else {
-					prev_bound = new_bound;
+					comps_set.pop_back();
 				}
-				Gen_New_bound(new_bound, comp_bases, first_i_spsp, prev_bound);
-				
-				cout << "the new bound is " << new_bound << endl;
-				comps_set.push_back(first_i_spsp);
-				myfile.open("new_bound.csv", std::ios::app);
-				NewNaiveReliableWitness(new_bound, comps_set, witness, ifreliable, count_wit);
-				// wit_file.open("tab_wit.csv", std::ios::app);
-				// NewNaiveReliableWitness(bound, comps_set, witness, ifreliable, count_wit);
-				myfile << bound << "," << new_bound << "," << count_wit << "," << base_set.at(i) << "," << first_i_spsp << "," << endl;
-				if (ifreliable.at(0) == 0) break;
-				// wit_file << bound << "," << count_wit <<"," << base_set.at(i) << "," << first_i_spsp << ",";
-				// for (int i = 0; i < witness.size(); i++) {
-				// 	wit_file << witness.at(i) << ",";
-				// }
-				// wit_file << endl;
-				myfile.close();
-				// wit_file.close();
 			}
 		}
 
