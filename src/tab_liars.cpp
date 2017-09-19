@@ -40,7 +40,8 @@ void tony_tabliars(const long& n, const vector<long>& sieve, vector<long>& liars
   for (long i=0; i<primefactors.size(); ++i)
   {
     long pp = prod / primefactors.at(i);
-    long in = inverseMod(pp, primefactors.at(i));
+    // Use NTL's built-in function
+    long in = invMod(pp, primefactors.at(i));
     cp[i] = pp * in;
     cpsum += cp[i];
   }
