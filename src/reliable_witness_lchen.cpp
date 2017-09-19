@@ -8,7 +8,7 @@
  * Result in the witnesses vector is a 1 if a is a reliable witness.
  * Very basic - straightforward Miller_Rabin applied for each a, each n.
  */
-void NewNaiveReliableWitness(long bound, const vector<long> &comps, vector<long> &witnesses, vector<bool> &ifreliable, long &count_wit) {
+void NewNaiveReliableWitness(long bound, const vector<long> &comps, vector<long> &witnesses, bool &ifreliable, long &count_wit) {
 	witnesses.clear();
     long IfWitness;
 
@@ -16,7 +16,7 @@ void NewNaiveReliableWitness(long bound, const vector<long> &comps, vector<long>
 
     // if reliable is a vector that indicate whether or not this comps have reliable witness. 
     // 
-	ifreliable.push_back(0);
+	ifreliable = 0;
 
 	// initialize output vector
 	// update: we don't need to use a vector to save the witness
@@ -75,7 +75,7 @@ void NewNaiveReliableWitness(long bound, const vector<long> &comps, vector<long>
 	}
 
     if (count_wit > 0) {
-        ifreliable.at(0) = 1;
+        ifreliable = 1;
         cout << "there are " << count_wit << " reliable witnesses for this composite set. " << endl;
         cout << "the count_wit is " << count_wit << " , the bound is " << bound << endl;
         double percentage = double(count_wit)/double(bound) * 100;
@@ -89,7 +89,7 @@ void NewNaiveReliableWitness(long bound, const vector<long> &comps, vector<long>
         cout << endl;
     }
     else {
-    	ifreliable.at(0) = 0;
+    	ifreliable = 0;
         cout << "there are no reliable witness for the composite set." << endl;
     }
 
