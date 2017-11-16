@@ -1,0 +1,20 @@
+Author:  Andrew Shallue
+Date: July, 2015
+
+Description of code in the folder "counting liars," including tab_carmichael.cpp, tab_liars.cpp, tab_psp.cpp, first_liar.cpp, DoubleLinkedListArray.cpp.
+
+Code in this folder corresponds to two papers, namely "Counting composites with two strong liars" by Shallue,Bach and "Tabulating pseudoprimes and tabulating liars" by Shallue.  It also includes code for basic prime sieves, which I used to help me learn linear sieve and wheel sieve techniques. 
+
+DoubleLinkedListArray.  A container class which is an array, but acts like a linked list.  By which I mean, each entry has a "next" and "prev" which gives other indices.  In this way, we have random access and constant time removals.  And if several entries have been removed, traversing array using "next" takes as many steps as non-removed entries.  One solution for implementing linear sieves.
+
+first_liar.  Should be called first pseudoprime.  Finds smallest composite such that a is a strong liar for that composite.
+
+formulas.  Whole host of helper routines.  Also contains algorithms for counting the number of strong liars, as well as the algorithm from Bach-Shallue for siveing for composites with two strong liars.  Contains a sieve used for factoring any number up to a bound, and an algorithm for computing multiplicative order given the factorization of the group order.
+
+tab_carmichael.  Contains method of Pinch which tabulates Carmichael numbers with 3 prime factors.
+
+tab_liars.  Algorithm from Shallue for tabulating strong liars.  Also what little I've done so far on tabulating reliable witnesses.
+
+tab_psp.  Tabulating Fermat and strong pseudoprimes.  Method from Shallue is implemented and works.  Attempted linear sieve for Fermat psp does not work.  The obstruction is that an element of one F set will be removed while being needed for a later F set.  I'm not sure how to fix that.
+
+Tony has been doing some updates.  I'll let him write about them.
