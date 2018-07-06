@@ -1,11 +1,11 @@
-INCLUDE = -std=C++11 -I/usr/local/include 
+INCLUDE = -I/usr/local/include 
 LIB = -L/usr/local/lib
 TAGS = -lntl -lgmp -lm -O2 
 
 all: test runwitness runtwostrongliars test_tabspsp test_tonysconjecture test_odometer test_exponent test_reliable_witness_lchen new_bound
 
-test: test.o formulas.o tab_carmichael.o tab_liars.o first_liar.o sievepractice.o lowestprimesieve.o tab_psp.o DoubleLinkedListArray.o 
-	g++ $(INCLUDE) $(LIB) formulas.o tab_carmichael.o tab_liars.o tab_psp.o first_liar.o test.o sievepractice.o lowestprimesieve.o DoubleLinkedListArray.o -o test $(TAGS)
+test: test.o formulas.o tab_carmichael.o tab_liars.o first_liar.o sievepractice.o lowestprimesieve.o tab_psp.o DoubleLinkedListArray.o Odometer.o
+	g++ $(INCLUDE) $(LIB) formulas.o tab_carmichael.o tab_liars.o tab_psp.o first_liar.o test.o sievepractice.o lowestprimesieve.o DoubleLinkedListArray.o Odometer.o -o test $(TAGS)
 
 runwitness: runreliablewitness.o formulas.o tab_carmichael.o tab_liars.o
 	g++ $(INCLUDE) $(LIB) formulas.o tab_carmichael.o tab_liars.o runreliablewitness.o -o runwitness $(TAGS)

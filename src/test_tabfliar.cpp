@@ -2,8 +2,10 @@
 #include <iostream>
 #include <vector>
 #include <ctime>
+#include <NTL/ZZ.h>
 #include "../include/tab_liars.h"
 using namespace std;
+NTL_CLIENT
 
 int main()
 {
@@ -24,28 +26,33 @@ int main()
 	duration = clock() - duration;
 	t = double(duration) / CLOCKS_PER_SEC;
 	t *= 1000;
+	// need to convert from long to ZZ for MillerWitness()
+	ZZ nzz = conv<ZZ>(n);
+	sort(liars.begin(), liars.end());
 	// display the output
-	/*
-	cout << "Fermat liars of " << n << " are: ";
-	for (long i=0; i<liars.size()-1; ++i)
+	cout << "Strong liars of " << n << " are:" << endl;
+	for (long i=0; i<liars.size(); ++i)
 	{
-		cout << liars.at(i) << ", ";
+		ZZ azz = conv<ZZ>(liars.at(i));
+		if (MillerWitness(nzz, azz) == 0)
+		{
+			cout << liars.at(i) << endl;
+		}
 	}
-	cout << liars.at(liars.size()-1) << ".\n";*/
+	//cout << liars.at(liars.size()-1) << ".\n";
 	cout << "It takes " << t << " miliseconds to finish Tony's implementation.\n";
 	liars.clear();
 	duration = clock();
-	brute_tabliars(n, liars);
+	brute_tabstrongliars(n, liars);
 	duration = clock() - duration;
 	t = double(duration) / CLOCKS_PER_SEC;
 	t *= 1000;
-	/*
-	cout << "Fermat liars of " << n << " are: ";
+	cout << "Brute force: strong liars of " << n << " are:";
 	for (long i=0; i<liars.size()-1; ++i)
 	{
 		cout << liars.at(i) << ", ";
 	}
-	cout << liars.at(liars.size()-1) << ".\n";*/
+	cout << liars.at(liars.size()-1) << ".\n";
 	cout << "It takes " << t << " miliseconds to finish brute force.\n";
 	return 0;
 }

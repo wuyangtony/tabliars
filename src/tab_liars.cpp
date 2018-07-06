@@ -41,7 +41,7 @@ void tony_tabliars(const long& n, const vector<long>& sieve, vector<long>& liars
   {
     long pp = prod / primefactors.at(i);
     // Use NTL's built-in function
-    long in = invMod(pp, primefactors.at(i));
+    long in = InvMod(pp, primefactors.at(i));
     cp[i] = pp * in;
     cpsum += cp[i];
   }
@@ -94,6 +94,25 @@ void brute_tabliars(const long&n, vector<long>& liars)
     // use NTL's PowerMod() function
     long r = PowerMod(i, n-1, n);
     if (r == 1) liars.push_back(i);
+  }
+}
+
+/*
+The brute force method of finding strong liars.
+@para n:     a composite integer whose Fermat liars are sought
+    liars: see return
+@return void, but liars is passed by reference, which stores the outputs
+*/
+void brute_tabstrongliars(const long&n, vector<long>& liars)
+{
+  // need to convert from long to ZZ for MillerWitness()
+  ZZ nzz = conv<ZZ>(n);
+  // linear search from 1 to n
+  for (long i=1; i<n; ++i)
+  {
+    // use NTL's MillerWitness() function
+    long r = MillerWitness(nzz, conv<ZZ>(i));
+    if (r == 0) liars.push_back(i);
   }
 }
 

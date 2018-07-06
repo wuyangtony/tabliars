@@ -15,7 +15,17 @@ NTL_CLIENT
 
 int main() {
 
-  vector<ZZ> output;
+  long n;
+  cin >> n;
+  vector<long> sieve;
+  factoredSieve(n, sieve);
+  vector<long> factors;
+  getPrimeFactors(n, sieve, factors);
+  for (long i=0; i<factors.size(); ++i)
+  {
+    cout << factors.at(i) << " is a prime factor of " << n << endl;
+  }
+  /*vector<ZZ> output;
   output = TrivialStrongTab(to_ZZ(2), to_ZZ(100000));
 
   cout << "Looking at output of TrivialStrongTab\n";
@@ -122,7 +132,7 @@ for(long n = 1; n < bound; n++){
     }
     cout << "\n";
     factors.clear();
-  }	
+  }	*/
 
   return 0;
 }

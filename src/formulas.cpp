@@ -47,15 +47,15 @@ of integer n, including repeats.
 */
 void getPrimeFactors(long n, const vector<long>& sieve, vector<long>& factors)
 {
-	// n has to be positive
-
+	// n has to be greater than 1
+	if (n <= 1) throw invalid_argument("Parameter n needs to be greater than 1.");
 	// Done when cofactor reaches 1
 	while (n != 1)
 	{
 		// add smallest prime factor to factors
 		factors.push_back(sieve.at(n));
 		// update cofactor
-		n /= prime;
+		n /= sieve.at(n);
 	}
 }
 
@@ -69,8 +69,8 @@ rid of all repeating prime factors.
 */
 void getDistinctPrimeFactors(long n, const vector<long>& sieve, vector<long>& factors)
 {
-	// n has to be positive
-
+	// n has to be greater than 1
+	if (n <= 1) throw invalid_argument("Parameter n needs to be greater than 1.");
 	// Base case 1: n = 1
 	if (n == 1) return;
 	// Since n != 1, add smallest prime factor of n to factors first
@@ -100,9 +100,9 @@ than theoretically possible since I do not use precomputation in exp.
 long mulOrder(const long& a, const long& n, const vector<long>& sieve)
 {
 	// a has to be a unit of mod n group
-
+	if (GCD(a, n) != 1) throw invalid_argument("a needs to be a unit of mod n group.");
 	// n cannot be greater than the size of sieve
-
+	if (n > sieve.size()) throw out_of_range("n needs to be smaller than the size of sieve.");
 	// Compute phi(n) using factorization of n
 	long phi = 1;
 	vector<long> factors;

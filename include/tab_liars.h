@@ -35,6 +35,14 @@ The brute force method of finding Fermat liars.
 */
 void brute_tabliars(const long&n, vector<long>& liars);
 
+/*
+The brute force method of finding strong liars.
+@para	n: 	   a composite integer whose strong liars are sought
+		liars: see return
+@return	void, but liars is passed by reference, which stores the outputs
+*/
+void brute_tabstrongliars(const long&n, vector<long>& liars);
+
 /* the vector comps is a list of factored carmichael numbers
 Thm: a strong liar iff (a|p) matches for all p dividing n
 so this program simply checks that 

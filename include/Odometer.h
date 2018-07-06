@@ -5,7 +5,7 @@
 #define ODOMETER_H
 #include <ostream>
 #include <vector>
-
+using namespace std;
 /*
 	Odometer appears mostly in cars. Basically we can think of any natural
 	number as an odometer with 10s as bases for all digits.

@@ -88,9 +88,9 @@ ostream& operator<<(ostream& out, const Odometer& o)
 {
 	out << "[";
 	for (long i=0; i<o.number_of_wheels-1; i++) {
-		out << o.digits.at(i) << ", ";
+		out << o.digits[i] << ", ";
 	}
-	out << o.digits.at(o.number_of_wheels-1) << "]";
+	out << o.digits[o.number_of_wheels-1] << "]";
 	return out;
 }
 

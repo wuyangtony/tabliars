@@ -4,6 +4,7 @@
 #include <NTL/RR.h>
 #include <vector>
 #include <cmath>
+#include <exception>
 NTL_CLIENT
 
 /*
